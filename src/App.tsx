@@ -5,7 +5,7 @@ import ITag from "./types/ITag";
 const GET_ALL_TAGS = gql`
   query {
     getAllTags {
-      name
+      name 
     }
   }
 `;
@@ -14,7 +14,7 @@ function App() {
   const [tags, setTags] = useState<ITag[]>([]);
 
   const { loading, error } = useQuery(GET_ALL_TAGS, {
-    onCompleted: (data) => {
+    onCompleted: (data: any) => {
       setTags(data.getAllTags);
     },
   });

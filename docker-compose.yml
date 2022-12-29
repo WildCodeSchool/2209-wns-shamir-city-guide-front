@@ -2,8 +2,10 @@ version: "3.8"
 
 services:
   front:
+    container_name: city_guid_client_container
     build:
       dockerfile: "Dockerfile"
+      target: development
     volumes:
       - ./:/app:rw,cached
     ports:
