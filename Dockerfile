@@ -1,10 +1,15 @@
-FROM node:16
-
+FROM node:18 as base
 WORKDIR /app
+COPY package*.json ./
 
-COPY package.json ./
-COPY package-lock.json ./
 
+FROM base as development
+ENV NODE_ENV=development
 RUN npm install
+COPY . /
+CMD ["react-scripts", "start"]
 
-CMD ["npm", "start"]
+FROM base as production
+ENV NODE_ENV=production
+RUN npm ci
+COPY . /
