@@ -44,3 +44,11 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Docker
+### `docker compose -f docker-compose.yml up`
+
+If you try to lauch this command and your ubuntu terminal indicates you he can't find the 'npm' command maybe you have to install node.js on your linux sub-system via wsl2. So your linux sub-system on the windows partition, open your linux terminal(Debian or Ubuntu) and follow instructions from this link `https://learn.microsoft.com/fr-fr/windows/dev-environment/javascript/nodejs-on-wsl`, after that in your linux terminal you can verify if your npm command is now available : `npm --version`.
+First you have to install react-scripts with dependencies, so at the root of your project open an linux bash and run `npm install`, secondly you can run the docker command above, now it should work.
+
+

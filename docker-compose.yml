@@ -2,11 +2,14 @@ version: "3.8"
 
 services:
   front:
-    container_name: city_guid_client_container
+    container_name: city_guid_client
     build:
       dockerfile: "Dockerfile"
       target: development
     volumes:
       - ./:/app:rw,cached
+    environment:
+      - NODE_ENV=development
+    command: npm start
     ports:
       - 3000:3000
