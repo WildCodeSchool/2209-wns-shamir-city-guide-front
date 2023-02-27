@@ -1,0 +1,33 @@
+@import '../../../style//variables.scss';
+
+.dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .admin-dashboard {
+    width: 60%;
+    display: flex;
+    @media screen and (max-width: 800px) {
+      width: 75%;
+    }
+    @media screen and (max-width: 600px) {
+      width: 85%;
+    }
+    flex-wrap: wrap;
+    .link-block {
+      width: 50%;
+      text-align: center;
+      padding: 4rem;
+      a {
+        text-decoration: none;
+        svg {
+          font-size: 5.6rem;
+          color: $blue-light;
+        }
+        p {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+}

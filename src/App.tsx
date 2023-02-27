@@ -1,29 +1,14 @@
-import { gql, useQuery } from "@apollo/client";
-import { useState } from "react";
-import ITag from "./types/ITag";
+import Router from "./Router";
+import { ThemeProvider } from "@mui/material/styles";
+import { CustomFontTheme } from "./style/CustomFontTheme";
 
-const GET_ALL_TAGS = gql`
-  query {
-    getAllTags {
-      name 
-    }
-  }
-`;
 
-function App() {
-  const [tags, setTags] = useState<ITag[]>([]);
-
-  const { loading, error } = useQuery(GET_ALL_TAGS, {
-    onCompleted: (data: any) => {
-      setTags(data.getAllTags);
-    },
-  });
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-  console.log("All tags =>", tags);
-
-  return <div className="App"></div>;
+const App = () => {
+  return <div className="App">
+    <ThemeProvider theme={CustomFontTheme}>
+        <Router />
+    </ThemeProvider>
+  </div>;
 }
 
 export default App;
