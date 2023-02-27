@@ -106,8 +106,8 @@ const Login: React.FC = () => {
       setLoading(true);
       setTimeout(() => {
         const userConnectionPayload: IUserConnectionPayload = { 
-          username: username.trim(),
-          email: email.trim(), 
+          username: username.toLowerCase().trim(),
+          email: email.toLowerCase().trim(), 
           password: password.trim()
         }
         login({ variables: { user: userConnectionPayload }});

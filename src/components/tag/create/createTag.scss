@@ -13,7 +13,8 @@
 
 .form-appear {
   max-height: 500px;
-  transition: max-height 0.5s ease-in;
+  opacity: 0;
+  transition: all 0.5s ease-in;
   &.create-form {
     opacity: 1;
   }
@@ -24,8 +25,8 @@
 
 .form-not-visible {
   max-height: 0;
-  transition: max-height 1s ease-out;
   overflow: hidden;
+  transition: all 0.5s ease-in;
   &.create-form {
     opacity: 0;
   }
@@ -34,8 +35,6 @@
 .create-form {
   padding: 1.6rem;
   border-bottom: 1px solid $grey-light;
-  opacity: 0;
-  transition: all 0.2s ease-out;
   form {
     display: flex;
     flex-direction: column;

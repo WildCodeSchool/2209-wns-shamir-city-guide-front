@@ -32,7 +32,6 @@ const AdminNavLayout = () => (
 )
 
 
-
 const Router = () => {
   return (
     <BrowserRouter>

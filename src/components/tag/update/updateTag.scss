@@ -1,0 +1,38 @@
+@import '../../../style//variables.scss';
+
+.update-form {
+  padding: 1.6rem;
+  form {
+    display: flex;
+    flex-direction: column;
+    .fields {
+      margin-bottom: 2.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      div {
+        margin-right: 1.6rem;
+      }
+      .field-icon-block {
+        display: flex;
+        align-items: center;
+        div {
+          margin-right: 0.8rem !important;
+        }
+      }
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .update-btn-loading-block {
+        display: flex;
+        .update-btn {
+          padding: 0.2rem 0.8rem;
+          margin-right: 1.6rem;
+        }
+  
+      }
+    }
+  }
+}
