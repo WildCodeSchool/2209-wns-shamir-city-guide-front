@@ -1,7 +1,15 @@
 @import "../../../style/variables.scss";
 
-.icon-delete {
-  color: $blue-light;
-  stroke: $blue-light !important;
-  border-radius: 50%;
+
+.delete-block {
+  display: flex;
+  align-items: center;
+  .icon-delete {
+    font-size: 4rem !important;
+    color: white;
+    stroke: rgb(235, 66, 66) !important;
+    border-radius: 50%;
+    border: 1px solid rgb(235, 66, 66);
+    padding: 0.4rem;
+  }
 }
