@@ -1,0 +1,58 @@
+@import '../../../../style//variables.scss';
+
+.all-tags {
+  .content {
+    width: 70%;
+    margin: 4rem auto;
+    @media screen and (max-width: 600px) {
+      width: 85%;
+    }
+    .infos {
+      margin-bottom: 1.6rem;
+      p {
+        width: 100%;
+        span {
+          line-height: 10px;
+          display: inline-block;
+          vertical-align: middle;
+          font-weight: 500;
+          font-size: 4rem;
+          padding-top: 1.6rem;
+          color: $purple;
+        }
+        svg {
+          vertical-align: middle;
+          margin: 0 0.8rem;
+        }
+      }
+    }
+    .create-tag-block {
+      margin-bottom: 1.6rem;
+    }
+    .filtered-search {
+      margin-bottom: 3.2rem;
+    }
+    .tag-section {
+      border-bottom: 1px solid transparent !important;
+      .MuiTypography-root {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        @media screen and (max-width: 800px) {
+          font-size: 1.8rem;
+        }
+        @media screen and (max-width: 600px) {
+          font-size: 1.6rem;
+        }
+      }
+      svg {
+        stroke: $purple;
+      }
+    }
+  }
+}
+
+.icon-blue-light {
+  color: $blue-light;
+  stroke: $blue-light !important;
+}

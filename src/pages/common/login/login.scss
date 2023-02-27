@@ -1,0 +1,21 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h2 {
+    margin-bottom: 4rem;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & > div {
+      width: 70%;
+      margin-bottom: 1.6rem;
+    }
+    button {
+      margin-top: 3.2rem;
+    }
+  }
+}

@@ -1,0 +1,47 @@
+@import '../../../style/variables.scss';
+
+#error-modal {
+  width: 30%;
+  @media screen and (max-width: 1600px) {
+    width: 40%;
+  }
+  @media screen and (max-width: 1400px) {
+    width: 50%;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 55%;
+  }
+  @media screen and (max-width: 1000px) {
+    width: 60%;
+  }
+  @media screen and (max-width: 800px) {
+    width: 65%;
+  }
+  @media screen and (max-width: 600px) {
+    width: 70%;
+  }
+  @media screen and (max-width: 400px) {
+    width: 80%;
+  }
+  h3 {
+    margin: 0 auto;
+    color: $blue-light;
+    text-align: center;
+    margin-bottom: 1.6rem;
+  }
+  p {
+    .wording {
+      font-weight: bold;
+      margin-right: 0.8rem;
+    }
+  }
+}
+
+.icon-cross-close {
+  color: $blue-medium;
+  font-size: 4rem !important;
+  cursor: pointer;
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+}
