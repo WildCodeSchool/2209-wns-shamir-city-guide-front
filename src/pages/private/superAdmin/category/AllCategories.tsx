@@ -14,17 +14,17 @@ import { ICategory } from "../../../../types/category";
 import { GetAllCategories } from "../../../../services/category";
 import DynamicIcon from "../../../../components/dynamicIcon/DynamicIcon";
 
-import CreateTag from "../../../../components/tag/create/CreateTag";
-import UpdateTag from "../../../../components/tag/update/UpdateTag";
-import DeleteTag from "../../../../components/tag/delete/DeleteTag";
+import CreateCategory from "../../../../components/category/create/CreateCategory";
+import UpdateCategory from "../../../../components/category/update/UpdateCategory";
+import DeleteCategory from "../../../../components/category/delete/DeleteCategory";
 
 import Loader from "../../../../components/loader/Loader";
 import ErrorModal from "../../../../components/modal/serverError/ServerErrorModal";
 import UseFilteredSearch from "../../../../components/useFilteredSearch/UseFilteredSearch";
-import { DefaultIconsNames } from "../../../../utils/constants";
+import { DefaultIconsNames, Colors } from "../../../../utils/constants";
 
 
-const AllTags: React.FC = () => {
+const AllCategories: React.FC = () => {
   // Accordion state
   const [expanded, setExpanded] = useState<string | false>(false);
   const [loading, setLoading] = useState(true);
@@ -32,15 +32,15 @@ const AllTags: React.FC = () => {
   const handleModalClose = () => setOpenErrorModal(false);
   
   // GET ALL
-  const { allTags, tagsError, tagsLoading } = GetAllTags();
+  const { allCategories, categoriesError, categoriesLoading } = GetAllCategories();
 
-  // Active tags Loader during 0.5 second
+  // Active categories Loader during 0.5 second
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
       setExpanded(false);
     }, 600);
-  }, [allTags]);
+  }, [allCategories]);
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -48,64 +48,64 @@ const AllTags: React.FC = () => {
   };
 
   // Filtered search
-  const [filteredTags, setFilteredTags] = useState<ITag[]>();
-  const handleFilteredTags = (tags: ITag[]) => {
-    setFilteredTags(tags);
+  const [filteredCategories, setFilteredCategories] = useState<ICategory[]>();
+  const handleFilteredCategories = (categories: ICategory[]) => {
+    setFilteredCategories(categories);
   } 
 
   useEffect(() => {
-    if (allTags?.getAllTags) {
-      handleFilteredTags(allTags?.getAllTags);
+    if (allCategories?.getAllCategories) {
+      handleFilteredCategories(allCategories?.getAllCategories);
     } 
-  }, [allTags?.getAllTags]);
+  }, [allCategories?.getAllCategories]);
   
-  if (tagsError) return <ErrorModal error={tagsError} onModalClose={handleModalClose} />
+  if (categoriesError) return <ErrorModal error={categoriesError} onModalClose={handleModalClose} />
   
-  const ActiveLoaderTags: React.FC = () => (
+  const ActiveLoaderCategories: React.FC = () => (
     <div className="page all-tags">
       <div className="loader-all-items">
         <Loader styleClass="loader" />
-        <DynamicIcon iconName={DefaultIconsNames.TAG as keyof typeof icons} />
-        <h4>Chargement des tags...</h4> 
+        <DynamicIcon iconName={DefaultIconsNames.CATEGORY as keyof typeof icons} />
+        <h4>Chargement des catégories...</h4> 
       </div>
     </div> 
   )
 
-  if (tagsLoading) {
-     return <ActiveLoaderTags />
+  if (categoriesLoading) {
+     return <ActiveLoaderCategories/>
   }
 
   return (
     <div className="page all-tags" >
       {loading ? (
-        <ActiveLoaderTags />
+        <ActiveLoaderCategories />
       ) : (
         <div className="content">
           <div className="infos">
-            <p><span>*</span>L'icône <DynamicIcon iconName={DefaultIconsNames.TAG} />est utilisée par défault lors de la création si l'icône a déjà été choisie pour un autre tag présent dans la liste</p>
+            <p><span>*</span>L'icône <DynamicIcon iconName={DefaultIconsNames.CATEGORY} />est utilisée par défault lors de la création si l'icône a déjà été choisie pour une autre catégorie présent dans la liste</p>
           </div>
-          <CreateTag icons={icons} />
-          <UseFilteredSearch dataToFilter={allTags.getAllTags} searchKey={"name"} setItems={handleFilteredTags} />
+          <CreateCategory icons={icons} />
+          <UseFilteredSearch dataToFilter={allCategories.getAllCategoriess} searchKey={"name"} setItems={handleFilteredCategories} />
           {
-            filteredTags && 
-            filteredTags.map(
-              (tag: ITag, index: number) => {
+            filteredCategories && 
+            filteredCategories.map(
+              (tag: ICategory, index: number) => {
                 return (
-                  <div className="tag-section" key={tag.id}>
+                  <div className="tag-section" key={category.id}>
                     <Accordion expanded={expanded === "panel" + (index + 1)} onChange={handleChange("panel" + (index + 1))}>
                       <AccordionSummary
                         expandIcon={<ExpandMoreIcon className="icon-blue-light" />}
                         aria-controls={`panel${index + 1}bh-content`}
                       >
                       <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                        <DynamicIcon iconName={tag.icon} />
+                        <DynamicIcon iconName={category.icon} />
                       </Typography>
                       <Typography sx={{ color: 'text.secondary' }}>{tag.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
-                        <UpdateTag tag={tag} icons={icons} />
+                        <UpdateCategory category={category} icons={icons} />
                       </AccordionDetails>
-                      <DeleteTag id={Number(tag.id)} />
+                      <DeleteCategory id={Number(category.id)} />
                     </Accordion>
                   </div>
                 )
