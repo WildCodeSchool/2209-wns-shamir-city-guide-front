@@ -11,9 +11,10 @@ import Loader from "../../loader/Loader";
 
 type TagByIdProps = {
   id: number
+  resetExpanded: () => void
 };
 
-const DeleteTag: React.FC<TagByIdProps> = ({ id }: TagByIdProps) => {
+const DeleteTag: React.FC<TagByIdProps> = ({ id, resetExpanded }: TagByIdProps) => {
   const [loading, setLoading] = useState(false);
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const handleModalClose = () => setOpenErrorModal(false);
@@ -24,6 +25,9 @@ const DeleteTag: React.FC<TagByIdProps> = ({ id }: TagByIdProps) => {
       error: deleteTagError,  
     }
   ] = useMutation(DELETE_TAG, {
+    onCompleted() {
+      setLoading(false);
+    },
     refetchQueries: [
       { query: GET_ALL_TAGS }
     ],
@@ -34,23 +38,27 @@ const DeleteTag: React.FC<TagByIdProps> = ({ id }: TagByIdProps) => {
   });
 
   const handleOnDelete= (id: number) => {
-    deleteTag({
-      variables: { deleteTagId: id }, 
-      update() { window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })}
-    })
+    setLoading(true);
+      setTimeout(() => {
+        deleteTag({
+          variables: { deleteTagId: id }, 
+        })
+        resetExpanded();
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }, 500)
   }
 
   return (
-    <>
+    <div className="delete-block">
+      {loading && <Loader styleClass='delete-tag-loader' />}
       <Button onClick={() => handleOnDelete(id)}>
         <DeleteIcon className="icon-delete"  />
       </Button>
       {openErrorModal && <ErrorModal error={deleteTagError} onModalClose={handleModalClose} />}
-      {loading && <Loader styleClass='delete-tag-loader' />}
-    </>
+    </div>
   )
 }
 

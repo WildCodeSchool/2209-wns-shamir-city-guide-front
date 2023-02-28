@@ -20,6 +20,7 @@ import Loader from "../../loader/Loader";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
 import { GET_ALL_TAGS } from "../../../api/tag/queries";
 import DynamicIcon from "../../dynamicIcon/DynamicIcon";
+import { firstLetterToUppercase } from "../../../utils/utils";
 
 
 type TagFormProps = {
@@ -96,7 +97,7 @@ const CreateTag: React.FC<TagFormProps> = ({ icons }: TagFormProps) => {
   const changeIcon = async (value: keyof typeof icons) => {
     setTagIcon(value);
     const errorIcon = await validateIcon({ icon: value });
-    if (errorIcon) setNameError(errorIcon);
+    if (errorIcon) setIconError(errorIcon);
     else setIconError("");
     if(Object.keys(icons).includes(value)) {
       setIconDisplayed(value);
@@ -130,7 +131,6 @@ const CreateTag: React.FC<TagFormProps> = ({ icons }: TagFormProps) => {
           onSubmit={e => handleOnCreate(e)}
         >
           <div className="fields">
-
             <TextField  
               label="Nom" 
               variant="filled" 

@@ -14,7 +14,6 @@ import DynamicIcon from "../../../../components/dynamicIcon/DynamicIcon";
 
 import CreateTag from "../../../../components/tag/create/CreateTag";
 import UpdateTag from "../../../../components/tag/update/UpdateTag";
-import DeleteTag from "../../../../components/tag/delete/DeleteTag";
 
 import Loader from "../../../../components/loader/Loader";
 import ErrorModal from "../../../../components/modal/serverError/ServerErrorModal";
@@ -44,6 +43,8 @@ const AllTags: React.FC = () => {
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
   };
+
+  const resetExpanded = () => setExpanded(false);
 
   // Filtered search
   const [filteredTags, setFilteredTags] = useState<ITag[]>();
@@ -101,9 +102,8 @@ const AllTags: React.FC = () => {
                       <Typography sx={{ color: 'text.secondary' }}>{tag.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
-                        <UpdateTag tag={tag} icons={icons} />
+                        <UpdateTag tag={tag} icons={icons} resetExpanded={resetExpanded} />
                       </AccordionDetails>
-                      <DeleteTag id={Number(tag.id)} />
                     </Accordion>
                   </div>
                 )

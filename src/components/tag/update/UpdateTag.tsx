@@ -1,3 +1,4 @@
+import './updateTag.scss';
 import { FormEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ITag } from "../../../types/tag";
@@ -18,15 +19,17 @@ import Loader from "../../loader/Loader";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
 import { GET_ALL_TAGS } from "../../../api/tag/queries";
 import DynamicIcon from "../../dynamicIcon/DynamicIcon";
+import DeleteTag from '../delete/DeleteTag';
 
 
 type TagFormProps = {
   tag: ITag
   icons: object
+  resetExpanded: () => void
 };
 
 
-const UpdateTag: React.FC<TagFormProps> = ({ tag, icons }: TagFormProps) => {
+const UpdateTag: React.FC<TagFormProps> = ({ tag, icons, resetExpanded }: TagFormProps) => {
   const [tagToUpdate, setTagToUpdate] = useState<ITag>({
     id: Number(tag.id),
     name: tag.name,
@@ -90,10 +93,19 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons }: TagFormProps) => {
     if (errorName) setNameError(errorName);
     else setNameError("");
   } 
+
   const changeIcon = async (value: keyof typeof icons) => {
+    console.log("changeIcon");
+    
     setTagToUpdate({...tagToUpdate, icon: value});
     const errorIcon = await validateIcon({ icon: value });
-    if (errorIcon) setNameError(errorIcon);
+    console.log(errorIcon);
+    console.log(nameError);
+    
+    if (errorIcon) {
+      console.log("error");
+      setIconError(errorIcon);
+    } 
     else setIconError("");
     if(Object.keys(icons).includes(value)) {
       setIconDisplayed(value);
@@ -103,46 +115,56 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons }: TagFormProps) => {
   }
 
   return (
-    <>
+    <div className="update-form">
       <form 
       autoComplete="off"
         onSubmit={e => handleOnUpdate(e, tagToUpdate)}
       >
-        <TextField  
-          label="Nom" 
-          variant="filled" 
-          inputProps={{style: textFielPropsStyle}}
-          InputLabelProps={{style: labelTextFieldPropsStyle}} 
-          onChange={(e) => changeName(e.target.value)}
-          className='text-field'
-          value={tagToUpdate.name}
-          error={nameError?.length ? true : false}
-          helperText={nameError.length ? nameError : ""}
-        />
-        <TextField  
-          label="Icône" 
-          variant="filled" 
-          inputProps={{style: textFielPropsStyle}}
-          InputLabelProps={{style: labelTextFieldPropsStyle}} 
-          onChange={(e) => changeIcon(e.target.value as keyof typeof icons)}
-          className='text-field'
-          value={tagToUpdate.icon} 
-          error={iconError?.length ? true : false}
-          helperText={iconError.length ? iconError : ""}
-        />
-        <DynamicIcon iconName={iconDisplayed as keyof typeof icons} />
-        <Button   
-          style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}  
-          type="submit"
-          variant="contained"
-          disabled={(nameError || iconError) ? true : false}
-        >
-          Mettre à jour
-        </Button>
+        <div className='fields'>
+          <TextField  
+            label="Nom" 
+            variant="filled" 
+            inputProps={{style: textFielPropsStyle}}
+            InputLabelProps={{style: labelTextFieldPropsStyle}} 
+            onChange={(e) => changeName(e.target.value)}
+            className='text-field'
+            value={tagToUpdate.name}
+            error={nameError?.length ? true : false}
+            helperText={nameError.length ? nameError : ""}
+          />
+          <div className="field-icon-block">
+            <TextField  
+              label="Icône" 
+              variant="filled" 
+              inputProps={{style: textFielPropsStyle}}
+              InputLabelProps={{style: labelTextFieldPropsStyle}} 
+              onChange={(e) => changeIcon(e.target.value as keyof typeof icons)}
+              className='text-field'
+              value={tagToUpdate.icon} 
+              error={iconError?.length ? true : false}
+              helperText={iconError.length ? iconError : ""}
+            />
+            <DynamicIcon iconName={iconDisplayed as keyof typeof icons} />
+          </div>
+        </div>
+        <div className='buttons'>
+          <div className='update-btn-loading-block'>
+            <Button 
+              className='update-btn'  
+              style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}  
+              type="submit"
+              variant="contained"
+              disabled={(nameError || iconError) ? true : false}
+            >
+              Mettre à jour
+            </Button>
+            {loading && <Loader styleClass='update-tag-loader' />}
+          </div>
+          <DeleteTag id={Number(tag.id)} resetExpanded={resetExpanded} />
+        </div>
       </form>
       {openErrorModal && <ErrorModal error={updateTagError} onModalClose={handleModalClose} />}
-      {loading && <Loader styleClass='update-tag-loader' />}
-    </>
+    </div>
   )
 }
 
