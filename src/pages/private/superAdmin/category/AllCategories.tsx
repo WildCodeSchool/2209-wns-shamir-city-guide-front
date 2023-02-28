@@ -1,4 +1,5 @@
 //import "./allCategories.scss";
+import "../tag/allTags.scss";
 import { useState, useEffect } from "react";
 
 //Material UI Icons
@@ -21,7 +22,7 @@ import DeleteCategory from "../../../../components/category/delete/DeleteCategor
 import Loader from "../../../../components/loader/Loader";
 import ErrorModal from "../../../../components/modal/serverError/ServerErrorModal";
 import UseFilteredSearch from "../../../../components/useFilteredSearch/UseFilteredSearch";
-import { DefaultIconsNames, Colors } from "../../../../utils/constants";
+import { DefaultIconsNames } from "../../../../utils/constants";
 
 
 const AllCategories: React.FC = () => {
@@ -46,6 +47,9 @@ const AllCategories: React.FC = () => {
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
   };
+
+  const resetExpanded = () => setExpanded(false);
+
 
   // Filtered search
   const [filteredCategories, setFilteredCategories] = useState<ICategory[]>();
@@ -72,7 +76,7 @@ const AllCategories: React.FC = () => {
   )
 
   if (categoriesLoading) {
-     return <ActiveLoaderCategories/>
+    return <ActiveLoaderCategories/>
   }
 
   return (
@@ -84,12 +88,12 @@ const AllCategories: React.FC = () => {
           <div className="infos">
             <p><span>*</span>L'icône <DynamicIcon iconName={DefaultIconsNames.CATEGORY} />est utilisée par défault lors de la création si l'icône a déjà été choisie pour une autre catégorie présent dans la liste</p>
           </div>
-          <CreateCategory icons={icons} />
-          <UseFilteredSearch dataToFilter={allCategories.getAllCategoriess} searchKey={"name"} setItems={handleFilteredCategories} />
+          <CreateCategory icons={icons} color={"#1B1213"}/>
+          <UseFilteredSearch dataToFilter={allCategories.getAllCategories} searchKey={"name"} setItems={handleFilteredCategories} />
           {
             filteredCategories && 
             filteredCategories.map(
-              (tag: ICategory, index: number) => {
+              (category: ICategory, index: number) => {
                 return (
                   <div className="tag-section" key={category.id}>
                     <Accordion expanded={expanded === "panel" + (index + 1)} onChange={handleChange("panel" + (index + 1))}>
@@ -100,23 +104,24 @@ const AllCategories: React.FC = () => {
                       <Typography sx={{ width: '33%', flexShrink: 0 }}>
                         <DynamicIcon iconName={category.icon} />
                       </Typography>
-                      <Typography sx={{ color: 'text.secondary' }}>{tag.name}</Typography>
+                      <Typography sx={{ color: 'text.secondary' }}>{category.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
-                        <UpdateCategory category={category} icons={icons} />
+                        update form
+                        {/* <UpdateCategory category={category} icons={icons} color={"#1B1212"} resetExpanded={resetExpanded} /> */}
                       </AccordionDetails>
-                      <DeleteCategory id={Number(category.id)} />
+                      <DeleteCategory id={Number(category.id)} resetExpanded={resetExpanded} />
                     </Accordion>
                   </div>
                 )
               }
             )
           }
-          {openErrorModal && <ErrorModal error={tagsError} onModalClose={handleModalClose} />}
+          {openErrorModal && <ErrorModal error={categoriesError} onModalClose={handleModalClose} />}
         </div>
       )}
     </div>
   )
 }
 
-export default AllTags;
+export default AllCategories;

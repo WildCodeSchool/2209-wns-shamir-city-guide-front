@@ -24,5 +24,5 @@ export const enum UserRoles {
 
 export const enum DefaultIconsNames {
   TAG = "LocalOfferOutlined",
-  CATEGORY = "LocalOfferOutlined"
+  CATEGORY = "CategoryOutlined"
 }

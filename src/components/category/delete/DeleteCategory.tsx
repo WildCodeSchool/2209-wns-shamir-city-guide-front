@@ -11,7 +11,7 @@ import Loader from "../../loader/Loader";
 
 type CategoryByIdProps = {
   id: number
-  resetExpanded: () => void
+  resetExpanded: () =>  void
 };
 
 const DeleteCategory: React.FC<CategoryByIdProps> = ({ id, resetExpanded }: CategoryByIdProps) => {

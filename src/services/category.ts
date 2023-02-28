@@ -28,7 +28,7 @@ export const GetCategoryById = (id: number) => {
   };
 }
 
-export const GetCategorygByName = (name: string) => {
+export const GetCategoryByName = (name: string) => {
   const { data: categoryByName, error: categoryByNameError, loading: categoryByNameLoading } = useQuery(GET_CATEGORY_BY_NAME, {
     variables: {
       name

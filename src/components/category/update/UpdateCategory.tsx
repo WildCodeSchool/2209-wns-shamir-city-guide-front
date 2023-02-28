@@ -19,7 +19,7 @@ import Loader from "../../loader/Loader";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
 import { GET_ALL_CATEGORIES } from "../../../api/category/queries";
 import DynamicIcon from "../../dynamicIcon/DynamicIcon";
-import DeleteCategory from '../delete/deleteCategory';
+import DeleteCategory from '../delete/DeleteCategory';
 
 
 type CategoryFormProps = {
@@ -117,6 +117,13 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
     }
   }
 
+    const changeColor = async (value: string) => {
+    setCategoryToUpdate({...categoryToUpdate, color: value});
+    const errorColor = await validateColor({ color: value });
+    if (errorColor) setNameError(errorColor);
+    else setColorError("");
+  } 
+
   return (
     <div className="update-form">
       <form 
@@ -147,6 +154,17 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
               error={iconError?.length ? true : false}
               helperText={iconError.length ? iconError : ""}
             />
+            <TextField  
+              label="Color" 
+              variant="filled" 
+              inputProps={{style: textFielPropsStyle}}
+              InputLabelProps={{style: labelTextFieldPropsStyle}} 
+              onChange={(e) => changeColor(e.target.value)}
+              className='text-field'
+              value={categoryToUpdate.color}
+              error={colorError?.length ? true : false}
+              helperText={colorError.length ? colorError : ""}
+          />
             <DynamicIcon iconName={iconDisplayed as keyof typeof icons} />
           </div>
         </div>

@@ -1,4 +1,4 @@
-//import "./createCategory.scss";
+import "./createCategory.scss";
 import { FormEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 
@@ -25,15 +25,15 @@ import DynamicIcon from "../../dynamicIcon/DynamicIcon";
 
 
 type CategoryFormProps = {
-  icons: object
+  icons: object,
+  color: string,
 };
 
-const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProps) => {
+const CreateCategory: React.FC<CategoryFormProps> = ({ icons, color }: CategoryFormProps) => {
   const [categoryName, setCategoryName] = useState<string>("");
   const [categoryIcon, setCategoryIcon] = useState<string>(DefaultIconsNames.CATEGORY);
   const [iconDisplayed, setIconDisplayed] = useState<string>(DefaultIconsNames.CATEGORY);
   const [categoryColor, setCategoryColor] = useState<string>(Colors.CATEGORY);
-  const [ColorDisplayed, setColorDisplayed] = useState<string>(Colors.CATEGORY);
 
   const [onVisible, setOnVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -85,7 +85,7 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
               category: {
               name: categoryName,
               icon: icon,
-              //color: color,
+              color: color,
               }
             }
           }
