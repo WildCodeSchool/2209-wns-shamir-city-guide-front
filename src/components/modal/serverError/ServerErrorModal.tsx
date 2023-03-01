@@ -43,7 +43,6 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
   }
 
   if (error) {
-    // console.log("ERROR IN MODALE :", error.graphQLErrors);
     emojis = error.graphQLErrors[0].extensions.emoji;
     statusCodeMessage = error.graphQLErrors[0].extensions.statusCodeMessage;
     statusCodeError = error.graphQLErrors[0].extensions.statusCode;

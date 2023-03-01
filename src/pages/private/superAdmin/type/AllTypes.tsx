@@ -80,7 +80,7 @@ const AllTypes = () => {
       ) : (
         <div className="content">
           <div className="infos">
-            <p><span>*</span>Le logo <DynamicIcon color='#000' iconName={DefaultIconsNames.TYPE} />est utilisé par défaut lors de la création si le logo a déjà été choisie pour un autre tag présent dans la liste ou que le logo validé n'existe pas dans la liste des icônes diponibles.</p>
+            <p><span>*</span>Le logo <DynamicIcon color='' iconName={DefaultIconsNames.TYPE} />est utilisé par défaut lors de la création si le logo a déjà été choisie pour un autre tag présent dans la liste ou que le logo validé n'existe pas dans la liste des icônes diponibles.</p>
           </div>
           <CreateType icons={icons} />
           <UseFilteredSearch dataToFilter={allTypes.getAllTypes} searchKey={"name"} setItems={handleFilteredTypes} />

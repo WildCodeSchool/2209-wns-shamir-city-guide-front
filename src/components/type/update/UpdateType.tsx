@@ -1,6 +1,5 @@
 import './updateType.scss';
 import { FormEvent, useState } from "react";
-import { ColorPicker, useColor } from 'react-color-palette';
 import { useMutation } from "@apollo/client";
 
 import { UPDATE_TYPE } from "../../../api/type/mutations";
@@ -17,6 +16,8 @@ import { IType } from "../../../types/type";
 
 import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
+import { ColorPicker, useColor } from 'react-color-palette';
+
 import {
   textFielPropsStyle,
   labelTextFieldPropsStyle,
@@ -38,9 +39,9 @@ const UpdateType: React.FC<TypeFormProps> = ({ type, icons, resetExpanded }: Typ
     logo: type.logo,
     color: type.color
   });
+  const [typeLogoColor, setTypeLogoColor] = useColor("hex", type.color);
 
   const [iconDisplayed, setIconDisplayed] = useState<string>(typeToUpdate.logo);
-  const [typeLogoColor, setTypeLogoColor] = useColor("hex", type.color);
   const [loading, setLoading] = useState(false);
 
   const [nameError, setNameError] = useState<string>("");
@@ -94,7 +95,7 @@ const UpdateType: React.FC<TypeFormProps> = ({ type, icons, resetExpanded }: Typ
               name: typeToUpdate.name,
               logo: typeToUpdate.logo,
               color: typeLogoColor.hex
-            }, 
+            }
           },
         });
         window.scrollTo({
@@ -161,9 +162,9 @@ const UpdateType: React.FC<TypeFormProps> = ({ type, icons, resetExpanded }: Typ
           </div>
         </div>
         <div className='logo-choice-color-block'>
-            <p>Couleur du logo</p>
-            <ColorPicker width={200} height={80} color={typeLogoColor} onChange={setTypeLogoColor} hideHEX hideRGB hideHSV dark />
-          </div>
+          <p>Couleur du logo</p>
+          <ColorPicker width={200} height={80} color={typeLogoColor} onChange={setTypeLogoColor} hideHEX hideRGB hideHSV dark />
+        </div>
         <div className='buttons'>
           <div className='update-btn-loading-block'>
             <Button 

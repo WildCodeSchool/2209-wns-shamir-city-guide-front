@@ -16,8 +16,6 @@ import { UserRoles } from '../../../utils/constants';
 
 const Dashboard: React.FC = () => {
   const userData = useAppSelector((state) => state.userReducer.user);
-  console.log(userData);
-  
   
   return (
     <div className='page dashboard'>
