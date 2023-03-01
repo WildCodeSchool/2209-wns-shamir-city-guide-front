@@ -8,6 +8,7 @@ export type IconProps = {
 
 const DynamicIcon: React.FC<IconProps> = ({ iconName }: IconProps) => {
   const IconComponent = icons[iconName];
+  console.log(iconName);
   return <IconComponent className="icon" />;
 };
 
