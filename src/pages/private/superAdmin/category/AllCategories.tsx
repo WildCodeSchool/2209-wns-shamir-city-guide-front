@@ -17,7 +17,6 @@ import DynamicIcon from "../../../../components/dynamicIcon/DynamicIcon";
 
 import CreateCategory from "../../../../components/category/create/CreateCategory";
 import UpdateCategory from "../../../../components/category/update/UpdateCategory";
-import DeleteCategory from "../../../../components/category/delete/DeleteCategory";
 
 import Loader from "../../../../components/loader/Loader";
 import ErrorModal from "../../../../components/modal/serverError/ServerErrorModal";
@@ -107,10 +106,8 @@ const AllCategories: React.FC = () => {
                       <Typography sx={{ color: 'text.secondary' }}>{category.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
-                        update form
-                        {/* <UpdateCategory category={category} icons={icons} color={"#1B1212"} resetExpanded={resetExpanded} /> */}
+                        <UpdateCategory category={category} icons={icons} color={"#1B1215"} resetExpanded={resetExpanded} />
                       </AccordionDetails>
-                      <DeleteCategory id={Number(category.id)} resetExpanded={resetExpanded} />
                     </Accordion>
                   </div>
                 )
