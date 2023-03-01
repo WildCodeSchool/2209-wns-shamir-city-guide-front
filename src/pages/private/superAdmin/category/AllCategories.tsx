@@ -68,7 +68,7 @@ const AllCategories: React.FC = () => {
     <div className="page all-tags">
       <div className="loader-all-items">
         <Loader styleClass="loader" />
-        <DynamicIcon iconName={DefaultIconsNames.CATEGORY as keyof typeof icons} />
+        <DynamicIcon iconName={DefaultIconsNames.CATEGORY as keyof typeof icons} color='' />
         <h4>Chargement des catégories...</h4> 
       </div>
     </div> 
@@ -85,7 +85,7 @@ const AllCategories: React.FC = () => {
       ) : (
         <div className="content">
           <div className="infos">
-            <p><span>*</span>L'icône <DynamicIcon iconName={DefaultIconsNames.CATEGORY} />est utilisée par défault lors de la création si l'icône a déjà été choisie pour une autre catégorie présent dans la liste</p>
+            <p><span>*</span>L'icône <DynamicIcon iconName={DefaultIconsNames.CATEGORY} color='' />est utilisée par défault lors de la création si l'icône a déjà été choisie pour une autre catégorie présent dans la liste</p>
           </div>
           <CreateCategory icons={icons} color={"#1B1213"}/>
           <UseFilteredSearch dataToFilter={allCategories.getAllCategories} searchKey={"name"} setItems={handleFilteredCategories} />
@@ -101,7 +101,7 @@ const AllCategories: React.FC = () => {
                         aria-controls={`panel${index + 1}bh-content`}
                       >
                       <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                        <DynamicIcon iconName={category.icon} />
+                        <DynamicIcon iconName={category.icon} color='' />
                       </Typography>
                       <Typography sx={{ color: 'text.secondary' }}>{category.name}</Typography>
                       </AccordionSummary>

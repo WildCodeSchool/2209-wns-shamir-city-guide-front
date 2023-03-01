@@ -160,7 +160,7 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons, color }: CategoryF
                 error={iconError?.length ? true : false}
                 helperText={iconError.length ? iconError : ""}
               />
-              <DynamicIcon iconName={iconDisplayed as keyof typeof icons} />
+              <DynamicIcon iconName={iconDisplayed as keyof typeof icons} color='' />
             </div>
           </div>
           <div className="create-btn-loading-block">

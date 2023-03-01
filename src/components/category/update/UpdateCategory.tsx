@@ -165,7 +165,7 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
               error={colorError?.length ? true : false}
               helperText={colorError.length ? colorError : ""}
           />
-            <DynamicIcon iconName={iconDisplayed as keyof typeof icons} />
+            <DynamicIcon iconName={iconDisplayed as keyof typeof icons} color='' />
           </div>
         </div>
         <div className='buttons'>
