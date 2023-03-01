@@ -3,23 +3,25 @@ import { FormEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ITag } from "../../../types/tag";
 
+import { UPDATE_TAG } from "../../../api/tag/mutations";
+import { GET_ALL_TAGS } from "../../../api/tag/queries";
+
+import Loader from "../../loader/Loader";
+import ErrorModal from "../../modal/serverError/ServerErrorModal";
+import DynamicIcon from "../../dynamicIcon/DynamicIcon";
+import DeleteTag from '../delete/DeleteTag';
+
+import { validateName, validateIcon } from "../../../utils/validationForms/tagValidation";
+import { DefaultIconsNames } from "../../../utils/constants";
+
 import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
-
-import { UPDATE_TAG } from "../../../api/tag/mutations";
 import {
   textFielPropsStyle,
   labelTextFieldPropsStyle,
   formButtonStyle,
   disabledFormButtonStyle
 } from "../../../style/customStyles";
-import { validateName, validateIcon } from "../../../utils/validationForms/tagValidation";
-import { DefaultIconsNames } from "../../../utils/constants";
-import Loader from "../../loader/Loader";
-import ErrorModal from "../../modal/serverError/ServerErrorModal";
-import { GET_ALL_TAGS } from "../../../api/tag/queries";
-import DynamicIcon from "../../dynamicIcon/DynamicIcon";
-import DeleteTag from '../delete/DeleteTag';
 
 
 type TagFormProps = {
@@ -56,6 +58,8 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons, resetExpanded }: TagFor
     ],
     onCompleted() {
       setLoading(false);
+      setTagToUpdate(tagToUpdate);
+      resetExpanded();
     },
     onError() {
       setOpenErrorModal(true);
@@ -95,15 +99,10 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons, resetExpanded }: TagFor
   } 
 
   const changeIcon = async (value: keyof typeof icons) => {
-    console.log("changeIcon");
-    
     setTagToUpdate({...tagToUpdate, icon: value});
     const errorIcon = await validateIcon({ icon: value });
-    console.log(errorIcon);
-    console.log(nameError);
     
     if (errorIcon) {
-      console.log("error");
       setIconError(errorIcon);
     } 
     else setIconError("");
@@ -144,7 +143,7 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons, resetExpanded }: TagFor
               error={iconError?.length ? true : false}
               helperText={iconError.length ? iconError : ""}
             />
-            <DynamicIcon iconName={iconDisplayed as keyof typeof icons} />
+            <DynamicIcon iconName={iconDisplayed as keyof typeof icons} color='' />
           </div>
         </div>
         <div className='buttons'>

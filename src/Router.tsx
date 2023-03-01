@@ -18,6 +18,7 @@ import NotFound from "./pages/errors/notFound/NotFound";
 // pages/private
 import Dashboard from "./pages/private/dashboard/Dashboard";
 import AllTags from "./pages/private/superAdmin/tag/AllTags";
+import AllTypes from "./pages/private/superAdmin/type/AllTypes";
 import AllCircuits from "./pages/private/cityAdmin/circuit/AllCircuits";
 
 // utils
@@ -49,6 +50,7 @@ const Router = () => {
           <Route element={<ProtectedRoutes requiredRoles={[UserRoles.SUPER_ADMIN, UserRoles.CITY_ADMIN]} />}>
             <Route path="/private/dashboard" element={<Dashboard />} />
             <Route path="/private/tags" element={<AllTags />} />
+            <Route path="/private/types" element={<AllTypes />} />
           </Route>
 
           {/* City admin routes */}

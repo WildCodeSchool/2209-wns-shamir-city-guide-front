@@ -8,7 +8,6 @@ import { DELETE_TAG } from "../../../api/tag/mutations";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
 import Loader from "../../loader/Loader";
 
-
 type TagByIdProps = {
   id: number
   resetExpanded: () => void
