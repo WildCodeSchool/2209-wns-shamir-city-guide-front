@@ -9,7 +9,6 @@ export const enum Colors {
   BLUEMEDIUM = "#025373",
   BLUEGREEN = "#024959",
   BLACK = "#1B1212",
-  CATEGORY = "CATEGORY"
 }
 
 /* Constants for user roles */

@@ -2,45 +2,48 @@ import "./createCategory.scss";
 import { FormEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 
+import { CREATE_CATEGORY} from "../../../api/category/mutations";
+import { GET_ALL_CATEGORIES } from "../../../api/category/queries";
+
+import Loader from "../../loader/Loader";
+import ErrorModal from "../../modal/serverError/ServerErrorModal";
+import DynamicIcon from "../../dynamicIcon/DynamicIcon";
+
+import { validateName, validateIcon } from "../../../utils/validationForms/categoryValidation";
+import { DefaultIconsColors, DefaultIconsNames } from "../../../utils/constants";
+
 //lien des icones de material UI de Category
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
+import { ColorPicker, useColor } from "react-color-palette";
+import "react-color-palette/lib/css/styles.css";
 
-import { CREATE_CATEGORY} from "../../../api/category/mutations";
 import {
   textFielPropsStyle,
   labelTextFieldPropsStyle,
   formButtonStyle,
   disabledFormButtonStyle
 } from "../../../style/customStyles";
-import { validateName, validateIcon, validateColor } from "../../../utils/validationForms/categoryValidation";
-import { DefaultIconsNames, Colors } from "../../../utils/constants";
-import Loader from "../../loader/Loader";
-import ErrorModal from "../../modal/serverError/ServerErrorModal";
-import { GET_ALL_CATEGORIES } from "../../../api/category/queries";
-import DynamicIcon from "../../dynamicIcon/DynamicIcon";
-//import { firstLetterToUppercase } from "../../../utils/utils";
 
 
 type CategoryFormProps = {
-  icons: object,
-  color: string,
+  icons: object
 };
 
-const CreateCategory: React.FC<CategoryFormProps> = ({ icons, color }: CategoryFormProps) => {
+const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProps) => {
   const [categoryName, setCategoryName] = useState<string>("");
   const [categoryIcon, setCategoryIcon] = useState<string>(DefaultIconsNames.CATEGORY);
   const [iconDisplayed, setIconDisplayed] = useState<string>(DefaultIconsNames.CATEGORY);
-  const [categoryColor, setCategoryColor] = useState<string>(Colors.CATEGORY);
+  const [categoryIconColor, setCategoryIconColor] = useColor("hex", DefaultIconsColors.BLACK);
+ 
 
   const [onVisible, setOnVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [nameError, setNameError] = useState<string>("");
   const [iconError, setIconError] = useState<string>("");
-  const [colorError, setColorError] = useState<string>("");
 
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const handleModalClose = () => setOpenErrorModal(false);
@@ -60,7 +63,7 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons, color }: CategoryF
       handleStopOnVisible();
       setCategoryName("");
       setCategoryIcon(DefaultIconsNames.CATEGORY);
-      setCategoryColor(Colors.CATEGORY);
+      setIconDisplayed(DefaultIconsNames.CATEGORY);
     },
     onError() {
       setOpenErrorModal(true);
@@ -75,6 +78,7 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons, color }: CategoryF
       icon = DefaultIconsNames.CATEGORY;
     } else icon = categoryIcon;
     const errorName = await validateName({ name: categoryName });
+
     if (errorName) setNameError(errorName);
     if (!errorName) {
       setLoading(true);
@@ -83,9 +87,9 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons, color }: CategoryF
           { 
             variables: { 
               category: {
-              name: categoryName,
-              icon: icon,
-              color: color,
+                name: categoryName,
+                icon: icon,
+                color: categoryIconColor.hex,
               }
             }
           }
@@ -160,8 +164,12 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons, color }: CategoryF
                 error={iconError?.length ? true : false}
                 helperText={iconError.length ? iconError : ""}
               />
-              <DynamicIcon iconName={iconDisplayed as keyof typeof icons} color='' />
+              <DynamicIcon iconName={iconDisplayed as keyof typeof icons} color={categoryIconColor.hex} />
             </div>
+          </div>
+          <div className='logo-choice-color-block'>
+            <p>Couleur de l'icône</p>
+            <ColorPicker width={200} height={80} color={categoryIconColor} onChange={setCategoryIconColor} hideHEX hideRGB hideHSV dark />
           </div>
           <div className="create-btn-loading-block">
             <Button   
@@ -173,7 +181,7 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons, color }: CategoryF
             >
               Créer
             </Button>
-            {loading && <Loader styleClass='create-tag-loader' />}
+            {loading && <Loader styleClass='create-category-loader' />}
           </div>
         </form>
         {openErrorModal && <ErrorModal error={createdCategoryError} onModalClose={handleModalClose} />}

@@ -114,7 +114,6 @@ const Login: React.FC = () => {
       }, 500)
     } else return; 
   } 
-  console.log(usernameError.length, emailError, passwordError);
 
   return (
     <div className="page login-page">
