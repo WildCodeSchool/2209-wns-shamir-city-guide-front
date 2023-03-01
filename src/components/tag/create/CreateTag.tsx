@@ -2,25 +2,28 @@ import "./createTag.scss";
 import { FormEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 
+
+import { CREATE_TAG } from "../../../api/tag/mutations";
+import { GET_ALL_TAGS } from "../../../api/tag/queries";
+
+import Loader from "../../loader/Loader";
+import ErrorModal from "../../modal/serverError/ServerErrorModal";
+import DynamicIcon from "../../dynamicIcon/DynamicIcon";
+
+import { validateName, validateIcon } from "../../../utils/validationForms/tagValidation";
+import { DefaultIconsNames } from "../../../utils/constants";
+
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 
-import { CREATE_TAG } from "../../../api/tag/mutations";
 import {
   textFielPropsStyle,
   labelTextFieldPropsStyle,
   formButtonStyle,
   disabledFormButtonStyle
 } from "../../../style/customStyles";
-import { validateName, validateIcon } from "../../../utils/validationForms/tagValidation";
-import { DefaultIconsNames } from "../../../utils/constants";
-import Loader from "../../loader/Loader";
-import ErrorModal from "../../modal/serverError/ServerErrorModal";
-import { GET_ALL_TAGS } from "../../../api/tag/queries";
-import DynamicIcon from "../../dynamicIcon/DynamicIcon";
-import { firstLetterToUppercase } from "../../../utils/utils";
 
 
 type TagFormProps = {
@@ -56,6 +59,7 @@ const CreateTag: React.FC<TagFormProps> = ({ icons }: TagFormProps) => {
       handleStopOnVisible();
       setTagName("");
       setTagIcon(DefaultIconsNames.TAG);
+      setIconDisplayed(DefaultIconsNames.TAG);
     },
     onError() {
       setOpenErrorModal(true);
@@ -94,6 +98,7 @@ const CreateTag: React.FC<TagFormProps> = ({ icons }: TagFormProps) => {
     if (errorName) setNameError(errorName);
     else setNameError("");
   } 
+  
   const changeIcon = async (value: keyof typeof icons) => {
     setTagIcon(value);
     const errorIcon = await validateIcon({ icon: value });
@@ -154,7 +159,7 @@ const CreateTag: React.FC<TagFormProps> = ({ icons }: TagFormProps) => {
                 error={iconError?.length ? true : false}
                 helperText={iconError.length ? iconError : ""}
               />
-              <DynamicIcon iconName={iconDisplayed as keyof typeof icons} />
+              <DynamicIcon iconName={iconDisplayed as keyof typeof icons} color='' />
             </div>
           </div>
           <div className="create-btn-loading-block">

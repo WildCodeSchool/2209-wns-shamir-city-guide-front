@@ -42,7 +42,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </div>
           <div className='link-block'>
-            <Link to={'#'}>
+            <Link to={'/private/types'}>
               <ClassOutlinedIcon className='icon' />
               <p>Types</p>
             </Link>

@@ -1,6 +1,6 @@
-@import "../../../style/variables.scss";
+@import '../../../style/variables.scss';
 
-.create-form {
+.update-form {
   padding: 1.6rem;
   border-bottom: 1px solid $grey-light;
   form {
@@ -22,13 +22,15 @@
         }
       }
     }
-    .create-btn-loading-block {
-      display: flex;
-      justify-content: space-between;
-      .create-button {
-        padding: 0.2rem 0;
+    .logo-choice-color-block {
+      width: auto;
+      margin-bottom: 1.6rem;
+      p {
+        font-style: italic;
+        font-weight: bold;
+        margin-bottom: 0.4rem;
+        color: $black;
       }
-
     }
   }
 }

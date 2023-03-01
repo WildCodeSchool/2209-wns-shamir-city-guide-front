@@ -29,9 +29,7 @@ const UseFilteredSearch = ({ dataToFilter, searchKey, setItems }: IProps) => {
     }
   };
 
-  useEffect(() => {
-    console.log("terme change!!");
-    
+  useEffect(() => {    
     handleSearchChange();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
