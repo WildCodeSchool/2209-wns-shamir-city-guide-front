@@ -1,0 +1,28 @@
+@import '../../style/variables.scss';
+
+#loader-login {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%) !important;
+  // class to override the default color or the material ui loader
+  .css-18lrjg1-MuiCircularProgress-root {
+    color: $blue-light !important;
+  }
+}
+
+
+#loader-logout {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%) !important;
+  z-index: 100 !important;
+  // class to override the default color or the material ui loader
+  .css-18lrjg1-MuiCircularProgress-root {
+    color: $blue-light !important;
+  }
+}
+
+
+

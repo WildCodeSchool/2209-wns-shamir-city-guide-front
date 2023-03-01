@@ -1,0 +1,36 @@
+@import '../../../style/variables.scss';
+
+.update-form {
+  padding: 1.6rem;
+  border-bottom: 1px solid $grey-light;
+  form {
+    display: flex;
+    flex-direction: column;
+    .fields {
+      margin-bottom: 1.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      div {
+        margin-right: 1.6rem;
+      }
+      .field-icon-block {
+        display: flex;
+        align-items: center;
+        div {
+          margin-right: 0.8rem !important;
+        }
+      }
+    }
+    .logo-choice-color-block {
+      width: auto;
+      margin-bottom: 1.6rem;
+      p {
+        font-style: italic;
+        font-weight: bold;
+        margin-bottom: 0.4rem;
+        color: $black;
+      }
+    }
+  }
+}
