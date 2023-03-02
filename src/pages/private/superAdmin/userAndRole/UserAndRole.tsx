@@ -5,7 +5,7 @@ import AllUsers from '../user/AllUsers';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { Colors } from '../../../../utils/constants';
+
 
 const UserAndRole = () => {
   const location = useLocation();

@@ -1,8 +1,6 @@
 import './allRoles.scss';
 import React, { useState, useEffect } from "react";
 
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import * as icons from "@mui/icons-material";
 

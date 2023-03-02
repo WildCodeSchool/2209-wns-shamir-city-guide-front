@@ -19,7 +19,7 @@ const style = {
 };
 
 type ErrorModalProps = {
-  error: ApolloError | undefined;
+  error: any;
   onModalClose: () => void;
 };
 

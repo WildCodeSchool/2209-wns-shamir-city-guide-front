@@ -1,4 +1,4 @@
-import {
+import React, {
   BrowserRouter,
   Routes,
   Route,
@@ -21,7 +21,6 @@ import AllTags from "./pages/private/superAdmin/tag/AllTags";
 import AllTypes from "./pages/private/superAdmin/type/AllTypes";
 import AllCircuits from "./pages/private/cityAdmin/circuit/AllCircuits";
 import AllCategories from "./pages/private/superAdmin/category/AllCategories";
-import AllUsers from "./pages/private/superAdmin/user/AllUsers";
 import AllRoles from "./pages/private/superAdmin/role/AllRoles";
 import UserAndRole from "./pages/private/superAdmin/userAndRole/UserAndRole";
 

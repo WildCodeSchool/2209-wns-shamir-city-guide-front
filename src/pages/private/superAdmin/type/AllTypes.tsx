@@ -1,5 +1,5 @@
 import './allTypes.scss';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
