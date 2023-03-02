@@ -22,7 +22,7 @@ const Dashboard: React.FC = () => {
       {userData.infos.roles.find(role => role.name === UserRoles.SUPER_ADMIN) &&
         <div className='admin-dashboard super-admin-dashboard'>
           <div className='link-block'>
-            <Link to={'#'}>
+            <Link to={'/private/users'}>
               <PersonOutlineOutlinedIcon className='icon' />
               <p>Utilisateurs</p>
             </Link>

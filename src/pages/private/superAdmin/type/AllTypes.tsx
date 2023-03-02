@@ -10,14 +10,15 @@ import * as icons from "@mui/icons-material";
 
 import { IType } from "../../../../types/type";
 import { GetAllTypes } from "../../../../services/type";
-import DynamicIcon from "../../../../components/dynamicIcon/DynamicIcon";
 
-import UpdateType from "../../../../components/type/update/UpdateType";
 import CreateType from "../../../../components/type/create/CreateType";
+import UpdateType from "../../../../components/type/update/UpdateType";
 
 import Loader from "../../../../components/loader/Loader";
+import DynamicIcon from "../../../../components/dynamicIcon/DynamicIcon";
 import ErrorModal from "../../../../components/modal/serverError/ServerErrorModal";
 import UseFilteredSearch from "../../../../components/useFilteredSearch/UseFilteredSearch";
+
 import { DefaultIconsNames } from "../../../../utils/constants";
 
 const AllTypes = () => {

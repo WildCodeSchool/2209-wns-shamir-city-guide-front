@@ -24,6 +24,8 @@ type ErrorModalProps = {
 };
 
 const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: ErrorModalProps) => {
+  console.log("ERROR IN MODAL =>", error);
+  
   const [open] = useState(true);
   
   const handleCloseModal = () => {
@@ -42,11 +44,18 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
     return 'server-error-color';
   }
 
-  if (error) {
+  if (error && error.extensions) {
     emojis = error.graphQLErrors[0].extensions.emoji;
     statusCodeMessage = error.graphQLErrors[0].extensions.statusCodeMessage;
     statusCodeError = error.graphQLErrors[0].extensions.statusCode;
     errorMessage = error.message;
+  } else {
+    console.log("Error without extension:", error.message);
+    return <div className="unavailable-service-error">
+      <h2>Service indisponible</h2>
+      <h4>Code 503</h4>
+      <p>Le service que vous souhaitez utiliser est indisponible pour le moment, nous vous prions de nous excuser pour la gêne occasionnée</p>
+    </div>
   }
   
   return (

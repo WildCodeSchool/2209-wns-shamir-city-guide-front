@@ -1,0 +1,19 @@
+@import '../../../../style//variables.scss';
+
+.all-roles {
+  .content {
+    margin: 4rem auto;
+  }
+}
+.role-section {
+  display: flex;
+  padding: 1rem 0;
+  border-bottom: 1px solid #A2A2A2 !important;
+  &:nth-child(2) {
+    margin-top: 2.4rem;
+  }
+}
+
+#role-name-column {
+  font-size: 1.8rem;
+}

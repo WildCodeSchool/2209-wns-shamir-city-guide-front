@@ -22,9 +22,12 @@
     "jsx": "react-jsx",
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "baseUrl": "."
   },
   "include": [
-    "src"
-  ]
+  ["src/**/*.ts", "tests/**/*.ts"],
+  ],
+  "exclude": ["node_modules", ".vscode"],
 }
+  
