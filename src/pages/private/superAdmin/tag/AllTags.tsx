@@ -99,7 +99,7 @@ const AllTags: React.FC = () => {
                       <Typography sx={{ width: '33%', flexShrink: 0 }}>
                         <DynamicIcon iconName={tag.icon} color='' />
                       </Typography>
-                      <Typography sx={{ color: 'text.secondary' }}>{tag.name}</Typography>
+                      <Typography className='name-section-color' sx={{ color: 'text.secondary' }}>{tag.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
                         <UpdateTag tag={tag} icons={icons} resetExpanded={resetExpanded} />

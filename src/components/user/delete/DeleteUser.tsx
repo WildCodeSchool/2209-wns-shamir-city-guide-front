@@ -1,34 +1,33 @@
-import "./deleteTag.scss";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { GET_ALL_TAGS } from "../../../api/tag/queries";
-import { DELETE_TAG } from "../../../api/tag/mutations";
+import { GET_ALL_USERS } from "../../../api/user/queries";
+import { DELETE_USER } from "../../../api/user/mutations";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
 import Loader from "../../loader/Loader";
 
-type TagByIdProps = {
+type UserByIdProps = {
   id: number
   resetExpanded: () => void
 };
 
-const DeleteTag: React.FC<TagByIdProps> = ({ id, resetExpanded }: TagByIdProps) => {
+const DeleteUser: React.FC<UserByIdProps> = ({ id, resetExpanded }: UserByIdProps) => {
   const [loading, setLoading] = useState(false);
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const handleModalClose = () => setOpenErrorModal(false);
 
   // DELETE
   const [
-    deleteTag, { 
-      error: deleteTagError,  
+    deleteUser, { 
+      error: deleteUserError,  
     }
-  ] = useMutation(DELETE_TAG, {
+  ] = useMutation(DELETE_USER, {
     onCompleted() {
       setLoading(false);
     },
     refetchQueries: [
-      { query: GET_ALL_TAGS }
+      { query: GET_ALL_USERS }
     ],
     onError() {
       setOpenErrorModal(true);
@@ -39,8 +38,8 @@ const DeleteTag: React.FC<TagByIdProps> = ({ id, resetExpanded }: TagByIdProps) 
   const handleOnDelete= (id: number) => {
     setLoading(true);
       setTimeout(() => {
-        deleteTag({
-          variables: { deleteTagId: id }, 
+        deleteUser({
+          variables: { deleteUserId: id }, 
         })
         resetExpanded();
         window.scrollTo({
@@ -52,13 +51,13 @@ const DeleteTag: React.FC<TagByIdProps> = ({ id, resetExpanded }: TagByIdProps) 
 
   return (
     <div className="delete-block">
-      {loading && <Loader styleClass='delete-tag-loader' />}
+      {loading && <Loader styleClass='delete-user-loader' />}
       <Button onClick={() => handleOnDelete(id)}>
         <DeleteIcon className="icon-delete"  />
       </Button>
-      {openErrorModal && <ErrorModal error={deleteTagError} onModalClose={handleModalClose} />}
+      {openErrorModal && <ErrorModal error={deleteUserError} onModalClose={handleModalClose} />}
     </div>
   )
 }
 
-export default DeleteTag
+export default DeleteUser

@@ -1,0 +1,25 @@
+@import '../../../../style//variables.scss';
+
+.user-role-nav {
+  width: 70%;
+  margin: 4.8rem auto 0;
+  div {
+    div {
+      div {
+        div {
+          a {
+            text-transform: none;
+            color: $grey;
+          }
+          .Mui-selected {
+            color: $black !important;
+            
+          }
+        }
+        .css-1aquho2-MuiTabs-indicator {
+          background-color: $purple;
+        }
+      }
+    }
+  }
+}

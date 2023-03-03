@@ -115,8 +115,6 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
   } 
 
   const changeIcon = async (value: keyof typeof icons) => {
-    console.log("changeIcon");
-    
     setCategoryToUpdate({...categoryToUpdate, icon: value});
     const errorIcon = await validateIcon({ icon: value });
     

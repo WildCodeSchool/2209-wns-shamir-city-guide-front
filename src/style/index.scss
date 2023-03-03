@@ -151,6 +151,26 @@ button {
   }
 }
 
+.MuiTypography-root {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media screen and (max-width: 800px) {
+    font-size: 1.8rem !important;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 1.6rem !important;
+  }
+}
+
+.content {
+  width: 70%;
+  margin: 0 auto;
+  @media screen and (max-width: 600px) {
+    width: 85%;
+  }
+}
+
 .form-card {
   width: 37.5% !important;
   height: 60% !important;
@@ -252,4 +272,8 @@ input[type=text] {
     border: 1px solid rgb(235, 66, 66);
     padding: 0.4rem;
   }
+}
+
+.name-section-color {
+  color: $black !important;
 }

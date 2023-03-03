@@ -1,5 +1,5 @@
 import "./createTag.scss";
-import { FormEvent, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 
 
@@ -61,7 +61,7 @@ const CreateTag: React.FC<TagFormProps> = ({ icons }: TagFormProps) => {
       setTagIcon(DefaultIconsNames.TAG);
       setIconDisplayed(DefaultIconsNames.TAG);
     },
-    onError() {
+    onError(error: Error) {
       setOpenErrorModal(true);
       setLoading(false);
     },

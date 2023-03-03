@@ -103,7 +103,7 @@ const AllCategories: React.FC = () => {
                       <Typography sx={{ width: '33%', flexShrink: 0 }}>
                         <DynamicIcon iconName={category.icon} color={category.color} />
                       </Typography>
-                      <Typography sx={{ color: 'text.secondary' }}>{category.name}</Typography>
+                      <Typography className='name-section-color' sx={{ color: 'text.secondary' }}>{category.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
                         <UpdateCategory category={category} icons={icons} color={"#1B1215"} resetExpanded={resetExpanded} />

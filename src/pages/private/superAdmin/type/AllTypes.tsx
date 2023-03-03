@@ -1,5 +1,5 @@
 import './allTypes.scss';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -10,14 +10,15 @@ import * as icons from "@mui/icons-material";
 
 import { IType } from "../../../../types/type";
 import { GetAllTypes } from "../../../../services/type";
-import DynamicIcon from "../../../../components/dynamicIcon/DynamicIcon";
 
-import UpdateType from "../../../../components/type/update/UpdateType";
 import CreateType from "../../../../components/type/create/CreateType";
+import UpdateType from "../../../../components/type/update/UpdateType";
 
 import Loader from "../../../../components/loader/Loader";
+import DynamicIcon from "../../../../components/dynamicIcon/DynamicIcon";
 import ErrorModal from "../../../../components/modal/serverError/ServerErrorModal";
 import UseFilteredSearch from "../../../../components/useFilteredSearch/UseFilteredSearch";
+
 import { DefaultIconsNames } from "../../../../utils/constants";
 
 const AllTypes = () => {
@@ -98,7 +99,7 @@ const AllTypes = () => {
                       <Typography sx={{ width: '33%', flexShrink: 0 }}>
                         <DynamicIcon iconName={type.logo} color={type.color} />
                       </Typography>
-                      <Typography sx={{ color: 'text.secondary' }}>{type.name}</Typography>
+                      <Typography className='name-section-color' sx={{ color: 'text.secondary' }}>{type.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
                         <UpdateType type={type} icons={icons} resetExpanded={resetExpanded} />

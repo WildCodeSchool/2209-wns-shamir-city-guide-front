@@ -2,11 +2,7 @@
 
 .all-tags {
   .content {
-    width: 70%;
     margin: 4rem auto;
-    @media screen and (max-width: 600px) {
-      width: 85%;
-    }
     .infos {
       margin-bottom: 1.6rem;
       p {

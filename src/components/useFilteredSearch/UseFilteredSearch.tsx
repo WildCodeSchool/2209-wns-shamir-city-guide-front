@@ -14,7 +14,7 @@ export interface IProps {
 const UseFilteredSearch = ({ dataToFilter, searchKey, setItems }: IProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const placeholderTodisplay = (): string => {
-    if (searchKey === "name") return "nom";
+    if (searchKey === "name" || "username") return "nom";
     else return "";
   }
   

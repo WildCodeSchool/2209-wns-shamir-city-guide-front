@@ -12,7 +12,6 @@ interface IColorData {
   color: string;
 }
 
-
 export const nameValidationSchema = yup.object().shape({
   name: yup
     .string()
@@ -27,14 +26,6 @@ export const iconValidationSchema = yup.object().shape({
     .max(255, "Le nom de l'icône ne peut pas faire plus de 255 caractères")
 });
 
-export const colorValidationSchema = yup.object().shape({
-  color: yup
-    .string()
-    .required("La couleur est requise")
-    .max(255, "Le nom de la couleur ne peut pas faire plus de 255 caractères")
-});
-
-
 export const validateName = async (name: INameData) => {
   try {
     await nameValidationSchema.validate(name);
@@ -48,16 +39,6 @@ export const validateName = async (name: INameData) => {
 export const validateIcon = async (icon: IIconData) => {
   try {
     await iconValidationSchema.validate(icon);
-  } catch (e) {
-    if (e instanceof Error) {
-      return e.message;
-    } 
-  }
-};
-
-export const validateColor = async (color: IColorData) => {
-  try {
-    await colorValidationSchema.validate(color);
   } catch (e) {
     if (e instanceof Error) {
       return e.message;

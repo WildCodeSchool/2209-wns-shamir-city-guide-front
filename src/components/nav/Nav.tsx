@@ -1,5 +1,5 @@
 import './nav.scss';
-import AdminMenu from '../admin-menu/AdminMenu';
+import AdminMenu from '../adminMenu/AdminMenu';
 
 
 const Nav: React.FC = () => {

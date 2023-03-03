@@ -1,4 +1,4 @@
-import {
+import React, {
   BrowserRouter,
   Routes,
   Route,
@@ -21,6 +21,8 @@ import AllTags from "./pages/private/superAdmin/tag/AllTags";
 import AllTypes from "./pages/private/superAdmin/type/AllTypes";
 import AllCircuits from "./pages/private/cityAdmin/circuit/AllCircuits";
 import AllCategories from "./pages/private/superAdmin/category/AllCategories";
+import AllRoles from "./pages/private/superAdmin/role/AllRoles";
+import UserAndRole from "./pages/private/superAdmin/userAndRole/UserAndRole";
 
 // utils
 import ProtectedRoutes from "./utils/ProtectedRoutes";
@@ -53,6 +55,9 @@ const Router = () => {
             <Route path="/private/tags" element={<AllTags />} />
             <Route path="/private/types" element={<AllTypes />} />
             <Route path="/private/categories" element={<AllCategories />} />
+            <Route path="/private/users" element={<UserAndRole />}>
+              <Route path='/private/users/roles' element={<AllRoles />} />
+            </Route>
           </Route>
 
           {/* City admin routes */}
