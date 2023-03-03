@@ -1,22 +1,19 @@
 import React, { FormEvent, useState } from "react";
-import { ApolloError, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import { UPDATE_USER } from "../../../api/user/mutations";
 import { GET_ALL_USERS } from "../../../api/user/queries";
 
-import { GetAllRoles } from "../../../services/role";
-
+import UserRolesTransfertList from "../../userRolesTransfertList.scss/UserRolesTransfertList";
 import DeleteUser from "../delete/DeleteUser";
 import Loader from "../../loader/Loader";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
 
 import { 
   validateUsername, 
-  validateEmail, 
-  validateRolesArray 
+  validateEmail
 } from "../../../utils/validationForms/userValidation";
-import { IAuthenticatedUser } from "../../../types/user";
-import { Colors } from "../../../utils/constants";
+import { IAuthenticatedUser, IUser } from "../../../types/user";
 
 import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
@@ -27,19 +24,22 @@ import {
   formButtonStyle,
   disabledFormButtonStyle
 } from "../../../style/customStyles";
+import { IRole } from "../../../types/role";
 
 type TypeFormProps = {
   user: IAuthenticatedUser
+  allRoles: IRole[]
   resetExpanded: () => void
 };
 
-const UpdateUser: React.FC<TypeFormProps> = ({ user, resetExpanded }: TypeFormProps) => {
-  const [userToUpdate, setUserToUpdate] = useState<IAuthenticatedUser>({
+const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: TypeFormProps) => {  
+  const [userToUpdate, setUserToUpdate] = useState<IUser>({
     id: Number(user.id),
     username: user.username,
-    email: user.email,
-    roles: user.roles
+    email: user.email
   });
+
+  const [roleToUpdate] = useState<IRole[]>(user.roles);
 
   const [loading, setLoading] = useState(false);
   const [usernameError, setUsernameError] = useState<string>("");
@@ -48,7 +48,7 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, resetExpanded }: TypeFormPr
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const handleModalClose = () => setOpenErrorModal(false);
 
-  // UPDATE
+  // Update user username and email
   const [
     updateUser, { 
       error: updateUserError, 
@@ -62,14 +62,13 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, resetExpanded }: TypeFormPr
       setUserToUpdate(userToUpdate);
       resetExpanded();
     },
-    onError(error) {
-      console.log("update user error:", error);
+    onError() {      
       setOpenErrorModal(true);
       setLoading(false);
     },
   });
 
-  const handleOnUpdate = async (e: FormEvent<HTMLFormElement>, userToUpdate: IAuthenticatedUser) => {
+  const handleOnUpdate = async (e: FormEvent<HTMLFormElement>, userToUpdate: IUser) => {
     e.preventDefault();
     const errorUsername = await validateUsername({ username: userToUpdate.username });
 
@@ -107,6 +106,8 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, resetExpanded }: TypeFormPr
     else setEmailError("");
   }
 
+  
+
   return (
     <div className="update-form">
       <form 
@@ -125,32 +126,31 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, resetExpanded }: TypeFormPr
             error={usernameError?.length ? true : false}
             helperText={usernameError.length ? usernameError : ""}
           />
-          <div className="field-icon-block">
-            <TextField  
-              label="Email" 
-              variant="filled" 
-              inputProps={{style: textFielPropsStyle}}
-              InputLabelProps={{style: labelTextFieldPropsStyle}} 
-              onChange={(e) => changeEmail(e.target.value.trim())}
-              className='text-field'
-              value={userToUpdate.email} 
-              error={emailError?.length ? true : false}
-              helperText={emailError.length ? emailError : ""}
-            />
-          </div>
-        </div>
-        <div className='buttons'>
-          <div className='update-btn-loading-block'>
-            <Button 
-              className='update-btn'  
-              style={(usernameError || emailError) ? disabledFormButtonStyle : formButtonStyle}  
-              type="submit"
-              variant="contained"
-              disabled={(usernameError || emailError) ? true : false}
-            >
-              Mettre à jour
-            </Button>
-            {loading && <Loader styleClass='update-tag-loader' />}
+          <TextField  
+            label="Email" 
+            variant="filled" 
+            inputProps={{style: textFielPropsStyle}}
+            InputLabelProps={{style: labelTextFieldPropsStyle}} 
+            onChange={(e) => changeEmail(e.target.value.trim())}
+            className='text-field'
+            value={userToUpdate.email} 
+            error={emailError?.length ? true : false}
+            helperText={emailError.length ? emailError : ""}
+          />
+          <div className='button-user-update'>
+            <div className='update-btn-loading-block'>
+              <Button 
+                className='update-btn'  
+                style={(usernameError || emailError) ? disabledFormButtonStyle : formButtonStyle}  
+                type="submit"
+                variant="contained"
+                disabled={(usernameError || emailError) ? true : false}
+              >
+                Mettre à jour
+              </Button>
+              {loading && <Loader styleClass='update-tag-loader' />}
+            </div>
+            <UserRolesTransfertList user={userToUpdate} allRoles={allRoles} actualUserRoles={roleToUpdate} resetExpanded={resetExpanded} />
           </div>
           <DeleteUser id={Number(user.id)} resetExpanded={resetExpanded} />
         </div>
@@ -159,6 +159,5 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, resetExpanded }: TypeFormPr
     </div>
   )
 }
-
 
 export default UpdateUser;

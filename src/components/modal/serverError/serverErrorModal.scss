@@ -23,11 +23,21 @@
   @media screen and (max-width: 400px) {
     width: 80%;
   }
-  h3 {
+  #modal-error-title {
+    display: flex;
+    justify-content: center;
     margin: 0 auto;
     color: $blue-light;
-    text-align: center;
+    text-align: center !important;
     margin-bottom: 1.6rem;
+  }
+  #modal-error-type {
+    display: flex;
+    justify-content: flex-start;
+  }
+  #modal-error-status-code {
+    display: flex;
+    justify-content: flex-start;
   }
   p {
     .wording {

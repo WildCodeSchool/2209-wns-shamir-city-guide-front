@@ -62,8 +62,6 @@ const CreateTag: React.FC<TagFormProps> = ({ icons }: TagFormProps) => {
       setIconDisplayed(DefaultIconsNames.TAG);
     },
     onError(error: Error) {
-      console.log("error tag:", error);
-      
       setOpenErrorModal(true);
       setLoading(false);
     },

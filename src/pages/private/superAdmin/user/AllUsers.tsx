@@ -10,6 +10,7 @@ import * as icons from "@mui/icons-material";
 
 import { IAuthenticatedUser } from "../../../../types/user";
 import { GetAllUsers } from "../../../../services/user";
+import { GetAllRoles } from "../../../../services/role";
 
 import UpdateUser from "../../../../components/user/update/UpdateUser";
 
@@ -29,6 +30,7 @@ const AllUsers: React.FC = () => {
   
   // GET ALL
   const { allUsers, usersError, usersLoading } = GetAllUsers();
+  const { allRoles } = GetAllRoles();
 
   // Active types Loader during 0.4 second
   useEffect(() => {
@@ -94,10 +96,10 @@ const AllUsers: React.FC = () => {
                       <Typography sx={{ width: '33%', flexShrink: 0 }}>
                         <DynamicIcon iconName={DefaultIconsNames.USER} color={Colors.BLUEGREEN} />
                       </Typography>
-                      <Typography sx={{ color: 'text.secondary' }}>{user.username}</Typography>
+                      <Typography className='name-section-color' sx={{ color: 'text.secondary' }}>{user.username}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
-                        <UpdateUser user={user} resetExpanded={resetExpanded} />
+                        <UpdateUser user={user} allRoles={allRoles.getAllRoles} resetExpanded={resetExpanded} />
                       </AccordionDetails>
                     </Accordion>
                   </div>

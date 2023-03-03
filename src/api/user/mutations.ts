@@ -29,6 +29,20 @@ export const UPDATE_USER = gql`
   }
 `;
 
+export const UPDATE_USER_ROLES = gql`
+  mutation updateUserRoles ($payload: UpdateUserRoles!) {
+    updateUserRoles (payload: $payload) {
+      id
+      username 
+      email
+      roles {
+        id
+        name
+      } 
+    }
+  }
+`;
+
 export const DELETE_USER = gql`
   mutation DeleteUser ($deleteUserId: Float!) {
     deleteUser (id: $deleteUserId) {

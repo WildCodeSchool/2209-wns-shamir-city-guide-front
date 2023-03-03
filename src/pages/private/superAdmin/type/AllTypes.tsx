@@ -99,7 +99,7 @@ const AllTypes = () => {
                       <Typography sx={{ width: '33%', flexShrink: 0 }}>
                         <DynamicIcon iconName={type.logo} color={type.color} />
                       </Typography>
-                      <Typography sx={{ color: 'text.secondary' }}>{type.name}</Typography>
+                      <Typography className='name-section-color' sx={{ color: 'text.secondary' }}>{type.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
                         <UpdateType type={type} icons={icons} resetExpanded={resetExpanded} />

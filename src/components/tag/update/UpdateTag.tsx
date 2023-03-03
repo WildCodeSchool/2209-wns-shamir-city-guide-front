@@ -62,8 +62,6 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons, resetExpanded }: TagFor
       resetExpanded();
     },
     onError(error) { 
-      console.log("ERROR:", error);
-      
       setOpenErrorModal(true);
       setLoading(false);
     },
@@ -114,7 +112,6 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons, resetExpanded }: TagFor
       setIconDisplayed(DefaultIconsNames.TAG);
     }
   }
-  console.log("ERROR TAG UPDATE: ", updateTagError);
   
   return (
     <div className="update-form">

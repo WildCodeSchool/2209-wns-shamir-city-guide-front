@@ -73,7 +73,7 @@ const AllRoles: React.FC = () => {
                     <Typography sx={{ width: '33%', flexShrink: 0 }}>
                       <DynamicIcon iconName={DefaultIconsNames.ROLE} color={Colors.BLUEGREEN} />
                     </Typography>
-                    <Typography id="role-name-column" sx={{ color: 'text.secondary' }}>{role.name}</Typography>
+                    <Typography id="role-name-column" className='name-section-color' sx={{ color: 'text.secondary' }}>{role.name}</Typography>
                   </div>
                 )
               }

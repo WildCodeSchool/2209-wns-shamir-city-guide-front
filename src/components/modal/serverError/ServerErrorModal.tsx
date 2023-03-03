@@ -19,13 +19,11 @@ const style = {
 };
 
 type ErrorModalProps = {
-  error: any;
+  error: ApolloError | undefined;
   onModalClose: () => void;
 };
 
-const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: ErrorModalProps) => {
-  console.log("ERROR IN MODAL =>", error);
-  
+const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: ErrorModalProps) => {  
   const [open] = useState(true);
   
   const handleCloseModal = () => {
@@ -44,18 +42,45 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
     return 'server-error-color';
   }
 
-  if (error && error.extensions) {
+  if (error && error.graphQLErrors.length > 0) {
     emojis = error.graphQLErrors[0].extensions.emoji;
     statusCodeMessage = error.graphQLErrors[0].extensions.statusCodeMessage;
     statusCodeError = error.graphQLErrors[0].extensions.statusCode;
     errorMessage = error.message;
   } else {
-    console.log("Error without extension:", error.message);
-    return <div className="unavailable-service-error">
-      <h2>Service indisponible</h2>
-      <h4>Code 503</h4>
-      <p>Le service que vous souhaitez utiliser est indisponible pour le moment, nous vous prions de nous excuser pour la gêne occasionnée</p>
-    </div>
+    return <Modal
+    keepMounted
+    open={open}
+    onClose={handleCloseModal}
+  >
+    <Box id='error-modal' sx={style}>
+      <CancelRoundedIcon 
+        className='icon-cross-close' 
+        onClick={handleCloseModal}
+      />
+      <Typography id="modal-error-title" variant="h5" component="h3">
+        Erreur serveur 
+      </Typography>
+      <Typography id="modal-error-emojis" variant="h6" component="h4">
+        {emojis} 
+      </Typography>
+      <Typography id="modal-error-type">
+        <span className='wording'>Type :</span> Service indisponible
+      </Typography>
+      <h2></h2>
+      <Typography id="modal-error-status-code">
+        <span className='wording'>Code status :</span> 
+        <span
+          className={colorClass()}
+        >
+          503
+        </span>
+      </Typography>
+      <Typography id="modal-error-description">
+        Le service que vous souhaitez utiliser est indisponible pour le moment, nous vous prions de nous excuser pour la gêne occasionnée
+      </Typography>
+    </Box>
+  </Modal>  
   }
   
   return (
