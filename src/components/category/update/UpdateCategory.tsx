@@ -169,7 +169,7 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
         <div className='buttons'>
           <div className='update-btn-loading-block'>
             <Button 
-              className='update-btn-loading-block'  
+              className='update-btn'  
               style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}  
               type="submit"
               variant="contained"

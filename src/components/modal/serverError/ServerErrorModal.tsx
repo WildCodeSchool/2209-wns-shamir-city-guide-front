@@ -1,5 +1,8 @@
 import './serverErrorModal.scss';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../../features/userSlice';
+import { useAppDispatch } from "../../../features/store";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
@@ -25,6 +28,8 @@ type ErrorModalProps = {
 
 const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: ErrorModalProps) => {  
   const [open] = useState(true);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   
   const handleCloseModal = () => {
     onModalClose();
@@ -43,9 +48,14 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
   }
 
   if (error && error.graphQLErrors.length > 0) {
+    // First check if the user is not logged anymore, if it is the case we redirect him to the login page
+    statusCodeError = error.graphQLErrors[0].extensions.statusCode;
+    if (statusCodeError === 401 || statusCodeError === 403) {
+      dispatch(logout());
+      navigate('/login');
+    }
     emojis = error.graphQLErrors[0].extensions.emoji;
     statusCodeMessage = error.graphQLErrors[0].extensions.statusCodeMessage;
-    statusCodeError = error.graphQLErrors[0].extensions.statusCode;
     errorMessage = error.message;
   } else {
     return <Modal

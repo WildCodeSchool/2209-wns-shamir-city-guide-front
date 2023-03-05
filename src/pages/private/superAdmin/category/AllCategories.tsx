@@ -84,6 +84,7 @@ const AllCategories: React.FC = () => {
         <ActiveLoaderCategories />
       ) : (
         <div className="content">
+          <h2 className="page-title">Les catégories</h2>
           <div className="infos">
             <p><span>*</span>L'icône <DynamicIcon iconName={DefaultIconsNames.CATEGORY} color='' />est utilisée par défault lors de la création si l'icône a déjà été choisie pour une autre catégorie présente dans la liste</p>
           </div>

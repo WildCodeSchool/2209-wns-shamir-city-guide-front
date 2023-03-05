@@ -14,10 +14,16 @@
       padding: 0;
       width: 200px;
       border-radius: 5px;
+      box-shadow: 0.5px 0.5px 2px rgba(73, 64, 64, 0.14);
       @media screen and (max-width: 801px){
         width: 160px;
       }
       div {
+        .list-title {
+          font-weight: 600;
+          color: $purple;
+          margin: 0.8rem;
+        }
         div {
           width: 100%;
           display: flex;

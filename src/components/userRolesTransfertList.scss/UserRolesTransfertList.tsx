@@ -12,7 +12,6 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import { disabledFormButtonStyle, formButtonStyle } from '../../style/customStyles';
 import Loader from '../loader/Loader';
 import { UPDATE_USER_ROLES } from '../../api/user/mutations';
@@ -124,7 +123,7 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
 
   const customList = (title: React.ReactNode, items: readonly IRole[]) => (
     <Card>
-      <Divider />
+      <p className='list-title'> {title} </p>
       <List
         sx={{
           width: 150,
@@ -168,7 +167,7 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
   return (
     <div className='roles-transfert-list'>
       <Grid id="roles-transfert-list-block" container spacing={2} justifyContent="center" alignItems="center">
-        <Grid className='roles-part-block' item>{customList('Rôles', left)}</Grid>
+        <Grid className='roles-part-block' item>{customList('Disabled', left)}</Grid>
         <Grid className='arrows-part-block' item>
           <Grid container direction="column" alignItems="center">
             <Button
@@ -195,7 +194,7 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
             </Button>
           </Grid>
         </Grid>
-        <Grid className='roles-part-block' item>{customList('User', right)}</Grid>
+        <Grid className='roles-part-block' item>{customList('Enabled', right)}</Grid>
       </Grid>
       <div className='update-btn-loading-block'>
         <Button 
