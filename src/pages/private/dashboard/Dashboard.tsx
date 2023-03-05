@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </div>
           <div className='link-block'>
-            <Link to={'#'}>
+            <Link to={'/private/cities'}>
               <LocationCityOutlinedIcon className='icon' />
               <p>Villes</p>
             </Link>
