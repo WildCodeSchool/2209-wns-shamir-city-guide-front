@@ -9,7 +9,7 @@ export const enum Colors {
   BLUEMEDIUM = "#025373",
   BLUEGREEN = "#024959",
   BLACK = "#1B1212",
-}
+ }
 
 /* Constants for user roles */
 export const enum UserRoles {
@@ -27,6 +27,7 @@ export const enum DefaultIconsNames {
   CATEGORY = "CategoryOutlined",
   USER = "PersonOutlined",
   ROLE = "PermContactCalendarOutlined"
+  CITY = "LocationCityOutlinedIcon"
 }
 
 /* Constants for default tag icon */
