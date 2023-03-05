@@ -168,14 +168,15 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
   return (
     <div className='roles-transfert-list'>
       <Grid id="roles-transfert-list-block" container spacing={2} justifyContent="center" alignItems="center">
-        <Grid item>{customList('Rôles', left)}</Grid>
-        <Grid item>
+        <Grid className='roles-part-block' item>{customList('Rôles', left)}</Grid>
+        <Grid className='arrows-part-block' item>
           <Grid container direction="column" alignItems="center">
             <Button
               sx={{ my: 0.5 }}
               variant="outlined"
               size="small"
               onClick={handleCheckedRight}
+              style={leftChecked.length === 0 ? disabledFormButtonStyle : formButtonStyle}
               disabled={leftChecked.length === 0}
               aria-label="move selected right"
             >
@@ -186,6 +187,7 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
               variant="outlined"
               size="small"
               onClick={handleCheckedLeft}
+              style={rightChecked.length === 0 ? disabledFormButtonStyle : formButtonStyle}  
               disabled={rightChecked.length === 0}
               aria-label="move selected left"
             >
@@ -193,7 +195,7 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
             </Button>
           </Grid>
         </Grid>
-        <Grid item>{customList('User', right)}</Grid>
+        <Grid className='roles-part-block' item>{customList('User', right)}</Grid>
       </Grid>
       <div className='update-btn-loading-block'>
         <Button 
