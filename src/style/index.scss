@@ -269,6 +269,22 @@ input[type=text] {
   }
 }
 
+.create-btn-loading-block {
+  display: flex;
+  justify-content: space-between;
+  .create-button {
+    padding: 0.2rem 0;
+  }
+}
+
+.update-btn-loading-block {
+  display: flex;
+  .update-btn {
+    padding: 0.2rem 0.8rem;
+    margin-right: 1.6rem;
+  }
+}
+
 .delete-block {
   display: flex;
   align-items: center;
@@ -278,6 +294,33 @@ input[type=text] {
     stroke: rgb(235, 66, 66) !important;
     border-radius: 50%;
     border: 1px solid rgb(235, 66, 66);
+    padding: 0.4rem;
+  }
+}
+
+.delete-block {
+  display: flex;
+  align-items: center;
+  .icon-delete {
+    font-size: 4rem !important;
+    color: white;
+    stroke: rgb(235, 66, 66) !important;
+    border-radius: 50%;
+    border: 1px solid rgb(235, 66, 66);
+    padding: 0.4rem;
+  }
+}
+
+.delete-block-disabled {
+  display: flex;
+  align-items: center;
+  .icon-delete {
+    font-size: 4rem !important;
+    color: $grey-light;
+    stroke: $grey !important;
+    border-radius: 50%;
+    border: 1px solid $white;
+    background-color: $grey-light;
     padding: 0.4rem;
   }
 }

@@ -12,14 +12,12 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import { disabledFormButtonStyle, formButtonStyle } from '../../style/customStyles';
 import Loader from '../loader/Loader';
 import { UPDATE_USER_ROLES } from '../../api/user/mutations';
 import { GET_ALL_USERS } from '../../api/user/queries';
 import { useMutation } from '@apollo/client';
 import { IUser } from '../../types/user';
-import { CardHeader } from '@mui/material';
 
 
 // toutes les valeurs de l'objet a qui ne sont pas dans l'objet b sont conservées

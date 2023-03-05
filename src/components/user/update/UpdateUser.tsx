@@ -155,7 +155,7 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: 
       </form>
       <UserRolesTransfertList user={userToUpdate} allRoles={allRoles} actualUserRoles={roleToUpdate} resetExpanded={resetExpanded} />
       {openErrorModal && <ErrorModal error={updateUserError} onModalClose={handleModalClose} />}
-      <DeleteUser id={Number(user.id)} resetExpanded={resetExpanded} />
+      <DeleteUser id={Number(user.id)} username={user.username} resetExpanded={resetExpanded} />
     </div>
   )
 }
