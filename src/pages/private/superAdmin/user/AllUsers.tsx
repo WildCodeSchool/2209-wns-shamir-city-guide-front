@@ -81,6 +81,7 @@ const AllUsers: React.FC = () => {
         <ActiveLoaderUsers />
       ) : (
         <div className="content">
+          <h2 className="page-title">Les utilisateurs</h2>
           <UseFilteredSearch dataToFilter={allUsers.getAllUsers} searchKey={"username"} setItems={handleFilteredUsers} />
           {
             filteredUsers && 

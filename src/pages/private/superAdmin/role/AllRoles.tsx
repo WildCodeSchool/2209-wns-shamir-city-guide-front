@@ -63,6 +63,7 @@ const AllRoles: React.FC = () => {
         <ActiveLoaderRoles />
       ) : (
         <div className="content">
+          <h2 className="page-title">Les rôles utilisateurs</h2>
           <UseFilteredSearch dataToFilter={allRoles.getAllRoles} searchKey={"name"} setItems={handleFilteredRoles} />
           {
             filteredRoles && 

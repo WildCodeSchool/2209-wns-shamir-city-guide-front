@@ -80,6 +80,7 @@ const AllTags: React.FC = () => {
         <ActiveLoaderTags />
       ) : (
         <div className="content">
+          <h2 className="page-title">Les tags</h2>
           <div className="infos">
             <p><span>*</span>L'icône <DynamicIcon iconName={DefaultIconsNames.TAG} color='' />est utilisée par défault lors de la création si l'icône a déjà été choisie pour un autre tag présent dans la liste ou que l'icône validée n'existe pas dans la liste des icônes diponibles.</p>
           </div>

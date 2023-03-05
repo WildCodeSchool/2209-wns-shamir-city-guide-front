@@ -19,6 +19,7 @@ import { UPDATE_USER_ROLES } from '../../api/user/mutations';
 import { GET_ALL_USERS } from '../../api/user/queries';
 import { useMutation } from '@apollo/client';
 import { IUser } from '../../types/user';
+import { CardHeader } from '@mui/material';
 
 
 // toutes les valeurs de l'objet a qui ne sont pas dans l'objet b sont conservées
@@ -124,7 +125,7 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
 
   const customList = (title: React.ReactNode, items: readonly IRole[]) => (
     <Card>
-      <Divider />
+      <p className='list-title'> {title} </p>
       <List
         sx={{
           width: 150,
@@ -168,7 +169,7 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
   return (
     <div className='roles-transfert-list'>
       <Grid id="roles-transfert-list-block" container spacing={2} justifyContent="center" alignItems="center">
-        <Grid className='roles-part-block' item>{customList('Rôles', left)}</Grid>
+        <Grid className='roles-part-block' item>{customList('Disabled', left)}</Grid>
         <Grid className='arrows-part-block' item>
           <Grid container direction="column" alignItems="center">
             <Button
@@ -195,7 +196,7 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
             </Button>
           </Grid>
         </Grid>
-        <Grid className='roles-part-block' item>{customList('User', right)}</Grid>
+        <Grid className='roles-part-block' item>{customList('Enabled', right)}</Grid>
       </Grid>
       <div className='update-btn-loading-block'>
         <Button 

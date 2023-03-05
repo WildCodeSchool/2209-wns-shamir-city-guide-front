@@ -130,6 +130,14 @@ button {
   position: relative;
 }
 
+.page-title {
+  text-align: center;
+  margin-bottom: 4rem;
+  @media screen and (max-width: 800px) {
+    margin-bottom: 3.2rem;
+  }
+}
+
 .loader-all-items {
   position: absolute;
   top: 50%;
