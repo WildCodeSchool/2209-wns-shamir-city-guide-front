@@ -111,7 +111,7 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: 
   return (
     <div className="update-form">
       <form 
-      autoComplete="off"
+        autoComplete="off"
         onSubmit={e => handleOnUpdate(e, userToUpdate)}
       >
         <div className='fields'>
@@ -137,6 +137,7 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: 
             error={emailError?.length ? true : false}
             helperText={emailError.length ? emailError : ""}
           />
+          </div>
           <div className='button-user-update'>
             <div className='update-btn-loading-block'>
               <Button 
@@ -150,12 +151,11 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: 
               </Button>
               {loading && <Loader styleClass='update-tag-loader' />}
             </div>
-            <UserRolesTransfertList user={userToUpdate} allRoles={allRoles} actualUserRoles={roleToUpdate} resetExpanded={resetExpanded} />
-          </div>
-          <DeleteUser id={Number(user.id)} resetExpanded={resetExpanded} />
         </div>
       </form>
+      <UserRolesTransfertList user={userToUpdate} allRoles={allRoles} actualUserRoles={roleToUpdate} resetExpanded={resetExpanded} />
       {openErrorModal && <ErrorModal error={updateUserError} onModalClose={handleModalClose} />}
+      <DeleteUser id={Number(user.id)} resetExpanded={resetExpanded} />
     </div>
   )
 }

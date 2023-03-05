@@ -16,60 +16,69 @@ import { UserRoles } from '../../../utils/constants';
 
 const Dashboard: React.FC = () => {
   const userData = useAppSelector((state) => state.userReducer.user);
-  
+  const isSuperAdmin = userData.infos.roles.find(role => role.name === UserRoles.SUPER_ADMIN);
+  const isCityAdmin = userData.infos.roles.find(role => role.name === UserRoles.CITY_ADMIN);
+
   return (
     <div className='page dashboard'>
-      {userData.infos.roles.find(role => role.name === UserRoles.SUPER_ADMIN) &&
-        <div className='admin-dashboard super-admin-dashboard'>
-          <div className='link-block'>
-            <Link to={'/private/users'}>
-              <PersonOutlineOutlinedIcon className='icon' />
-              <p>Utilisateurs</p>
-            </Link>
-          </div>
-          <div className='link-block'>
-            <Link to={'#'}>
-              <LocationCityOutlinedIcon className='icon' />
-              <p>Villes</p>
-            </Link>
-          </div>
-          <div className='link-block'>
-            <Link to={'/private/tags'}>
-              <SellOutlinedIcon className='icon' />
-              <p>Tags</p>
-            </Link>
-          </div>
-          <div className='link-block'>
-            <Link to={'/private/types'}>
-              <ClassOutlinedIcon className='icon' />
-              <p>Types</p>
-            </Link>
-          </div>
+      <div className='admin-dashboard super-admin-dashboard'>
+        {isSuperAdmin &&
           <div className='link-block'>
             <Link to={'/private/categories'}>
               <CategoryOutlinedIcon className='icon' />
               <p>Catégories</p>
             </Link>
           </div>
-        </div>
-      }
-
-      {userData.infos.roles.find(role => role.name === UserRoles.CITY_ADMIN) &&
-        <div className='admin-dashboard city-admin-dashboard'>
-          <div className='link-block'>
-            <Link to={'#'}>
-              <InterestsOutlinedIcon className='icon' />
-              <p>Points d'intérêt</p>
-            </Link>
-          </div>
+        } 
+        {isCityAdmin && 
           <div className='link-block'>
             <Link to={'#'}>
               <TravelExploreOutlinedIcon className='icon' />
               <p>Circuits</p>
             </Link>
           </div>
-        </div>
-      }
+        }
+        {isCityAdmin &&
+          <div className='link-block'>
+            <Link to={'#'}>
+              <InterestsOutlinedIcon className='icon' />
+              <p>Points d'intérêt</p>
+            </Link>
+          </div>
+        }
+        {isSuperAdmin && 
+          <div className='link-block'>
+            <Link to={'/private/tags'}>
+              <SellOutlinedIcon className='icon' />
+              <p>Tags</p>
+            </Link>
+          </div>
+        }
+        {isSuperAdmin && 
+          <div className='link-block'>
+            <Link to={'/private/types'}>
+              <ClassOutlinedIcon className='icon' />
+              <p>Types</p>
+            </Link>
+          </div>
+        }
+        {isSuperAdmin && 
+          <div className='link-block'>
+            <Link to={'/private/users'}>
+              <PersonOutlineOutlinedIcon className='icon' />
+              <p>Utilisateurs</p>
+            </Link>
+          </div>
+        }
+        {isSuperAdmin && 
+          <div className='link-block'>
+            <Link to={'#'}>
+              <LocationCityOutlinedIcon className='icon' />
+              <p>Villes</p>
+            </Link>
+          </div>
+        }
+      </div>
     </div>
   )
 }

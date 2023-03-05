@@ -49,9 +49,13 @@ const Router = () => {
         </Route>
         
         <Route element={<AdminNavLayout />} >
-          {/* Super admin routes */}
+          {/* Private dashboard route */}
           <Route element={<ProtectedRoutes requiredRoles={[UserRoles.SUPER_ADMIN, UserRoles.CITY_ADMIN]} />}>
             <Route path="/private/dashboard" element={<Dashboard />} />
+          </Route>
+
+          {/* Super admin routes */}
+          <Route element={<ProtectedRoutes requiredRoles={[UserRoles.SUPER_ADMIN]} />}>
             <Route path="/private/tags" element={<AllTags />} />
             <Route path="/private/types" element={<AllTypes />} />
             <Route path="/private/categories" element={<AllCategories />} />
