@@ -52,8 +52,8 @@ const UpdateType: React.FC<TypeFormProps> = ({ type, icons, resetExpanded }: Typ
 
   // UPDATE
   const [
-    updateType, { 
-      error: updateTypeError, 
+    updateType, {
+      error: updateTypeError,
     }
   ] = useMutation(UPDATE_TYPE, {
     refetchQueries: [
@@ -83,13 +83,13 @@ const UpdateType: React.FC<TypeFormProps> = ({ type, icons, resetExpanded }: Typ
       typeToUpdate.logo = DefaultIconsNames.TYPE;
     }
     const errorName = await validateName({ name: typeToUpdate.name });
-    
+
     if (errorName) setNameError(errorName);
     if (!errorName) {
       setLoading(true);
       setTimeout(() => {
-        updateType({ 
-          variables: { 
+        updateType({
+          variables: {
             type: {
               id: typeToUpdate.id,
               name: typeToUpdate.name,

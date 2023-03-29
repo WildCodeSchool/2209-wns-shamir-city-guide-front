@@ -29,8 +29,8 @@ const Dashboard: React.FC = () => {
               <p>Catégories</p>
             </Link>
           </div>
-        } 
-        {isCityAdmin && 
+        }
+        {isCityAdmin &&
           <div className='link-block'>
             <Link to={'#'}>
               <TravelExploreOutlinedIcon className='icon' />
@@ -46,7 +46,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </div>
         }
-        {isSuperAdmin && 
+        {isSuperAdmin &&
           <div className='link-block'>
             <Link to={'/private/tags'}>
               <SellOutlinedIcon className='icon' />
@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </div>
         }
-        {isSuperAdmin && 
+        {isSuperAdmin &&
           <div className='link-block'>
             <Link to={'/private/types'}>
               <ClassOutlinedIcon className='icon' />
@@ -62,7 +62,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </div>
         }
-        {isSuperAdmin && 
+        {isSuperAdmin &&
           <div className='link-block'>
             <Link to={'/private/users'}>
               <PersonOutlineOutlinedIcon className='icon' />
@@ -70,15 +70,55 @@ const Dashboard: React.FC = () => {
             </Link>
           </div>
         }
-        {isSuperAdmin && 
+        {isSuperAdmin &&
           <div className='link-block'>
             <Link to={'#'}>
               <LocationCityOutlinedIcon className='icon' />
               <p>Villes</p>
             </Link>
           </div>
+<<<<<<< HEAD
         }
       </div>
+=======
+          <div className='link-block'>
+            <Link to={'/private/tags'}>
+              <SellOutlinedIcon className='icon' />
+              <p>Tags</p>
+            </Link>
+          </div>
+          <div className='link-block'>
+            <Link to={'/private/types'}>
+              <ClassOutlinedIcon className='icon' />
+              <p>Types</p>
+            </Link>
+          </div>
+          <div className='link-block'>
+            <Link to={'/private/categories'}>
+              <CategoryOutlinedIcon className='icon' />
+              <p>Catégories</p>
+            </Link>
+          </div>
+        </div>
+      }
+
+      {userData.infos.roles.find(role => role.name === UserRoles.CITY_ADMIN) &&
+        <div className='admin-dashboard city-admin-dashboard'>
+          <div className='link-block'>
+            <Link to={'#'}>
+              <InterestsOutlinedIcon className='icon' />
+              <p>Points d'intérêt</p>
+            </Link>
+          </div>
+          <div className='link-block'>
+            <Link to={'#'}>
+              <TravelExploreOutlinedIcon className='icon' />
+              <p>Circuits</p>
+            </Link>
+          </div>
+        </div>
+      }
+>>>>>>> origin/master
     </div>
   )
 }
