@@ -26,7 +26,7 @@ export const enum DefaultIconsNames {
   TYPE = "ClassOutlined",
   CATEGORY = "CategoryOutlined",
   USER = "PersonOutlined",
-  ROLE = "PermContactCalendarOutlined"
+  ROLE = "PermContactCalendarOutlined",
   CITY = "LocationCityOutlinedIcon"
 }
 
