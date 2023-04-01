@@ -33,12 +33,12 @@ export const UPDATE_USER_ROLES = gql`
   mutation updateUserRoles ($payload: UpdateUserRoles!) {
     updateUserRoles (payload: $payload) {
       id
-      username 
+      username
       email
       roles {
         id
         name
-      } 
+      }
     }
   }
 `;
