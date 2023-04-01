@@ -81,20 +81,20 @@ const Dashboard: React.FC = () => {
       </div>
 
       {userData.infos.roles.find(role => role.name === UserRoles.CITY_ADMIN) &&
-        <div className='admin-dashboard city-admin-dashboard'>
-          <div className='link-block'>
-            <Link to={'#'}>
-              <InterestsOutlinedIcon className='icon' />
-              <p>Points d'intérêt</p>
-            </Link>
+          <div className='admin-dashboard city-admin-dashboard'>
+            <div className='link-block'>
+              <Link to={'#'}>
+                <InterestsOutlinedIcon className='icon' />
+                <p>Points d'intérêt</p>
+              </Link>
+            </div>
+            <div className='link-block'>
+              <Link to={'#'}>
+                <TravelExploreOutlinedIcon className='icon' />
+                <p>Circuits</p>
+              </Link>
+            </div>
           </div>
-          <div className='link-block'>
-            <Link to={'#'}>
-              <TravelExploreOutlinedIcon className='icon' />
-              <p>Circuits</p>
-            </Link>
-          </div>
-        </div>
       }
     </div>
   )

@@ -3,7 +3,8 @@ version: "3.8"
 services:
   front:
     container_name: city_guid_client
-    build:
+    image: city_guid_client_app
+    build: 
       dockerfile: "Dockerfile"
       target: development
     volumes:
