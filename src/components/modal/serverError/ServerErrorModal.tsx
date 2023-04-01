@@ -1,6 +1,6 @@
 import './serverErrorModal.scss';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { logout } from '../../../features/userSlice';
 import { useAppDispatch } from "../../../features/store";
 import Box from '@mui/material/Box';
@@ -28,12 +28,24 @@ type ErrorModalProps = {
 
 const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: ErrorModalProps) => {  
   const [open] = useState(true);
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   
   const handleCloseModal = () => {
     onModalClose();
   } 
+
+  const returnToDashboardOrLoginPage = () => {
+    console.log("coucou", location);
+    if (/private/.test(location.pathname)) {
+      handleCloseModal();
+      navigate('/private/dashboard');
+    } else {
+      handleCloseModal();
+      navigate('/login');
+    }
+  }
 
   let errorMessage: string = "";
   let emojis: any = null;
@@ -42,31 +54,67 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
 
   const colorClass = () => {
     if (statusCodeError >= 400 && statusCodeError < 500)
-    return 'client-error-color';
+      return 'client-error-color';
     else if (statusCodeError >= 500 && statusCodeError < 600)
-    return 'server-error-color';
+      return 'server-error-color';
   }
 
   if (error && error.graphQLErrors.length > 0) {
     // First check if the user is not logged anymore, if it is the case we redirect him to the login page
     statusCodeError = error.graphQLErrors[0].extensions.statusCode;
-    if (statusCodeError === 401 || statusCodeError === 403) {
-      dispatch(logout());
-      navigate('/login');
-    }
     emojis = error.graphQLErrors[0].extensions.emoji;
     statusCodeMessage = error.graphQLErrors[0].extensions.statusCodeMessage;
     errorMessage = error.message;
-  } else {
-    return <Modal
+
+    if (statusCodeError === 401 || statusCodeError === 403) {
+      dispatch(logout());
+      navigate('/login');
+    } else if (statusCodeError === 400) {
+      return <Modal
     keepMounted
     open={open}
     onClose={handleCloseModal}
   >
     <Box id='error-modal' sx={style}>
-      <CancelRoundedIcon 
+      <CancelRoundedIcon
         className='icon-cross-close' 
+        data-testid="mon-svg"
         onClick={handleCloseModal}
+      />
+      <Typography id="modal-error-title" variant="h5" component="h3">
+        Erreur client 
+      </Typography>
+      <Typography id="modal-error-emojis" variant="h6" component="h4">
+        {emojis} 
+      </Typography>
+      <Typography id="modal-error-type">
+        <span className='wording'>Type : Service indisponible</span>
+      </Typography>
+      <Typography id="modal-error-status-code">
+        <span className='wording'>Code status :</span> 
+        <span
+          className={colorClass()}
+        >
+          400
+        </span>
+      </Typography>
+      <Typography id="modal-error-description">
+        Le service que vous souhaitez utiliser est indisponible pour le moment, nous vous prions de nous excuser pour la gêne occasionnée
+      </Typography>
+    </Box>
+  </Modal>  
+    }
+  } else {
+    return <Modal
+    keepMounted
+    open={open}
+    onClose={returnToDashboardOrLoginPage}
+  >
+    <Box id='error-modal' sx={style}>
+      <CancelRoundedIcon
+        className='icon-cross-close' 
+        data-testid="mon-svg"
+        onClick={returnToDashboardOrLoginPage}
       />
       <Typography id="modal-error-title" variant="h5" component="h3">
         Erreur serveur 
@@ -75,13 +123,12 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
         {emojis} 
       </Typography>
       <Typography id="modal-error-type">
-        <span className='wording'>Type :</span> Service indisponible
+        <span className='wording'>Type : Service indisponible</span>
       </Typography>
-      <h2></h2>
       <Typography id="modal-error-status-code">
         <span className='wording'>Code status :</span> 
         <span
-          className={colorClass()}
+          className="error-503-color"
         >
           503
         </span>
@@ -102,6 +149,7 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
       >
         <Box id='error-modal' sx={style}>
           <CancelRoundedIcon 
+            role = "cancel"
             className='icon-cross-close' 
             onClick={handleCloseModal}
           />

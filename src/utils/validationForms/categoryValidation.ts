@@ -8,10 +8,6 @@ interface IIconData {
   icon: string;
 }
 
-interface IColorData {
-  color: string;
-}
-
 export const nameValidationSchema = yup.object().shape({
   name: yup
     .string()

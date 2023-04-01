@@ -7,7 +7,6 @@ import { GET_ALL_USERS } from "../../../api/user/queries";
 import { DELETE_USER } from "../../../api/user/mutations";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
 import Loader from "../../loader/Loader";
-import { disabledFormButtonStyle } from "../../../style/customStyles";
 
 type UserByIdProps = {
   id: number
