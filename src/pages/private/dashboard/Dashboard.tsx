@@ -29,8 +29,8 @@ const Dashboard: React.FC = () => {
               <p>Catégories</p>
             </Link>
           </div>
-        } 
-        {isCityAdmin && 
+        }
+        {isCityAdmin &&
           <div className='link-block'>
             <Link to={'#'}>
               <TravelExploreOutlinedIcon className='icon' />
@@ -46,7 +46,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </div>
         }
-        {isSuperAdmin && 
+        {isSuperAdmin &&
           <div className='link-block'>
             <Link to={'/private/tags'}>
               <SellOutlinedIcon className='icon' />
@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </div>
         }
-        {isSuperAdmin && 
+        {isSuperAdmin &&
           <div className='link-block'>
             <Link to={'/private/types'}>
               <ClassOutlinedIcon className='icon' />
@@ -62,7 +62,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </div>
         }
-        {isSuperAdmin && 
+        {isSuperAdmin &&
           <div className='link-block'>
             <Link to={'/private/users'}>
               <PersonOutlineOutlinedIcon className='icon' />
@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </div>
         }
-        {isSuperAdmin && 
+        {isSuperAdmin &&
           <div className='link-block'>
             <Link to={'#'}>
               <LocationCityOutlinedIcon className='icon' />

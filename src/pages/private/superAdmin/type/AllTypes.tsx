@@ -27,7 +27,7 @@ const AllTypes = () => {
   const [loading, setLoading] = useState(true);
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const handleModalClose = () => setOpenErrorModal(false);
-  
+
   // GET ALL
   const { allTypes, typesError, typesLoading } = GetAllTypes();
 
@@ -50,14 +50,14 @@ const AllTypes = () => {
   const [filteredTypes, setFilteredTypes] = useState<IType[]>();
   const handleFilteredTypes = (types: IType[]) => {
     setFilteredTypes(types);
-  } 
+  }
 
   useEffect(() => {
     if (allTypes?.getAllTypes) {
       handleFilteredTypes(allTypes?.getAllTypes);
-    } 
+    }
   }, [allTypes?.getAllTypes]);
-  
+
   if (typesError) return <ErrorModal error={typesError} onModalClose={handleModalClose} />
 
   const ActiveLoaderTypes: React.FC = () => (
@@ -65,9 +65,9 @@ const AllTypes = () => {
       <div className="loader-all-items">
         <Loader styleClass="loader" />
         <DynamicIcon iconName={DefaultIconsNames.TYPE as keyof typeof icons} color='' />
-        <h4>Chargement des types...</h4> 
+        <h4>Chargement des types...</h4>
       </div>
-    </div> 
+    </div>
   )
 
   if (typesLoading) {
@@ -87,7 +87,7 @@ const AllTypes = () => {
           <CreateType icons={icons} />
           <UseFilteredSearch dataToFilter={allTypes.getAllTypes} searchKey={"name"} setItems={handleFilteredTypes} />
           {
-            filteredTypes && 
+            filteredTypes &&
             filteredTypes.map(
               (type: IType, index: number) => {
                 return (

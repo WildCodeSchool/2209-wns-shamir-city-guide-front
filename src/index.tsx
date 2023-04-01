@@ -2,11 +2,11 @@ import './style/index.scss';
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { 
-  ApolloClient, 
-  ApolloProvider, 
+import {
+  ApolloClient,
+  ApolloProvider,
   createHttpLink,
-  InMemoryCache 
+  InMemoryCache
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { store } from "./features/store";

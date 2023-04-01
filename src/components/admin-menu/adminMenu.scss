@@ -1,0 +1,47 @@
+@import '../../style//variables.scss';
+
+.admin-menu {
+  width: 100%;
+  padding: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .globe-link {
+    display: inline-block;
+    max-width: 80px;
+    .globe-draw-img {
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+  .user-menu {
+    padding: 0;
+    // position absolute in order to avoid the user-menu move to left when logout-modal is opening
+    position: absolute;
+    right: 1rem;
+    p { 
+      font-size: 2rem;
+      margin-right: 0.8rem;
+      color: $blue-light;
+    }
+    .user-menu-icon {
+      color: transparent;
+      font-size: 8rem;
+      font-weight: 300;
+      stroke: $purple;
+      stroke-width: 0.3 !important;
+    }
+  }
+}
+
+.MuiList-root {
+  li {
+    svg {
+      color: $blue-light;
+      margin-right: 1.6rem;
+    }
+    p {
+      font-size: 2rem;
+    }
+  }
+}

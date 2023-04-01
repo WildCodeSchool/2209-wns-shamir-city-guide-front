@@ -37,7 +37,7 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
   const [categoryIcon, setCategoryIcon] = useState<string>(DefaultIconsNames.CATEGORY);
   const [iconDisplayed, setIconDisplayed] = useState<string>(DefaultIconsNames.CATEGORY);
   const [categoryIconColor, setCategoryIconColor] = useColor("hex", DefaultIconsColors.BLACK);
- 
+
 
   const [onVisible, setOnVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,9 +50,9 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
 
   // CREATE
   const [
-    createCategory, 
-    { 
-      error: createdCategoryError, 
+    createCategory,
+    {
+      error: createdCategoryError,
     }
   ] = useMutation(CREATE_CATEGORY, {
     refetchQueries: [
@@ -84,8 +84,8 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
       setLoading(true);
       setTimeout(() => {
         createCategory(
-          { 
-            variables: { 
+          {
+            variables: {
               category: {
                 name: categoryName,
                 icon: icon,
@@ -103,7 +103,7 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
     const errorName = await validateName({ name: value });
     if (errorName) setNameError(errorName);
     else setNameError("");
-  } 
+  }
   const changeIcon = async (value: keyof typeof icons) => {
     setCategoryIcon(value);
     const errorIcon = await validateIcon({ icon: value });
@@ -114,38 +114,38 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
     } else {
       setIconDisplayed(DefaultIconsNames.CATEGORY);
     }
-  } 
+  }
 
   const handleOnVisible = () => setOnVisible(true);
   const handleStopOnVisible = () => setOnVisible(false);
 
   return (
     <div className="create-tag-block">
-      <Button 
+      <Button
         onClick={handleOnVisible}
-        disabled={onVisible ? true : false} 
+        disabled={onVisible ? true : false}
       >
         <AddOutlinedIcon
           className={onVisible ? '' : 'icon-add'}
         />
       </Button>
-      <Button 
+      <Button
         className={onVisible ? "visible" : "not-visible"}
-        onClick={handleStopOnVisible} 
+        onClick={handleStopOnVisible}
       >
         <CloseIcon className="close-icon-blue" />
       </Button>
       <div className={onVisible ? "form-appear create-form" : "form-not-visible create-form"} >
-        <form 
+        <form
           autoComplete="off"
           onSubmit={e => handleOnCreate(e)}
         >
           <div className="fields">
-            <TextField  
-              label="Nom" 
-              variant="filled" 
+            <TextField
+              label="Nom"
+              variant="filled"
               inputProps={{style: textFielPropsStyle}}
-              InputLabelProps={{style: labelTextFieldPropsStyle}} 
+              InputLabelProps={{style: labelTextFieldPropsStyle}}
               onChange={(e) => changeName(e.target.value)}
               className='text-field'
               value={categoryName}
@@ -153,14 +153,14 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
               helperText={nameError.length ? nameError : ""}
             />
             <div className="field-icon-block">
-              <TextField  
-                label="Icône" 
-                variant="filled" 
+              <TextField
+                label="Icône"
+                variant="filled"
                 inputProps={{style: textFielPropsStyle}}
-                InputLabelProps={{style: labelTextFieldPropsStyle}} 
+                InputLabelProps={{style: labelTextFieldPropsStyle}}
                 onChange={(e) => changeIcon(e.target.value as keyof typeof icons)}
                 className='text-field'
-                value={categoryIcon} 
+                value={categoryIcon}
                 error={iconError?.length ? true : false}
                 helperText={iconError.length ? iconError : ""}
               />
@@ -172,9 +172,9 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
             <ColorPicker width={200} height={80} color={categoryIconColor} onChange={setCategoryIconColor} hideHEX hideRGB hideHSV dark />
           </div>
           <div className="create-btn-loading-block">
-            <Button   
+            <Button
               className="create-button"
-              style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}  
+              style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}
               type="submit"
               variant="contained"
               disabled={(nameError || iconError) ? true : false}

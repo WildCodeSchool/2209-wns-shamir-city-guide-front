@@ -53,8 +53,8 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
 
   // UPDATE
   const [
-    updateCategory, { 
-      error: updateCategoryError, 
+    updateCategory, {
+      error: updateCategoryError,
     }
   ] = useMutation(UPDATE_CATEGORY, {
     refetchQueries: [
@@ -89,8 +89,8 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
     if (!errorName) {
       setLoading(true);
       setTimeout(() => {
-        updateCategory({ 
-          variables: { 
+        updateCategory({
+          variables: {
             category: {
               id: categoryToUpdate.id,
               name: categoryToUpdate.name,
@@ -112,15 +112,15 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
     const errorName = await validateName({ name: value });
     if (errorName) setNameError(errorName);
     else setNameError("");
-  } 
+  }
 
   const changeIcon = async (value: keyof typeof icons) => {
     setCategoryToUpdate({...categoryToUpdate, icon: value});
     const errorIcon = await validateIcon({ icon: value });
-    
+
     if (errorIcon) {
       setIconError(errorIcon);
-    } 
+    }
     else setIconError("");
     if(Object.keys(icons).includes(value)) {
       setIconDisplayed(value);
@@ -131,16 +131,16 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
 
   return (
     <div className="update-form">
-      <form 
+      <form
       autoComplete="off"
         onSubmit={e => handleOnUpdate(e, categoryToUpdate)}
       >
         <div className='fields'>
-          <TextField  
-            label="Nom" 
-            variant="filled" 
+          <TextField
+            label="Nom"
+            variant="filled"
             inputProps={{style: textFielPropsStyle}}
-            InputLabelProps={{style: labelTextFieldPropsStyle}} 
+            InputLabelProps={{style: labelTextFieldPropsStyle}}
             onChange={(e) => changeName(e.target.value.trim())}
             className='text-field'
             value={categoryToUpdate.name}
@@ -148,14 +148,14 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
             helperText={nameError.length ? nameError : ""}
           />
           <div className="field-icon-block">
-            <TextField  
-              label="Icône" 
-              variant="filled" 
+            <TextField
+              label="Icône"
+              variant="filled"
               inputProps={{style: textFielPropsStyle}}
-              InputLabelProps={{style: labelTextFieldPropsStyle}} 
+              InputLabelProps={{style: labelTextFieldPropsStyle}}
               onChange={(e) => changeIcon(e.target.value.trim() as keyof typeof icons)}
               className='text-field'
-              value={categoryToUpdate.icon} 
+              value={categoryToUpdate.icon}
               error={iconError?.length ? true : false}
               helperText={iconError.length ? iconError : ""}
             />
@@ -168,9 +168,9 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
         </div>
         <div className='buttons'>
           <div className='update-btn-loading-block'>
-            <Button 
-              className='update-btn'  
-              style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}  
+            <Button
+              className='update-btn'
+              style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}
               type="submit"
               variant="contained"
               disabled={(nameError || iconError) ? true : false}
