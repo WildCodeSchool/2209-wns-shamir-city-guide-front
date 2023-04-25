@@ -1,4 +1,3 @@
-import "../type/allTypes.scss";
 import { useState, useEffect } from "react";
 
 import Accordion from '@mui/material/Accordion';
@@ -7,20 +6,24 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import * as icons from "@mui/icons-material";
+import LocationCityOutlinedIcon from '@mui/icons-material/LocationCityOutlined';
 
 import { ICity } from "../../../../types/city";
+// import { IUser } from "../../../../types/user";
 import { GetAllCities } from "../../../../services/city";
-import DynamicIcon from "../../../../components/dynamicIcon/DynamicIcon";
+import { GetAllUsers } from "../../../../services/user";
 
-// import UpdateCity from "../../../components/city/update/UpdateCity";
+import UpdateCity from "../../../../components/city/update/UpdateCity";
 import CreateCity from "../../../../components/city/create/CreateCity";
 
 import Loader from "../../../../components/loader/Loader";
 import ErrorModal from "../../../../components/modal/serverError/ServerErrorModal";
 import UseFilteredSearch from "../../../../components/useFilteredSearch/UseFilteredSearch";
-import { DefaultIconsNames } from "../../../../utils/constants";
+// import { TextField } from "@mui/material";
+// import DynamicIcon from "../../../../components/dynamicIcon/DynamicIcon";
+// import { DefaultIconsNames } from "../../../../utils/constants";
 
-const AllCities = () => {
+const AllCities: React.FC = () => {
   // Accordion state
   const [expanded, setExpanded] = useState<string | false>(false);
   const [loading, setLoading] = useState(true);
@@ -29,6 +32,8 @@ const AllCities = () => {
   
   // GET ALL
   const { allCities, citiesError, citiesLoading } = GetAllCities();
+  const { allUsers } = GetAllUsers();
+
 
   // Active cities Loader during 0.5 second
   useEffect(() => {
@@ -63,7 +68,7 @@ const AllCities = () => {
     <div className="page all-types">
       <div className="loader-all-items">
         <Loader styleClass="loader" />
-        <DynamicIcon iconName={DefaultIconsNames.CITY as keyof typeof icons} color='' />
+        <LocationCityOutlinedIcon className='icon' />
         <h4>Chargement des villes...</h4> 
       </div>
     </div> 
@@ -79,9 +84,9 @@ const AllCities = () => {
         <ActiveLoaderCities />
       ) : (
         <div className="content">
+          <h2 className="page-title">Les villes</h2>
           <div className="infos">
-            {/* <p><span>*</span>Le logo <DynamicIcon color='#000' iconName={DefaultIconsNames.CITY} />est utilisé par défaut lors de la création si la photo a déjà été choisie pour une autre ville présente dans la liste ou que la photo validée n'existe pas dans la liste des photos diponibles.</p> */}
-          "Hello"
+            <p><span>*</span>L'icône <LocationCityOutlinedIcon className='icon' /> est utilisée par défault lors de la création des villes.</p>
           </div>
           <CreateCity icons={icons} />
           <UseFilteredSearch dataToFilter={allCities.getAllCities} searchKey={"name"} setItems={handleFilteredCities} />
@@ -97,12 +102,12 @@ const AllCities = () => {
                         aria-controls={`panel${index + 1}bh-content`}
                       >
                       <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                        {/* <DynamicIcon iconName={city.logo} color={city.color} /> */}
+                        <LocationCityOutlinedIcon className='icon' />
                       </Typography>
                       <Typography sx={{ color: 'text.secondary' }}>{city.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
-                        {/* <UpdateCity city={city} icons={icons} resetExpanded={resetExpanded} /> */}
+                        <UpdateCity city={city} user={allUsers.GetAllUsers} resetExpanded={resetExpanded} />
                       </AccordionDetails>
                     </Accordion>
                   </div>

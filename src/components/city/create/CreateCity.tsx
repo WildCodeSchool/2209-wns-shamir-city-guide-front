@@ -7,16 +7,16 @@ import { GET_ALL_CITIES } from "../../../api/city/queries";
 
 import Loader from "../../loader/Loader";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
-import DynamicIcon from "../../dynamicIcon/DynamicIcon";
+// import LocationCityOutlinedIcon from '@mui/icons-material/LocationCityOutlined';
 
-import { validateName, validateLogo } from "../../../utils/validationForms/typeValidation";
-import { DefaultIconsNames, DefaultIconsColors } from "../../../utils/constants";
+import { validateName, validatePicture, validateLatitude, validateLongitude } from "../../../utils/validationForms/cityValidation";
+import { DefaultIconsNames } from "../../../utils/constants";
 
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
-import { ColorPicker, useColor } from "react-color-palette";
+// import { useColor } from "react-color-palette";
 import "react-color-palette/lib/css/styles.css";
 
 import {
@@ -34,19 +34,19 @@ type CityFormProps = {
 const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
   const [cityName, setCityName] = useState<string>("");
   const [cityLogo, setCityLogo] = useState<string>(DefaultIconsNames.CITY);
-  const [iconDisplayed, setIconDisplayed] = useState<string>(DefaultIconsNames.TYPE);
-  const [cityLogoColor, setCityLogoColor] = useColor("hex", DefaultIconsColors.BLACK);
-  
-  // ajouter Picture
-  const [cityPicture, setCityPicture] = useState<string>(DefaultIconsNames.CITY);
-
+  // const [cityLogoColor, setCityLogoColor] = useColor("hex", DefaultIconsColors.BLACK);
+  const [cityPicture, setCityPicture] = useState<string>("");
+  const [cityLatitude, setCityLatitude] = useState<string>("");
+  const [cityLongitude, setCityLongitude] = useState<string>("");
 
   const [onVisible, setOnVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [nameError, setNameError] = useState<string>("");
-  const [logoError, setLogoError] = useState<string>("");
+  // const [logoError, setLogoError] = useState<string>("");
   const [pictureError, setPictureError] = useState<string>("");
+  const [latitudeError, setLatitudeError] = useState<string>("");
+  const [longitudeError, setLongitudeError] = useState<string>("");
 
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const handleModalClose = () => setOpenErrorModal(false);
@@ -66,7 +66,9 @@ const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
       handleStopOnVisible();
       setCityName("");
       setCityLogo(DefaultIconsNames.CITY);
-      setIconDisplayed(DefaultIconsNames.CITY);
+      setCityPicture("");
+      setCityLatitude("");
+      setCityLongitude("");
     },
     onError() {
       setOpenErrorModal(true);
@@ -81,7 +83,6 @@ const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
       icon = DefaultIconsNames.TYPE;
     } else icon = cityLogo;
     const errorName = await validateName({ name: cityName });
-    
     if (errorName) setNameError(errorName);
     if (!errorName) {
       setLoading(true);
@@ -89,10 +90,12 @@ const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
         createCity(
           { 
             variables: { 
-              type: {
+              city: {
               name: cityName,
               logo: icon,
-              // color: typeLogoColor.hex
+              picture: cityPicture,
+              latitude: cityLatitude,
+              longitude: cityLongitude,
               }
             }
           }
@@ -108,18 +111,30 @@ const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
     else setNameError("");
   } 
 
-  const changeLogo = async (value: keyof typeof icons) => {
-    setCityLogo(value);
-    const errorLogo = await validateLogo({ logo: value });
-    if (errorLogo) setLogoError(errorLogo);
-    else setLogoError("");
-    if(Object.keys(icons).includes(value)) {
-      setIconDisplayed(value);
-    } else {
-      setIconDisplayed(DefaultIconsNames.CITY);
-    }
-  } 
+  const changePicture = async (value: string) => {
+    setCityPicture(value);
+    const errorPicture = await validatePicture({ picture: value});
+    if (errorPicture) setPictureError(errorPicture);
+    else setPictureError("");
+  }
 
+  const changeLatitude = async (value: string) => {
+    setCityLatitude(value);
+    const errorLatitude = await validateLatitude({ latitude: value});
+    if (errorLatitude) setLatitudeError(errorLatitude);
+    else setLatitudeError("");
+  }
+
+   const changeLongitude = async (value: string) => {
+    setCityLongitude(value);
+    const errorLongitude = await validateLongitude({ longitude: value });
+    if (errorLongitude)
+      setLongitudeError(errorLongitude);
+    else
+      setLongitudeError("");
+  }
+
+ 
   const handleOnVisible = () => setOnVisible(true);
   const handleStopOnVisible = () => setOnVisible(false);
 
@@ -156,32 +171,51 @@ const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
               error={nameError?.length ? true : false}
               helperText={nameError.length ? nameError : ""}
             />
-            <div className="field-icon-block">
-              <TextField  
-                label="Logo" 
-                variant="filled" 
-                inputProps={{style: textFielPropsStyle}}
-                InputLabelProps={{style: labelTextFieldPropsStyle}} 
-                onChange={(e) => changeLogo(e.target.value.trim() as keyof typeof icons)}
-                className='text-field'
-                value={cityLogo} 
-                error={logoError?.length ? true : false}
-                helperText={logoError.length ? logoError : ""}
-              />
-              <DynamicIcon iconName={iconDisplayed as keyof typeof icons} color={cityLogoColor.hex} />
-            </div>
+            <TextField
+              label="Photo"
+              variant="filled" 
+              inputProps={{style: textFielPropsStyle}}
+              InputLabelProps={{style: labelTextFieldPropsStyle}} 
+              onChange={(e) => changePicture(e.target.value.trim())}
+              className='text-field'
+              value={cityPicture}
+              error={pictureError?.length ? true : false}
+              helperText={pictureError.length ? pictureError : ""}
+            />
+            <TextField
+              label="Latitude"
+              variant="filled" 
+              inputProps={{style: textFielPropsStyle}}
+              InputLabelProps={{style: labelTextFieldPropsStyle}} 
+              onChange={(e) => changeLatitude(e.target.value.trim())}
+              className='text-field'
+              value={cityLatitude}
+              error={latitudeError?.length ? true : false}
+              helperText={latitudeError.length ? latitudeError : ""}
+            />
+            <TextField
+              label="Longitude"
+              variant="filled" 
+              inputProps={{style: textFielPropsStyle}}
+              InputLabelProps={{style: labelTextFieldPropsStyle}} 
+              onChange={(e) => changeLongitude(e.target.value.trim())}
+              className='text-field'
+              value={cityLongitude}
+              error={longitudeError?.length ? true : false}
+              helperText={longitudeError.length ? longitudeError : ""}
+            /> 
+            <TextField
+              label="Administrateur"
+            /> 
           </div>
-          <div className='logo-choice-color-block'>
-            <p>Couleur du logo</p>
-            <ColorPicker width={200} height={80} color={cityLogoColor} onChange={setCityLogoColor} hideHEX hideRGB hideHSV dark />
-          </div>
+          
           <div className="create-btn-loading-block">
             <Button   
               className="create-button"
-              style={(nameError || logoError) ? disabledFormButtonStyle : formButtonStyle}  
+              style={nameError? disabledFormButtonStyle : formButtonStyle}  
               type="submit"
               variant="contained"
-              disabled={(nameError || logoError) ? true : false}
+              disabled={nameError? true : false}
             >
               Créer
             </Button>
