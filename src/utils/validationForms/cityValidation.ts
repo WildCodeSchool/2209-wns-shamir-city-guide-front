@@ -1,12 +1,13 @@
 import * as yup from "yup";
+import { IUser } from "../../types/user";
+
+type CityFormProps = {
+  users: IUser[]
+};
 
 interface INameData {
   name: string;
 }
-
-// interface ILogoData {
-//   logo: string;
-// }
 
 interface IPictureData {
   picture: string;
@@ -20,41 +21,41 @@ interface ILongitudeData {
   longitude: string;
 }
 
+interface IAdministrateurData {
+  administrateur: object;
+}
+
 export const nameValidationSchema = yup.object().shape({
   name: yup
     .string()
     .required("Le nom est requis")
-    .min(1, "Le nom est trop court")
     .max(255, "Le nom est trop long")
 });
-
-// export const logoValidationSchema = yup.object().shape({
-//   logo: yup
-//     .string()
-//     .required("Le logo est requis")
-//     .max(255, "Le nom du logo est trop long")
-// });
 
 export const pictureValidationSchema = yup.object().shape({
   picture: yup
     .string()
-    .matches(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/, "La photo est requise")
-    .max(255,"Le nom de la photo est trop long")
+    .matches(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/, "L'url de l'image n'est pas dans le bon format")
 });
 
 export const latitudeValidationSchema = yup.object().shape({
   latitude: yup
     .string()
-    .matches(/^-?([0-8]?[0-9]|90)(\.[0-9]{1,})$/, "La latitude est requise")
-    .max(255,"La latitude est incorrecte")
+    .matches(/^-?([0-8]?[0-9]|90)(\.[0-9]{1,})$/, "La latitude n'est pas dans le bon format")
 });
 
 export const longitudeValidationSchema = yup.object().shape({
   longitude: yup
     .string()
-    .matches(/^-?([0-9]{1,2}|1[0-7][0-9]|180)(\.[0-9]{1,})$/, "La longitude est requise")
-    .max(255,"La longitude est incorrecte")
+    .matches(/^-?([0-9]{1,2}|1[0-7][0-9]|180)(\.[0-9]{1,})$/, "La longitude n'est pas dans le bon format")
 });
+
+export const administrateurValidationSchema = yup.object().shape({
+  administrateur: yup
+    // .oneOf()
+    .string()
+    .required("L'administrateur est requis")
+})
 
 
 export const validateName = async (name: INameData) => {
@@ -66,16 +67,6 @@ export const validateName = async (name: INameData) => {
     } 
   }
 };
-
-// export const validateLogo = async (logo: ILogoData) => {
-//   try {
-//     await logoValidationSchema.validate(logo);
-//   } catch (e) {
-//     if (e instanceof Error) {
-//       return e.message;
-//     } 
-//   }
-// };
 
 export const validatePicture = async (picture: IPictureData) => {
   try {
@@ -106,3 +97,13 @@ export const validateLongitude = async (longitude: ILongitudeData) => {
     }
   }
 };
+
+export const validateAdministrateur = async (administrateur : IAdministrateurData) => {
+  try {
+    await administrateurValidationSchema.validate(administrateur);
+  } catch(e) {
+    if(e instanceof Error) {
+      return e.message;
+    }
+  }
+}

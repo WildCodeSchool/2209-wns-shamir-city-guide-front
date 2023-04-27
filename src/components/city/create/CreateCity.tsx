@@ -7,17 +7,12 @@ import { GET_ALL_CITIES } from "../../../api/city/queries";
 
 import Loader from "../../loader/Loader";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
-// import LocationCityOutlinedIcon from '@mui/icons-material/LocationCityOutlined';
 
 import { validateName, validatePicture, validateLatitude, validateLongitude } from "../../../utils/validationForms/cityValidation";
-import { DefaultIconsNames } from "../../../utils/constants";
 
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import { TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import Button from '@mui/material/Button';
-// import { useColor } from "react-color-palette";
-import "react-color-palette/lib/css/styles.css";
+import { FormControl, TextField, MenuItem, Select, SelectChangeEvent, InputLabel, Button } from "@mui/material";
 
 import {
   textFielPropsStyle,
@@ -25,28 +20,27 @@ import {
   formButtonStyle,
   disabledFormButtonStyle
 } from "../../../style/customStyles";
-
+import { IUser } from "../../../types/user";
 
 type CityFormProps = {
-  icons: object
+  users: IUser[]
 };
 
-const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
+const CreateCity: React.FC<CityFormProps> = ({ users }: CityFormProps) => {
   const [cityName, setCityName] = useState<string>("");
-  const [cityLogo, setCityLogo] = useState<string>(DefaultIconsNames.CITY);
-  // const [cityLogoColor, setCityLogoColor] = useColor("hex", DefaultIconsColors.BLACK);
   const [cityPicture, setCityPicture] = useState<string>("");
   const [cityLatitude, setCityLatitude] = useState<string>("");
   const [cityLongitude, setCityLongitude] = useState<string>("");
+  const [cityAdmin, setCityAdmin] = useState<IUser>();  
 
   const [onVisible, setOnVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [nameError, setNameError] = useState<string>("");
-  // const [logoError, setLogoError] = useState<string>("");
   const [pictureError, setPictureError] = useState<string>("");
   const [latitudeError, setLatitudeError] = useState<string>("");
   const [longitudeError, setLongitudeError] = useState<string>("");
+  const [administrateurError, setAdministrateurError] = useState<string>("");
 
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const handleModalClose = () => setOpenErrorModal(false);
@@ -65,10 +59,10 @@ const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
       setLoading(false);
       handleStopOnVisible();
       setCityName("");
-      setCityLogo(DefaultIconsNames.CITY);
       setCityPicture("");
       setCityLatitude("");
       setCityLongitude("");
+      setCityAdmin(undefined);
     },
     onError() {
       setOpenErrorModal(true);
@@ -78,12 +72,16 @@ const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
 
   const handleOnCreate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let icon = "";
-    if (!Object.keys(icons).includes(cityLogo)) {
-      icon = DefaultIconsNames.TYPE;
-    } else icon = cityLogo;
     const errorName = await validateName({ name: cityName });
     if (errorName) setNameError(errorName);
+    const errorPicture = await validatePicture({picture: cityPicture});
+    if (errorPicture) setPictureError(errorPicture);
+    const errorLatitude = await validateLatitude({latitude: cityLatitude})
+    if (errorLatitude) setLatitudeError(errorLatitude);
+    const errorLongitude = await validateLongitude({longitude: cityLongitude});
+    if (errorLongitude) setLongitudeError(errorLongitude);
+  
+
     if (!errorName) {
       setLoading(true);
       setTimeout(() => {
@@ -92,10 +90,10 @@ const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
             variables: { 
               city: {
               name: cityName,
-              logo: icon,
               picture: cityPicture,
               latitude: cityLatitude,
               longitude: cityLongitude,
+              user: cityAdmin,
               }
             }
           }
@@ -134,7 +132,10 @@ const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
       setLongitudeError("");
   }
 
- 
+  const handleUserChange = (event: SelectChangeEvent<IUser>) => {
+    setCityAdmin(event.target.value as IUser);
+  };
+
   const handleOnVisible = () => setOnVisible(true);
   const handleStopOnVisible = () => setOnVisible(false);
 
@@ -204,9 +205,31 @@ const CreateCity: React.FC<CityFormProps> = ({ icons }: CityFormProps) => {
               error={longitudeError?.length ? true : false}
               helperText={longitudeError.length ? longitudeError : ""}
             /> 
-            <TextField
+          <FormControl sx={{width:220}}>
+            <InputLabel id="custom-select-label">Administrateur</InputLabel>  
+            <Select
+              labelId="custom-select-label"
               label="Administrateur"
-            /> 
+              value={cityAdmin ?? ""}
+              onChange={handleUserChange}
+              error={administrateurError?.length ? true : false}
+
+              >
+                
+                {users &&
+                  users.map((cityAdministrator: any) => {
+                    return (
+                      <MenuItem value={cityAdministrator} key={cityAdministrator.id}>
+                        {cityAdministrator.username}
+                      </MenuItem>
+                    )})}
+
+              </Select>
+              {
+              administrateurError.length ? administrateurError : ""
+
+              }
+          </FormControl>
           </div>
           
           <div className="create-btn-loading-block">

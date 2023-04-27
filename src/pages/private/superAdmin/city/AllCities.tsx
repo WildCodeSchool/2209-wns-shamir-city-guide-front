@@ -1,17 +1,12 @@
 import { useState, useEffect } from "react";
 
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Typography from '@mui/material/Typography';
+import { Accordion, AccordionDetails, AccordionSummary, Typography }  from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import * as icons from "@mui/icons-material";
 import LocationCityOutlinedIcon from '@mui/icons-material/LocationCityOutlined';
 
 import { ICity } from "../../../../types/city";
-// import { IUser } from "../../../../types/user";
 import { GetAllCities } from "../../../../services/city";
-import { GetAllUsers } from "../../../../services/user";
+import { GetAllUsersWithoutRoles } from "../../../../services/user";
 
 import UpdateCity from "../../../../components/city/update/UpdateCity";
 import CreateCity from "../../../../components/city/create/CreateCity";
@@ -19,9 +14,6 @@ import CreateCity from "../../../../components/city/create/CreateCity";
 import Loader from "../../../../components/loader/Loader";
 import ErrorModal from "../../../../components/modal/serverError/ServerErrorModal";
 import UseFilteredSearch from "../../../../components/useFilteredSearch/UseFilteredSearch";
-// import { TextField } from "@mui/material";
-// import DynamicIcon from "../../../../components/dynamicIcon/DynamicIcon";
-// import { DefaultIconsNames } from "../../../../utils/constants";
 
 const AllCities: React.FC = () => {
   // Accordion state
@@ -32,8 +24,8 @@ const AllCities: React.FC = () => {
   
   // GET ALL
   const { allCities, citiesError, citiesLoading } = GetAllCities();
-  const { allUsers } = GetAllUsers();
-
+  const { allUsers, usersError } = GetAllUsersWithoutRoles();
+  console.log(allUsers?.getAllUsers);
 
   // Active cities Loader during 0.5 second
   useEffect(() => {
@@ -62,7 +54,7 @@ const AllCities: React.FC = () => {
     } 
   }, [allCities?.getAllCities]);
   
-  if (citiesError) return <ErrorModal error={citiesError} onModalClose={handleModalClose} />
+  if (citiesError || usersError) return <ErrorModal error={citiesError} onModalClose={handleModalClose} />
 
   const ActiveLoaderCities: React.FC = () => (
     <div className="page all-types">
@@ -85,10 +77,7 @@ const AllCities: React.FC = () => {
       ) : (
         <div className="content">
           <h2 className="page-title">Les villes</h2>
-          <div className="infos">
-            <p><span>*</span>L'icône <LocationCityOutlinedIcon className='icon' /> est utilisée par défault lors de la création des villes.</p>
-          </div>
-          <CreateCity icons={icons} />
+          <CreateCity users={allUsers.getAllUsers}/>
           <UseFilteredSearch dataToFilter={allCities.getAllCities} searchKey={"name"} setItems={handleFilteredCities} />
           {
             filteredCities && 
@@ -107,7 +96,7 @@ const AllCities: React.FC = () => {
                       <Typography sx={{ color: 'text.secondary' }}>{city.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
-                        <UpdateCity city={city} user={allUsers.GetAllUsers} resetExpanded={resetExpanded} />
+                        <UpdateCity city={city} users={allUsers.GetAllUsers} resetExpanded={resetExpanded} />
                       </AccordionDetails>
                     </Accordion>
                   </div>

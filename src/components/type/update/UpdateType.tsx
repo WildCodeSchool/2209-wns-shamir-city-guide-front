@@ -14,8 +14,7 @@ import { validateName, validateLogo } from "../../../utils/validationForms/typeV
 import { DefaultIconsNames } from "../../../utils/constants";
 import { IType } from "../../../types/type";
 
-import { TextField } from "@mui/material";
-import Button from '@mui/material/Button';
+import { TextField, Button } from "@mui/material";
 import { ColorPicker, useColor } from 'react-color-palette';
 
 import {

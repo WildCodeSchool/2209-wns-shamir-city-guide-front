@@ -2,7 +2,6 @@ import "./createTag.scss";
 import React, { FormEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 
-
 import { CREATE_TAG } from "../../../api/tag/mutations";
 import { GET_ALL_TAGS } from "../../../api/tag/queries";
 
@@ -14,9 +13,8 @@ import { validateName, validateIcon } from "../../../utils/validationForms/tagVa
 import { DefaultIconsNames } from "../../../utils/constants";
 
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import { TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import Button from '@mui/material/Button';
+import { TextField, Button } from "@mui/material";
 
 import {
   textFielPropsStyle,

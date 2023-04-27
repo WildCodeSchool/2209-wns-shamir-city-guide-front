@@ -8,12 +8,12 @@ import { GET_ALL_CITIES } from "../../../api/city/queries";
 
 import Loader from "../../loader/Loader";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
-// import LocationCityOutlinedIcon from '@mui/icons-material/LocationCityOutlined';
-// import DeleteCity from '../delete/DeleteCity';
+import DeleteCity from '../delete/deleteCity';
+
+import { FormControl, TextField, Select, SelectChangeEvent, MenuItem, InputLabel } from "@mui/material";
 
 import { validateName, validatePicture, validateLatitude, validateLongitude } from "../../../utils/validationForms/cityValidation";
 
-import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import {
   textFielPropsStyle,
@@ -26,27 +26,30 @@ import { IUser } from "../../../types/user";
 
 type CityFormProps = {
   city: ICity
-  user: IUser[]
+  users: IUser[]
   resetExpanded: () => void
 };
 
 
-const UpdateCity: React.FC<CityFormProps> = ({ city, user, resetExpanded }: CityFormProps) => {
+const UpdateCity: React.FC<CityFormProps> = ({ city, users, resetExpanded }: CityFormProps) => {
   const [cityToUpdate, setCityToUpdate] = useState<ICity>({
     id: Number(city.id),
     name: city.name,
     latitude: city.latitude,
     longitude: city.longitude,
-    picture: city.picture,
+    picture: city.picture
   });
 
-  // const [userToUpdate, setUserToUpdate] = useState<IUser[]>(user.userName);
+  const [adminToUpdate] = useState<IUser[]>(users)
+  
+  const [cityAdmin, setCityAdmin] = useState<IUser>();  
 
   const [loading, setLoading] = useState(false);
+  const [pictureError, setPictureError] = useState<string>("");
   const [nameError, setNameError] = useState<string>("");
   const [latitudeError, setLatitudeError] = useState<string>("");
   const [longitudeError, setLongitudeError] = useState<string>("");
-  const [pictureError, setPictureError] = useState<string>("");
+  const [administrateurError, setAdministrateurError] = useState<string>("");
 
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const handleModalClose = () => setOpenErrorModal(false);
@@ -65,7 +68,7 @@ const UpdateCity: React.FC<CityFormProps> = ({ city, user, resetExpanded }: City
       setCityToUpdate(cityToUpdate);
       resetExpanded();
     },
-    onError(error) { 
+    onError() { 
       setOpenErrorModal(true);
       setLoading(false);
     },
@@ -73,18 +76,22 @@ const UpdateCity: React.FC<CityFormProps> = ({ city, user, resetExpanded }: City
 
   const handleOnUpdate = async (e: FormEvent<HTMLFormElement>, cityToUpdate: ICity) => {
     e.preventDefault();
-    // if (!Object.keys(icons).includes(cityToUpdate.icon)) {
-    //   cityToUpdate.icon = DefaultIconsNames.CITY;
-    // }
-    const errorName = await validateName({ name: cityToUpdate.name });
-
+      const errorName = await validateName({ name: cityToUpdate.name });
     if (errorName) setNameError(errorName);
+    const errorPicture = await validatePicture({picture: cityToUpdate.picture});
+    if (errorPicture) setPictureError(errorPicture);
+    const errorLatitude = await validateLatitude({latitude: cityToUpdate.latitude})
+    if (errorLatitude) setLatitudeError(errorLatitude);
+    const errorLongitude = await validateLongitude({longitude: cityToUpdate.longitude});
+    if (errorLongitude) setLongitudeError(errorLongitude);
+  
     if (!errorName) {
       setLoading(true);
       setTimeout(() => {
         updateCity({ 
           variables: { 
             city: cityToUpdate, 
+            user: cityAdmin,
           },
         });
         window.scrollTo({
@@ -122,6 +129,10 @@ const UpdateCity: React.FC<CityFormProps> = ({ city, user, resetExpanded }: City
     if (errorLongitude) setLongitudeError(errorLongitude);
     else setLongitudeError("");
   }
+
+    const handleUserChange = (event: SelectChangeEvent<IUser>) => {
+    setCityAdmin(event.target.value as IUser);
+  };
 
   
   return (
@@ -177,10 +188,32 @@ const UpdateCity: React.FC<CityFormProps> = ({ city, user, resetExpanded }: City
               error={longitudeError?.length ? true : false}
               helperText={longitudeError.length ? longitudeError : ""}
             /> 
-            <TextField
+                      <FormControl sx={{width:220}}>
+            <InputLabel id="custom-select-label">Administrateur</InputLabel>  
+            <Select
+              labelId="custom-select-label"
               label="Administrateur"
-            /> 
-            </div>
+              value={cityAdmin ?? ""}
+              onChange={handleUserChange}
+              error={administrateurError?.length ? true : false}
+
+              >
+                
+                {users &&
+                  users.map((cityAdministrator: any) => {
+                    return (
+                      <MenuItem value={cityAdministrator} key={cityAdministrator.id}>
+                        {cityAdministrator.username}
+                      </MenuItem>
+                    )})}
+
+              </Select>
+              {
+              administrateurError.length ? administrateurError : ""
+
+              }
+          </FormControl>
+          </div>
 
         <div className='buttons'>
           <div className='update-btn-loading-block'>
@@ -195,7 +228,7 @@ const UpdateCity: React.FC<CityFormProps> = ({ city, user, resetExpanded }: City
             </Button>
             {loading && <Loader styleClass='update-tag-loader' />}
           </div>
-          {/* <DeleteCity id={Number(city.id)} resetExpanded={resetExpanded} /> */}
+          <DeleteCity id={Number(city.id)} resetExpanded={resetExpanded} />
         </div>
       </form>
       {openErrorModal && <ErrorModal error={updateCityError} onModalClose={handleModalClose} />}

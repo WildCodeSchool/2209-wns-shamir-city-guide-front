@@ -14,8 +14,7 @@ import DeleteTag from '../delete/DeleteTag';
 import { validateName, validateIcon } from "../../../utils/validationForms/tagValidation";
 import { DefaultIconsNames } from "../../../utils/constants";
 
-import { TextField } from "@mui/material";
-import Button from '@mui/material/Button';
+import { TextField, Button } from "@mui/material";
 import {
   textFielPropsStyle,
   labelTextFieldPropsStyle,

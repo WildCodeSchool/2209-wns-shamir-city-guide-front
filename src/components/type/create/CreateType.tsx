@@ -13,9 +13,8 @@ import { validateName, validateLogo } from "../../../utils/validationForms/typeV
 import { DefaultIconsNames, DefaultIconsColors } from "../../../utils/constants";
 
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import { TextField } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import Button from '@mui/material/Button';
 import { ColorPicker, useColor } from "react-color-palette";
 import "react-color-palette/lib/css/styles.css";
 
