@@ -37,7 +37,6 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
   } 
 
   const returnToDashboardOrLoginPage = () => {
-    console.log("coucou", location);
     if (/private/.test(location.pathname)) {
       handleCloseModal();
       navigate('/private/dashboard');
@@ -82,16 +81,16 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
         onClick={handleCloseModal}
       />
       <Typography id="modal-error-title" variant="h5" component="h3">
-        Erreur client 
+        Erreur client
       </Typography>
       <Typography id="modal-error-emojis" variant="h6" component="h4">
-        {emojis} 
+        {emojis}
       </Typography>
       <Typography id="modal-error-type">
         <span className='wording'>Type : Service indisponible</span>
       </Typography>
       <Typography id="modal-error-status-code">
-        <span className='wording'>Code status :</span> 
+        <span className='wording'>Code status :</span>
         <span
           className={colorClass()}
         >
@@ -102,7 +101,7 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
         Le service que vous souhaitez utiliser est indisponible pour le moment, nous vous prions de nous excuser pour la gêne occasionnée
       </Typography>
     </Box>
-  </Modal>  
+  </Modal>
     }
   } else {
     return <Modal
@@ -112,7 +111,7 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
   >
     <Box id='error-modal' sx={style}>
       <CancelRoundedIcon
-        className='icon-cross-close' 
+        className='icon-cross-close'
         data-testid="mon-svg"
         onClick={returnToDashboardOrLoginPage}
       />
@@ -150,7 +149,7 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
         <Box id='error-modal' sx={style}>
           <CancelRoundedIcon 
             role = "cancel"
-            className='icon-cross-close' 
+            className='icon-cross-close'
             onClick={handleCloseModal}
           />
           <Typography id="modal-error-title" variant="h5" component="h3">
