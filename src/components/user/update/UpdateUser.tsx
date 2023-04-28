@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_USER } from "../../../api/user/mutations";
 import { GET_ALL_USERS } from "../../../api/user/queries";
 
-import UserRolesTransfertList from "../../userRolesTransfertList.scss/UserRolesTransfertList";
+import UserRolesTransfertList from "../../userRolesTransfertList/UserRolesTransfertList";
 import DeleteUser from "../delete/DeleteUser";
 import Loader from "../../loader/Loader";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";

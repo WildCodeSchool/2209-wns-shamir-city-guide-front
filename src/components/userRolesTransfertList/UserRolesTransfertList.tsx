@@ -2,7 +2,7 @@ import './userRolesTransfertList.scss';
 
 import React, { FormEvent, useEffect, useState } from 'react'
 import { IRole } from '../../types/role';
-import ErrorModal from "../../components/modal/serverError/ServerErrorModal";
+import ErrorModal from "../modal/serverError/ServerErrorModal";
 
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';

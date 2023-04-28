@@ -17,12 +17,15 @@ import NotFound from "./pages/errors/notFound/NotFound";
 
 // pages/private
 import Dashboard from "./pages/private/dashboard/Dashboard";
+
 import AllTags from "./pages/private/superAdmin/tag/AllTags";
 import AllTypes from "./pages/private/superAdmin/type/AllTypes";
-import AllCircuits from "./pages/private/cityAdmin/circuit/AllCircuits";
 import AllCategories from "./pages/private/superAdmin/category/AllCategories";
 import AllRoles from "./pages/private/superAdmin/role/AllRoles";
 import UserAndRole from "./pages/private/superAdmin/userAndRole/UserAndRole";
+
+import AllPois from "./pages/private/cityAdmin/poi/AllPois";
+import AllCircuits from "./pages/private/cityAdmin/circuit/AllCircuits";
 
 // utils
 import ProtectedRoutes from "./utils/ProtectedRoutes";
@@ -66,6 +69,7 @@ const Router = () => {
 
           {/* City admin routes */}
           <Route element={<ProtectedRoutes requiredRoles={[UserRoles.CITY_ADMIN]} />}>
+            <Route path="/private/pois" element={<AllPois />} />
             <Route path="/private/circuits" element={<AllCircuits />} />
           </Route>
         </Route>

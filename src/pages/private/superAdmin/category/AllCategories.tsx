@@ -1,4 +1,3 @@
-//import "./allCategories.scss";
 import "../tag/allTags.scss";
 import { useState, useEffect } from "react";
 
@@ -89,7 +88,11 @@ const AllCategories: React.FC = () => {
             <p><span>*</span>L'icône <DynamicIcon iconName={DefaultIconsNames.CATEGORY} color='' />est utilisée par défault lors de la création si l'icône a déjà été choisie pour une autre catégorie présente dans la liste</p>
           </div>
           <CreateCategory icons={icons} />
-          <UseFilteredSearch dataToFilter={allCategories.getAllCategories} searchKey={"name"} setItems={handleFilteredCategories} />
+          <UseFilteredSearch 
+            dataToFilter={allCategories.getAllCategories} 
+            searchKey={"name"} 
+            setItems={handleFilteredCategories} 
+          />
           {
             filteredCategories && 
             filteredCategories.map(
