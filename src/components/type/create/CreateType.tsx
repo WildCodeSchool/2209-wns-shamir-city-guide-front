@@ -72,14 +72,14 @@ const CreateType: React.FC<TypeFormProps> = ({ icons }: TypeFormProps) => {
 
   const handleOnCreate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Last inputs verification before validate the api call, for security
     let icon = "";
     if (!Object.keys(icons).includes(typeLogo)) {
       icon = DefaultIconsNames.TYPE;
     } else icon = typeLogo;
-    const errorName = await validateName({ name: typeName });
     
-    if (errorName) setNameError(errorName);
-    if (!errorName) {
+    if (!isThereAnyError()) {
       setLoading(true);
       setTimeout(() => {
         createType(
@@ -116,6 +116,13 @@ const CreateType: React.FC<TypeFormProps> = ({ icons }: TypeFormProps) => {
     }
   } 
 
+  const isThereAnyError = () => (
+    typeName.length === 0 ||
+    typeLogo.length === 0 ||
+    nameError || 
+    logoError
+  );
+   
   const handleOnVisible = () => setOnVisible(true);
   const handleStopOnVisible = () => setOnVisible(false);
 
@@ -174,10 +181,10 @@ const CreateType: React.FC<TypeFormProps> = ({ icons }: TypeFormProps) => {
           <div className="create-btn-loading-block">
             <Button   
               className="create-button"
-              style={(nameError || logoError) ? disabledFormButtonStyle : formButtonStyle}  
+              style={isThereAnyError() ? disabledFormButtonStyle : formButtonStyle}  
               type="submit"
               variant="contained"
-              disabled={(nameError || logoError) ? true : false}
+              disabled={isThereAnyError() ? true : false}
             >
               Créer
             </Button>

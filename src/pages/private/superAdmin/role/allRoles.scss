@@ -3,6 +3,11 @@
 .all-roles {
   .content {
     margin: 4rem auto;
+    div {
+      &:first-child {
+        margin-bottom: 4rem;
+      }
+    }
   }
 }
 .role-section {

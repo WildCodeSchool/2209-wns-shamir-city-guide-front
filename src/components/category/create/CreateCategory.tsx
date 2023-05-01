@@ -73,14 +73,14 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
 
   const handleOnCreate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Last inputs verification before validate the api call, for security
     let icon = "";
     if (!Object.keys(icons).includes(categoryIcon)) {
       icon = DefaultIconsNames.CATEGORY;
     } else icon = categoryIcon;
-    const errorName = await validateName({ name: categoryName });
 
-    if (errorName) setNameError(errorName);
-    if (!errorName) {
+    if (!isThereAnyError()) {
       setLoading(true);
       setTimeout(() => {
         createCategory(
@@ -115,6 +115,13 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
       setIconDisplayed(DefaultIconsNames.CATEGORY);
     }
   }
+
+  const isThereAnyError = () => (
+    categoryName.length === 0 ||
+    categoryIcon.length === 0 ||
+    nameError || 
+    iconError
+  );
 
   const handleOnVisible = () => setOnVisible(true);
   const handleStopOnVisible = () => setOnVisible(false);
@@ -174,10 +181,10 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
           <div className="create-btn-loading-block">
             <Button
               className="create-button"
-              style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}
+              style={isThereAnyError() ? disabledFormButtonStyle : formButtonStyle}
               type="submit"
               variant="contained"
-              disabled={(nameError || iconError) ? true : false}
+              disabled={isThereAnyError() ? true : false}
             >
               Créer
             </Button>

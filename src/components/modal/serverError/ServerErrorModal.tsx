@@ -1,13 +1,17 @@
 import './serverErrorModal.scss';
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ApolloError } from '@apollo/client';
+
 import { logout } from '../../../features/userSlice';
 import { useAppDispatch } from "../../../features/store";
+
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import { ApolloError } from '@apollo/client';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+
+import { StatusCode, StatusCodeMessage } from '../../../utils/constants';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -31,13 +35,15 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  console.log("ERROR SERVER =>", error?.message);
   
   const handleCloseModal = () => {
     onModalClose();
   } 
 
+  const isBadRequestErrorMessage = () => error?.message.includes("not successful") && error.message.includes("400");
+
   const returnToDashboardOrLoginPage = () => {
-    console.log("coucou", location);
     if (/private/.test(location.pathname)) {
       handleCloseModal();
       navigate('/private/dashboard');
@@ -104,6 +110,11 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
     </Box>
   </Modal>  
     }
+  } else if (isBadRequestErrorMessage()) {
+    statusCodeError = StatusCode.BAD_REQUEST;
+    emojis = null;
+    statusCodeMessage = StatusCodeMessage.BAD_REQUEST;
+    errorMessage = "La requête envoyée au serveur est dans un format incorrect";
   } else {
     return <Modal
     keepMounted

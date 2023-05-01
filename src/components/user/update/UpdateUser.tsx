@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_USER } from "../../../api/user/mutations";
 import { GET_ALL_USERS } from "../../../api/user/queries";
 
-import UserRolesTransfertList from "../../userRolesTransfertList.scss/UserRolesTransfertList";
+import UserRolesTransfertList from "../../userRolesTransfertList/UserRolesTransfertList";
 import DeleteUser from "../delete/DeleteUser";
 import Loader from "../../loader/Loader";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
@@ -38,7 +38,7 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: 
     username: user.username,
     email: user.email
   });
-
+  
   const [roleToUpdate] = useState<IRole[]>(user.roles);
 
   const [loading, setLoading] = useState(false);
@@ -59,7 +59,6 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: 
     ],
     onCompleted() {
       setLoading(false);
-      setUserToUpdate(userToUpdate);
       resetExpanded();
     },
     onError() {      
@@ -70,10 +69,8 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: 
 
   const handleOnUpdate = async (e: FormEvent<HTMLFormElement>, userToUpdate: IUser) => {
     e.preventDefault();
-    const errorUsername = await validateUsername({ username: userToUpdate.username });
 
-    if (errorUsername) setUsernameError(errorUsername);
-    if (!errorUsername) {
+    if (!isThereAnyError()) {
       setLoading(true);
       setTimeout(() => {
         updateUser({ 
@@ -106,7 +103,12 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: 
     else setEmailError("");
   }
 
-  
+  const isThereAnyError = () => (
+    userToUpdate.username.length === 0 ||
+    userToUpdate.email.length === 0 ||
+    usernameError || 
+    emailError
+  );  
 
   return (
     <div className="update-form">
@@ -142,10 +144,10 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: 
             <div className='update-btn-loading-block'>
               <Button 
                 className='update-btn'  
-                style={(usernameError || emailError) ? disabledFormButtonStyle : formButtonStyle}  
+                style={isThereAnyError() ? disabledFormButtonStyle : formButtonStyle}  
                 type="submit"
                 variant="contained"
-                disabled={(usernameError || emailError) ? true : false}
+                disabled={isThereAnyError() ? true : false}
               >
                 Mettre à jour
               </Button>
@@ -153,7 +155,7 @@ const UpdateUser: React.FC<TypeFormProps> = ({ user, allRoles, resetExpanded }: 
             </div>
         </div>
       </form>
-      <UserRolesTransfertList user={userToUpdate} allRoles={allRoles} actualUserRoles={roleToUpdate} resetExpanded={resetExpanded} />
+      <UserRolesTransfertList userId={userToUpdate.id} allRoles={allRoles} actualUserRoles={roleToUpdate} resetExpanded={resetExpanded} />
       {openErrorModal && <ErrorModal error={updateUserError} onModalClose={handleModalClose} />}
       <DeleteUser id={Number(user.id)} username={user.username} resetExpanded={resetExpanded} />
     </div>

@@ -16,7 +16,7 @@ export const CREATE_USER = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser ($user: UserType!) {
+  mutation UpdateUser ($user: CleanedUserType!) {
     updateUser(user: $user) {
       id
       username 
@@ -33,8 +33,6 @@ export const UPDATE_USER_ROLES = gql`
   mutation updateUserRoles ($payload: UpdateUserRoles!) {
     updateUserRoles (payload: $payload) {
       id
-      username
-      email
       roles {
         id
         name

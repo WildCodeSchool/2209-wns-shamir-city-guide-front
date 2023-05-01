@@ -9,6 +9,11 @@ export const GET_ALL_CIRCUITS = gql`
       picture
       description
       price
+      city {
+        id
+        name
+        picture
+      }
       category {
         id
         name

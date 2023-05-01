@@ -10,5 +10,13 @@ export interface ICity {
   picture: string;
   circuits?: ICircuit[];
   pois?: IPoi[];
-  user: IUser[];
+  user: IUser;
+}
+
+export interface ICityIdToParse {
+  id?: string;
+  name: string;
+  latitude: string;
+  longiture: string;
+  picture: string;
 }

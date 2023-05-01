@@ -2,14 +2,31 @@ import { gql } from "@apollo/client";
 
 
 export const GET_ALL_POIS = gql`
-  query GetAllPois {
-    getAllPois {
+  query GetAllPoi {
+    getAllPoi {
       id
       name  
       address
       latitude
       longitude
       picture
+      city {
+        latitude
+        id
+        longitude
+        name
+        picture
+        user {
+          id
+          username
+          email
+        }
+      user {
+        id
+        username
+        email
+      }
+    }
       type {
         id
         name

@@ -11,7 +11,7 @@ import ErrorModal from "../../modal/serverError/ServerErrorModal";
 import DynamicIcon from "../../dynamicIcon/DynamicIcon";
 
 import { validateName, validateIcon } from "../../../utils/validationForms/tagValidation";
-import { DefaultIconsNames } from "../../../utils/constants";
+import { DefaultIconsNames, Colors } from "../../../utils/constants";
 
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { TextField } from "@mui/material";
@@ -69,13 +69,16 @@ const CreateTag: React.FC<TagFormProps> = ({ icons }: TagFormProps) => {
 
   const handleOnCreate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Last inputs verification before validate the api call, for security
     let icon = "";
     if (!Object.keys(icons).includes(tagIcon)) {
       icon = DefaultIconsNames.TAG;
     } else icon = tagIcon;
-    const errorName = await validateName({ name: tagName });
-    if (errorName) setNameError(errorName);
-    if (!errorName) {
+
+    await changeName(tagName);
+
+    if (!isThereAnyError()) {
       setLoading(true);
       setTimeout(() => {
         createTag(
@@ -110,6 +113,13 @@ const CreateTag: React.FC<TagFormProps> = ({ icons }: TagFormProps) => {
       setIconDisplayed(DefaultIconsNames.TAG);
     }
   } 
+
+  const isThereAnyError = () => (
+    tagName.length === 0 ||
+    tagIcon.length === 0 ||
+    nameError || 
+    iconError
+  );
 
   const handleOnVisible = () => setOnVisible(true);
   const handleStopOnVisible = () => setOnVisible(false);
@@ -159,16 +169,16 @@ const CreateTag: React.FC<TagFormProps> = ({ icons }: TagFormProps) => {
                 error={iconError?.length ? true : false}
                 helperText={iconError.length ? iconError : ""}
               />
-              <DynamicIcon iconName={iconDisplayed as keyof typeof icons} color='' />
+              <DynamicIcon iconName={iconDisplayed as keyof typeof icons} color={Colors.PURPLE} />
             </div>
           </div>
           <div className="create-btn-loading-block">
             <Button   
               className="create-button"
-              style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}  
+              style={isThereAnyError() ? disabledFormButtonStyle : formButtonStyle}  
               type="submit"
               variant="contained"
-              disabled={(nameError || iconError) ? true : false}
+              disabled={isThereAnyError() ? true : false}
             >
               Créer
             </Button>
