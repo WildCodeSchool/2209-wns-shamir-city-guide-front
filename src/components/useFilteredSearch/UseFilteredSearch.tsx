@@ -1,28 +1,50 @@
-import './useFilteredSearch.scss';
-import React, { useState, useEffect } from 'react';
+import './style.scss';
+import { useState, useEffect } from 'react';
 import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { textFielPropsStyle } from '../../style/customStyles';
 
 export interface IProps {
-  dataToFilter: any[] | undefined;
-  searchKey: string;
-  setItems: (data: any[]) => void;
+  dataToFilter: any[] | undefined
+  searchKey?: string
+  searchKeyProperty?: string
+  setItems: (data: any[]) => void
 }
 
 
-const UseFilteredSearch = ({ dataToFilter, searchKey, setItems }: IProps) => {
+const UseFilteredSearch = ({ 
+  dataToFilter, 
+  searchKey, 
+  searchKeyProperty, 
+  setItems
+}: IProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const placeholderTodisplay = (): string => {
-    if (searchKey === "name" || "username") return "nom";
-    else return "";
+    let sentence = "";
+    if (searchKey === "name" || "username") sentence += "nom";
+    if (searchKeyProperty && searchKeyProperty === "city") sentence += " ou par ville"
+    
+    return sentence;
   }
   
   const handleSearchTermChange = (value: string) => setSearchTerm(value.toLowerCase());
   
   const handleSearchChange = () => {
-    if (searchKey.length > 0 && dataToFilter) {
-      const filteredData = dataToFilter.filter((item: any) => item[searchKey].toLowerCase().includes(searchTerm));
+    if (
+      searchKey && 
+      searchKey.length > 0 && 
+      dataToFilter
+    ) {
+      const filteredData = dataToFilter.filter((item: any) => {
+        if (
+          searchKeyProperty &&
+          (
+            item[searchKey].toLowerCase().includes(searchTerm) ||
+            item[searchKeyProperty].name.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        ) return true; 
+        else if (item[searchKey].toLowerCase().includes(searchTerm)) return true;
+      });
       setItems(filteredData);
     } else {
       if (dataToFilter) setItems(dataToFilter);
@@ -31,12 +53,10 @@ const UseFilteredSearch = ({ dataToFilter, searchKey, setItems }: IProps) => {
 
   useEffect(() => {    
     handleSearchChange();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
 
   useEffect(() => {
     handleSearchTermChange("");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   // if dataToFilter change so it does mean that the tags has been reload so we have to reset the searchTerme field
   }, [dataToFilter]);
 

@@ -59,16 +59,8 @@ const UpdateType: React.FC<TypeFormProps> = ({ type, icons, resetExpanded }: Typ
     refetchQueries: [
       { query: GET_ALL_TYPES }
     ],
-    onCompleted(data) {
+    onCompleted() {
       setLoading(false);
-      const updatedType = data.updateType;
-      setTypeToUpdate({
-        id: Number(updatedType.id),
-        name: updatedType.name,
-        logo: updatedType.logo,
-        color: updatedType.color
-      });
-      setIconDisplayed(updatedType.logo);
       resetExpanded();
     },
     onError() {
@@ -79,13 +71,13 @@ const UpdateType: React.FC<TypeFormProps> = ({ type, icons, resetExpanded }: Typ
 
   const handleOnUpdate = async (e: FormEvent<HTMLFormElement>, typeToUpdate: IType) => {
     e.preventDefault();
+
+        // Last inputs verification before validate the api call, for security
     if (!Object.keys(icons).includes(typeToUpdate.logo)) {
       typeToUpdate.logo = DefaultIconsNames.TYPE;
     }
-    const errorName = await validateName({ name: typeToUpdate.name });
 
-    if (errorName) setNameError(errorName);
-    if (!errorName) {
+    if (!isThereAnyError()) {
       setLoading(true);
       setTimeout(() => {
         updateType({
@@ -127,6 +119,13 @@ const UpdateType: React.FC<TypeFormProps> = ({ type, icons, resetExpanded }: Typ
       setIconDisplayed(DefaultIconsNames.TYPE);
     }
   }
+
+  const isThereAnyError = () => (
+    typeToUpdate.name.length === 0 ||
+    typeToUpdate.logo.length === 0 ||
+    nameError || 
+    logoError
+  );
   
   return (
     <div className="update-form">
@@ -169,10 +168,10 @@ const UpdateType: React.FC<TypeFormProps> = ({ type, icons, resetExpanded }: Typ
           <div className='update-btn-loading-block'>
             <Button 
               className='update-btn'  
-              style={(nameError || logoError) ? disabledFormButtonStyle : formButtonStyle}  
+              style={isThereAnyError() ? disabledFormButtonStyle : formButtonStyle}  
               type="submit"
               variant="contained"
-              disabled={(nameError || logoError) ? true : false}
+              disabled={isThereAnyError() ? true : false}
             >
               Mettre à jour
             </Button>

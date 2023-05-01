@@ -18,7 +18,7 @@ import CreateTag from "../../../../components/tag/create/CreateTag";
 import Loader from "../../../../components/loader/Loader";
 import ErrorModal from "../../../../components/modal/serverError/ServerErrorModal";
 import UseFilteredSearch from "../../../../components/useFilteredSearch/UseFilteredSearch";
-import { DefaultIconsNames } from "../../../../utils/constants";
+import { DefaultIconsNames, Colors } from "../../../../utils/constants";
 
 
 const AllTags: React.FC = () => {
@@ -82,7 +82,7 @@ const AllTags: React.FC = () => {
         <div className="content">
           <h2 className="page-title">Les tags</h2>
           <div className="infos">
-            <p><span>*</span>L'icône <DynamicIcon iconName={DefaultIconsNames.TAG} color='' />est utilisée par défault lors de la création si l'icône a déjà été choisie pour un autre tag présent dans la liste ou que l'icône validée n'existe pas dans la liste des icônes diponibles.</p>
+            <p><span>*</span>L'icône <DynamicIcon iconName={DefaultIconsNames.TAG} color={Colors.PURPLE} />est utilisée par défault lors de la création si l'icône a déjà été choisie pour un autre tag présent dans la liste ou que l'icône validée n'existe pas dans la liste des icônes diponibles.</p>
           </div>
           <CreateTag icons={icons} />
           <UseFilteredSearch dataToFilter={allTags.getAllTags} searchKey={"name"} setItems={handleFilteredTags} />

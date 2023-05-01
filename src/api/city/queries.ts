@@ -51,3 +51,20 @@ export const GET_CITY_BY_NAME = gql`
     }
   }
 `;
+
+export const GET_CITIES_BY_USERNAME = gql`
+  query GetCitiesByUsername ($username: String!) {
+    getCitiesByUsername (username: $username) {
+      id
+      name
+      latitude
+      longitude
+      picture
+      user {
+        id
+        username
+        email
+      }
+    }
+  }
+`;

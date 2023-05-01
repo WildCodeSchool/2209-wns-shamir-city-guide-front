@@ -11,7 +11,7 @@ import Loader from "../../loader/Loader";
 
 type PoiByIdProps = {
     id: number
-    resetExpanded: () =>  void
+    resetExpanded: () => void
 };
 
 const DeletePoi: React.FC<PoiByIdProps> = ({ id, resetExpanded }: PoiByIdProps) => {

@@ -110,7 +110,7 @@ const AllCategories: React.FC = () => {
                       <Typography className='name-section-color' sx={{ color: 'text.secondary' }}>{category.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
-                        <UpdateCategory category={category} icons={icons} color={"#1B1215"} resetExpanded={resetExpanded} />
+                        <UpdateCategory category={category} icons={icons} resetExpanded={resetExpanded} />
                       </AccordionDetails>
                     </Accordion>
                   </div>

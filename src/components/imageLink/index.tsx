@@ -12,7 +12,7 @@ const ImageLink:React.FC<ImageLinkProps> = ({ link, defaultPath, alt }: ImageLin
 
     const handleImagePathError = () => setImagePath(defaultPath);
     const handleImagePath = (value: string) => setImagePath(value);
-
+    
     useEffect(() => {
         handleImagePath(link);
     }, [link]);

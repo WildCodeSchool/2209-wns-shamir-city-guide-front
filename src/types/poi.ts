@@ -9,7 +9,7 @@ export interface IPoi {
   latitude: string;
   longitude: string
   picture: string;
-  city?: ICity;
-  type?: IType;
-  tags?: ITag[];
+  city: ICity;
+  type: IType;
+  tags: ITag[];
 }

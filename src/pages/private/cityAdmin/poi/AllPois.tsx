@@ -1,6 +1,9 @@
 import "../../superAdmin/tag/allTags.scss";
 import { useState, useEffect } from "react";
 
+// Redux, store
+import { useAppSelector } from "../../../../features/store";
+
 //Material UI Icons
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -9,8 +12,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import * as icons from "@mui/icons-material";
 
-//lien des icones de material UI de poi
 import { IPoi } from "../../../../types/poi";
+import { GetCitiesByUsername } from "../../../../services/city";
 import { GetAllPois } from "../../../../services/poi";
 import { GetAllTags } from "../../../../services/tag";
 import { GetAllTypes } from "../../../../services/type";
@@ -31,8 +34,12 @@ const AllPois: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
     const handleModalClose = () => setOpenErrorModal(false);
+
+    // User in store
+    const userSelector = useAppSelector((state) => state.userReducer.user);
   
     // GET ALL
+    const { citiesByUsername, citiesByUsernameError } = GetCitiesByUsername(userSelector.infos.username);
     const { allPois, poisError, poisLoading } = GetAllPois();
     const { allTags, tagsError } = GetAllTags();
     const { allTypes, typesError } = GetAllTypes();
@@ -54,9 +61,7 @@ const AllPois: React.FC = () => {
 
     // Filtered search
     const [filteredPois, setFilteredPois] = useState<IPoi[]>();
-    const handleFilteredPois = (pois: IPoi[]) => {
-        setFilteredPois(pois);
-    } 
+    const handleFilteredPois = (pois: IPoi[]) => setFilteredPois(pois);
 
     useEffect(() => {
         if (allPois?.getAllPoi) {
@@ -64,7 +69,7 @@ const AllPois: React.FC = () => {
         } 
     }, [allPois?.getAllPoi]);
   
-    if (poisError || tagsError || typesError) return <ErrorModal error={poisError} onModalClose={handleModalClose} />
+    if (poisError || citiesByUsernameError || typesError || tagsError) return <ErrorModal error={poisError} onModalClose={handleModalClose} />
   
     const ActiveLoaderPois: React.FC = () => (
     <div className="page all-tags">
@@ -87,8 +92,17 @@ const AllPois: React.FC = () => {
             ) : (
                     <div className="content">
                         <h2 className="page-title">Les points d'intérêt</h2>
-                        <CreatePoi tags={allTags.getAllTags} types={allTypes.getAllTypes} />
-                        <UseFilteredSearch dataToFilter={allPois.getAllPoi} searchKey={"name"} setItems={handleFilteredPois} />
+                        <CreatePoi 
+                            tags={allTags.getAllTags} 
+                            types={allTypes.getAllTypes} 
+                            userCities={citiesByUsername.getCitiesByUsername} 
+                        />
+                        <UseFilteredSearch 
+                            dataToFilter={allPois.getAllPoi} 
+                            searchKey="name"
+                            searchKeyProperty="city"
+                            setItems={handleFilteredPois} 
+                        />
                         {filteredPois && filteredPois.map((poi: IPoi, index: number) => {
                             return (
                                 <div className="tag-section" key={poi.id}>
@@ -104,7 +118,12 @@ const AllPois: React.FC = () => {
                                         </AccordionSummary>
 
                                         <AccordionDetails id={`section-${index}`}>
-                                            <UpdatePoi poi={poi} tags={allTags.getAllTags} types={allTypes.getAllTypes} resetExpanded={resetExpanded} />
+                                            <UpdatePoi 
+                                                poi={poi} 
+                                                tags={allTags.getAllTags} 
+                                                types={allTypes.getAllTypes} 
+                                                userCities={citiesByUsername.getCitiesByUsername} resetExpanded={resetExpanded} 
+                                            />
                                         </AccordionDetails>
                                     </Accordion>
                                 </div>

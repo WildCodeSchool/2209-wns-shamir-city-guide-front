@@ -17,7 +17,6 @@ import Loader from '../loader/Loader';
 import { UPDATE_USER_ROLES } from '../../api/user/mutations';
 import { GET_ALL_USERS } from '../../api/user/queries';
 import { useMutation } from '@apollo/client';
-import { IUser } from '../../types/user';
 
 
 // toutes les valeurs de l'objet a qui ne sont pas dans l'objet b sont conservées
@@ -30,13 +29,13 @@ const intersection = (a: readonly IRole[], b: readonly IRole[]) => {
 }
 
 type IPropsRolesTransfertList = {
-  user: IUser
+  userId: number | null | undefined
   allRoles: IRole[],
   actualUserRoles: IRole[]
   resetExpanded: () => void
 }
 
-const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpanded }: IPropsRolesTransfertList) => {
+const UserRolesTransfertList = ({ userId,  allRoles, actualUserRoles, resetExpanded }: IPropsRolesTransfertList) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [checked, setChecked] = useState<readonly IRole[]>([]);
   const [left, setLeft] = useState<IRole[]>(not(allRoles, actualUserRoles));
@@ -104,7 +103,7 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
       updateUserRoles({ 
         variables: { 
           payload: {
-            user: user,
+            userId: userId,
             roles: formattedRoles
           }, 
         },
@@ -200,10 +199,10 @@ const UserRolesTransfertList = ({ user,  allRoles, actualUserRoles, resetExpande
         <Button 
           onClick={(e: any) => handleOnRolesUpdate(e)}
           className='update-btn'  
-          style={(rightError) ? disabledFormButtonStyle : formButtonStyle}  
+          style={rightError ? disabledFormButtonStyle : formButtonStyle}  
           type="submit"
           variant="contained"
-          disabled={(rightError) ? true : false}
+          disabled={rightError ? true : false}
         >
           Modifier les rôles
         </Button>

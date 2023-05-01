@@ -46,9 +46,9 @@ const longitudeValidationSchema = yup.object().shape({
 });
 
 const pictureValidationSchema = yup.object().shape({
-  longitude: yup
+  picture: yup
     .string()
-    .matches(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/, "L'url de l'image n'est pas dans le bon format")
+    .matches(/^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/ , "L'url de l'image n'est pas dans le bon format")
 });
 
 export const validateName = async (name: INameData) => {

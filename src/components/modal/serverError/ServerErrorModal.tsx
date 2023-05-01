@@ -44,7 +44,6 @@ const ServerErrorModal: React.FC<ErrorModalProps> = ({ error, onModalClose }: Er
   const isBadRequestErrorMessage = () => error?.message.includes("not successful") && error.message.includes("400");
 
   const returnToDashboardOrLoginPage = () => {
-    console.log("coucou", location);
     if (/private/.test(location.pathname)) {
       handleCloseModal();
       navigate('/private/dashboard');
