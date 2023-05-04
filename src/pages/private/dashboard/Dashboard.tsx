@@ -32,7 +32,7 @@ const Dashboard: React.FC = () => {
         }
         {isCityAdmin &&
           <div className='link-block'>
-            <Link to={'#'}>
+            <Link to={'/private/circuits'}>
               <TravelExploreOutlinedIcon className='icon' />
               <p>Circuits</p>
             </Link>
