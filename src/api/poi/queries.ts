@@ -89,3 +89,13 @@ export const GET_POI_BY_NAME = gql`
     }
   }
 `;
+
+export const GET_POIS_BY_CITY = gql`
+  query GetPoisByCity($cityId: Float!) {
+    getPoisByCity(cityId: $cityId) {
+      id 
+      name
+      picture
+    }
+  }
+`;

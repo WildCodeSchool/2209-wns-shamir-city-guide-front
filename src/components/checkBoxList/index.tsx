@@ -3,16 +3,14 @@ import {
   FormGroup,
   FormControlLabel, 
   Checkbox,
-  Avatar,
-  Box,
-  SelectChangeEvent
+  Avatar
 } from "@mui/material";
 import DynamicIcon from '../dynamicIcon/DynamicIcon';
 
 export const StyleAvatar = {
   padding: '0px',
-  width: '100px',
-  height: '50px',
+  width: '80px',
+  height: '40px',
   marginLeft: '32px',
   borderRadius: 5
 }
@@ -27,6 +25,7 @@ interface CheckboxListProps <T> {
   propertyImgToDisplay: string | null
   displayIcon: boolean,
   iconColor: string
+  labelId?: string
 }
 
 function CustomCheckboxList<T>(props: CheckboxListProps<T>) {
@@ -40,6 +39,7 @@ function CustomCheckboxList<T>(props: CheckboxListProps<T>) {
     propertyImgToDisplay,
     displayIcon,
     iconColor,
+    labelId
   } = props;
   
   return (
@@ -47,6 +47,7 @@ function CustomCheckboxList<T>(props: CheckboxListProps<T>) {
       {dataToList.map((item: any) => (
         <FormControlLabel
           key={item.id}
+          id={labelId}
           control={
             <Checkbox
               checked={idsArray.includes(parseInt(item.id)) || false}
@@ -59,6 +60,13 @@ function CustomCheckboxList<T>(props: CheckboxListProps<T>) {
               <p> {item[menuItemPropertyToDisplay]} </p>
               {displayIcon && propertyImgToDisplay &&
                 <DynamicIcon iconName={item[propertyImgToDisplay]} color={item?.color ?? iconColor} />
+              }
+              {displayImg && propertyImgToDisplay &&
+                <Avatar
+                alt={`${item[menuItemPropertyToDisplay]}-img-alt`}
+                src={item[propertyImgToDisplay]}
+                style={StyleAvatar}
+              />
               }
             </div>
           }

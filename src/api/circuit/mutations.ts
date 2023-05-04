@@ -8,7 +8,6 @@ export const CREATE_CIRCUIT = gql`
       name  
       picture
       description
-      price
       category {
         id
         name
@@ -45,7 +44,6 @@ export const UPDATE_CIRCUIT = gql`
       name  
       picture
       description
-      price
       category {
         id
         name

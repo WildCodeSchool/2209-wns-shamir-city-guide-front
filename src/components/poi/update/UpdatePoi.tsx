@@ -1,4 +1,3 @@
-//import './updateCategory.scss';
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 
@@ -90,7 +89,7 @@ const UpdatePoi: React.FC<PoiFormProps> = ({
         parsePoiCityId(poi.city.id);
         parsePoiTypeId(poi.type.id);
         initializeTagsIdsArray(poi.tags);
-    }, [poi.id, poi.city.id, poi.type.id, poi.tags]);
+    }, [poi]);
 
     // UPDATE
     const [
@@ -105,7 +104,7 @@ const UpdatePoi: React.FC<PoiFormProps> = ({
             setLoading(false);
             resetExpanded();
         },
-            onError() {
+        onError() {
             setOpenErrorModal(true);
             setLoading(false);
         },

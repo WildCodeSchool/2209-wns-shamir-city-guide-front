@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import * as icons from "@mui/icons-material";
 
-import { IPoi } from "../../../../types/poi";
 import { GetCitiesByUsername } from "../../../../services/city";
 import { GetAllPois } from "../../../../services/poi";
 import { GetAllTags } from "../../../../services/tag";
@@ -26,6 +25,7 @@ import Loader from "../../../../components/loader/Loader";
 import ErrorModal from "../../../../components/modal/serverError/ServerErrorModal";
 import UseFilteredSearch from "../../../../components/useFilteredSearch/UseFilteredSearch";
 import { DefaultIconsNames } from "../../../../utils/constants";
+import { IPoi } from "../../../../types/poi";
 
 
 const AllPois: React.FC = () => {
