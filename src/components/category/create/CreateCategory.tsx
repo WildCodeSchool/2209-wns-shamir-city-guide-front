@@ -14,9 +14,8 @@ import { DefaultIconsColors, DefaultIconsNames } from "../../../utils/constants"
 
 //lien des icones de material UI de Category
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import { TextField } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import Button from '@mui/material/Button';
 import { ColorPicker, useColor } from "react-color-palette";
 import "react-color-palette/lib/css/styles.css";
 
@@ -73,14 +72,14 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
 
   const handleOnCreate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Last inputs verification before validate the api call, for security
     let icon = "";
     if (!Object.keys(icons).includes(categoryIcon)) {
       icon = DefaultIconsNames.CATEGORY;
     } else icon = categoryIcon;
+    const errorName = await validateName({ name: categoryName });
 
-    if (!isThereAnyError()) {
+    if (errorName) setNameError(errorName);
+    if (!errorName) {
       setLoading(true);
       setTimeout(() => {
         createCategory(
@@ -115,13 +114,6 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
       setIconDisplayed(DefaultIconsNames.CATEGORY);
     }
   }
-
-  const isThereAnyError = () => (
-    categoryName.length === 0 ||
-    categoryIcon.length === 0 ||
-    nameError || 
-    iconError
-  );
 
   const handleOnVisible = () => setOnVisible(true);
   const handleStopOnVisible = () => setOnVisible(false);
@@ -181,10 +173,10 @@ const CreateCategory: React.FC<CategoryFormProps> = ({ icons }: CategoryFormProp
           <div className="create-btn-loading-block">
             <Button
               className="create-button"
-              style={isThereAnyError() ? disabledFormButtonStyle : formButtonStyle}
+              style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}
               type="submit"
               variant="contained"
-              disabled={isThereAnyError() ? true : false}
+              disabled={(nameError || iconError) ? true : false}
             >
               Créer
             </Button>

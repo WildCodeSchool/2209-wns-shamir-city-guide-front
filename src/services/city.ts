@@ -3,8 +3,8 @@ import {
   GET_ALL_CITIES, 
   GET_CITY_BY_ID, 
   GET_CITY_BY_NAME,
-  GET_CITIES_BY_USERNAME 
-} from "../api/city/queries";
+
+} from "../api/city/qGET_CITIES_BY_USERNAMEueries";
 
 
 export const GetAllCities = () => {
@@ -47,10 +47,10 @@ export const GetCitiesByUsername = (username: string) => {
       variables: {
         username
       }
-    }); 
-    return { 
-      citiesByUsername, 
-      citiesByUsernameError, 
-      citiesByUsernameLoading 
+    });
+    return {
+      citiesByUsername,
+      citiesByUsernameError,
+      citiesByUsernameLoading
     };
 }

@@ -15,6 +15,16 @@ export const GET_ALL_USERS = gql`
   }
 `;
 
+export const GET_ALL_USERS_WITHOUT_ROLES = gql`
+  query GetAllUsers {
+    getAllUsers {
+      id
+      username 
+      email
+    }
+  }
+`;
+
 export const GET_USER_BY_ID = gql`
   query GetUserById ($id: Float!) {
     getUserById (id: $id) {

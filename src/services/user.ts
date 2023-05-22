@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { 
   GET_ALL_USERS, 
+  GET_ALL_USERS_WITHOUT_ROLES, 
   GET_USER_BY_ID, 
   GET_USER_BY_USERNAME 
 } from "../api/user/queries";
@@ -8,6 +9,15 @@ import {
 
 export const GetAllUsers = () => {
   const { data: allUsers, error: usersError, loading: usersLoading } = useQuery(GET_ALL_USERS);
+  return { 
+    allUsers, 
+    usersError, 
+    usersLoading 
+  };
+}
+
+export const GetAllUsersWithoutRoles = () => {
+  const { data: allUsers, error: usersError, loading: usersLoading } = useQuery(GET_ALL_USERS_WITHOUT_ROLES);
   return { 
     allUsers, 
     usersError, 
