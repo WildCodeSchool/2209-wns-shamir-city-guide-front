@@ -30,7 +30,7 @@ export const passwordValidationSchema =  yup.object().shape({
   password: yup
     .string()
     .required("Le mot de passe est requis")
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&-_]{8,}$/,
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[^\s]{8,}$/,
     "Le format du mot de passe est incorrect."
     )
     .max(255, "Le mot de passe ne peut pas faire plus de 255 caractères")

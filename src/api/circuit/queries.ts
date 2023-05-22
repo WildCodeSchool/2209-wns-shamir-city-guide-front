@@ -8,14 +8,23 @@ export const GET_ALL_CIRCUITS = gql`
       name  
       picture
       description
-      price
+      city {
+        id
+        name
+        picture
+        user {
+          id
+          username
+          email
+        }
+      }
       category {
         id
         name
         icon
         color
       }
-      pointsOfInterest {
+      pois: pointsOfInterest {
         id
         name
         address
@@ -40,19 +49,28 @@ export const GET_ALL_CIRCUITS = gql`
 
 export const GET_CIRCUITS_BY_ID = gql`
   query GetCircuitById ($id: Float!) {
-    getCircuitById (id: $id) {
+    getAllCircuits {
       id
       name  
       picture
       description
-      price
+      city {
+        id
+        name
+        picture
+        user {
+          id
+          username
+          email
+        }
+      }
       category {
         id
         name
         icon
         color
       }
-      pointsOfInterest {
+      pois: pointsOfInterest {
         id
         name
         address
@@ -70,26 +88,35 @@ export const GET_CIRCUITS_BY_ID = gql`
           name
           icon
         }
-      } 
+      }
     }
   }
 `;
 
 export const GET_CIRCUIT_BY_NAME = gql`
   query GetCircuitByName ($name: String!) {
-    getCircuitByName (name: $name) {
+    getAllCircuits {
       id
       name  
       picture
       description
-      price
+      city {
+        id
+        name
+        picture
+        user {
+          id
+          username
+          email
+        }
+      }
       category {
         id
         name
         icon
         color
       }
-      pointsOfInterest {
+      pois: pointsOfInterest {
         id
         name
         address

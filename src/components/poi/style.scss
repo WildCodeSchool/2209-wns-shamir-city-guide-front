@@ -1,0 +1,497 @@
+@import '../../style/variables.scss';
+
+.form_block {
+  .form-appear {
+    max-height: 1500px !important;
+  }
+  .create-form {
+    form {
+      .fields {
+        display: flex;
+        justify-content: space-between;
+        textarea {
+          font-size: 1.6rem !important;
+        }
+        .container-select-image-checkbox {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          margin-top: 3.2rem;
+          .image-field_block {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            .text-field {
+              width: 50%;
+            }
+            .image_block {
+              margin-top: 2.4rem !important;
+              width: 70%;
+              max-height: 300px;
+              margin: 0 auto;
+              img {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+
+          .menu-select-block {
+            width: 50%;
+            padding: 0;
+            margin: 4.8rem 0 0 0;
+            .cities-select-menu,
+            .types-select-menu,
+            .categories-select-menu {
+              margin-right: 0;
+              padding: 0;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+              .MuiFormControl-root {
+                width: 80%;
+                margin-right: 0rem !important;
+                padding: 0.4rem;
+                .MuiInputBase-root {
+                  padding: 0 !important;
+                  margin-right: 0;
+                  div {
+                    span {
+                      .MuiAvatar-root {
+                        @media screen and (max-width: 1150px) {
+                          margin-right: 1.6rem !important;
+                          width: 80px !important;
+                          height: 40px !important;
+                        }
+                      }
+                      span {
+                        @media screen and (max-width: 1150px) {
+                          font-size: 1.8rem;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              p {
+                margin: 0.8rem 0;
+                color: red;
+              }
+            }
+          }
+          .ville-type-block {
+            width: 50%;
+            margin-top: 1.6rem;
+            .selected-city {
+              margin-right: 0;
+              .libelle_block {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                padding: 1.6rem;
+                p {
+                  &:first-child {
+                    font-size: 2rem;
+                    color: $purple;
+
+                  }
+                  &:nth-child(2) {
+                    font-size: 2rem;
+                    margin-left: 2.4rem;
+                    align-self:center;
+                  }
+                }
+              }
+              .city-img_block {
+                width: 70%;
+                margin: 0 auto;
+                img {
+                  object-fit: cover;
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+            }
+            .selected-type {
+              margin-right: 0;
+              .libelle_block {
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                width: 100% !important;
+                padding: 1.6rem;
+                .libelle {
+                  font-size: 2rem;
+                  color: $purple;
+                  align-self: center;
+                  margin: 0;
+                }
+                .name-logo {
+                  font-size: 2rem;
+                  margin-left: 2.4rem;
+                  display: flex;
+                  align-items: center;
+                  svg {
+                    margin-left: 0.8rem;
+                  }
+                }
+              }
+
+            }
+          }
+        }
+        h4 {
+          margin-top: 2.4rem;
+        }
+        .no-pois-by-city-msg {
+          border: 1px solid red;
+          font-size: 1.8rem;
+          display: flex;
+          align-items: center;
+          color: $purple;
+        }
+        .checkbox-list {
+          width: 100%;
+          max-height: 250px;
+          margin: 1.6rem 0;
+          padding: 0 !important;
+          display: flex !important;
+          justify-content: space-between !important;
+          @media screen and (max-width: 1150px) {
+            max-height: 230px;
+          }
+          @media screen and (max-width: 850px) {
+            max-height: 280px;
+          }
+          /* Styles pour les iPhone 6, 7 et 8 en mode portrait */
+          @media only screen 
+          and (min-device-width: 375px) 
+          and (max-device-width: 668px) 
+          and (-webkit-device-pixel-ratio: 2)
+          and (orientation: portrait) {
+            max-height: 500px;
+          }
+          .poi-row {
+            border: 1px solid red;
+          }
+          label {
+            width: 20% !important;
+            margin: 0.8rem 0 !important;
+            padding: 0 !important;
+            @media screen and (max-width: 1350px) {
+              width: 22% !important;
+            }
+            @media screen and (max-width: 1150px) {
+              width: 25% !important;
+            }
+            @media screen and (max-width: 850px) {
+              width: 30% !important;
+            }
+            /* Styles pour les iPhone 6, 7 et 8 en mode portrait */
+            @media only screen 
+            and (min-device-width: 375px) 
+            and (max-device-width: 668px) 
+            and (-webkit-device-pixel-ratio: 2)
+            and (orientation: portrait) {
+              width: 40% !important;
+            }
+           
+            span {
+              padding: 0 !important;
+              &:first-child {
+                svg {
+                  @media screen and (max-width: 1350px) {
+                      width: 2.4rem !important;
+                      height: 2.4rem !important;
+                  }
+                }
+              }
+              &:nth-child(2) {
+                width: 100%;
+                pointer-events: none !important;
+                div {
+                  width: 100%;
+                  display: flex;
+                  justify-content: space-between;
+                  margin: 0 auto;
+                  p {
+                    font-size: 2rem;
+                    margin-left: 1.6rem;
+                    color: $black;
+                    @media screen and (max-width: 1500px) {
+                      font-size: 1.8rem;
+                    }
+                    @media screen and (max-width: 1150px) {
+                      font-size: 1.6rem;
+                    }
+                  }
+                  svg {
+                    @media screen and (max-width: 1350px) {
+                      width: 2.4rem;
+                      height: 2.4rem;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .poi-by-city-checkbox-list.css-dmmspl-MuiFormGroup-root {
+          display: flex;
+          flex-direction: row;
+        }
+        .poi-by-city-checkbox-list {
+          display: flex !important;
+          justify-content: flex-start !important;
+          flex-wrap: wrap !important;
+          & > #poi-by-city-label {
+            margin-left: 3.2rem !important;
+            margin-bottom: 1.6rem !important;
+          }
+          .MuiFormControlLabel-root {
+            width: 23% !important;
+            @media screen and (max-width: 1650px) {
+              width: 30% !important;
+            }
+            @media screen and (max-width: 1450px) {
+              width: 40% !important;
+            }
+            @media screen and (max-width: 1100px) {
+              width: 45% !important;
+            }
+            @media screen and (max-width: 900px) {
+              width: 48% !important;
+            }
+            @media screen and (max-width: 400px) {
+              width: 48% !important;
+            }
+            .MuiTypography-root {
+              div {
+                display: flex !important;
+                justify-content: space-between !important;
+                p {
+                  font-size: 1.4rem !important;
+                }
+                .MuiAvatar-root {
+                  display: block;
+                  margin-left: 0.8rem !important;
+                  margin-right: 0 !important;
+                }
+              }
+            }
+          }
+        }
+        .ids-error-msg {
+          font-size: 2rem;
+          color: red;
+        }
+      }
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.MuiFormControl-root {
+  width: 23%;
+  @media screen and (max-width: 1800px) {
+    width: 26%;
+  }
+  @media screen and (max-width: 1600px) {
+    width: 30%;
+  }
+  @media screen and (max-width: 1380px) {
+    width: 35%;
+  }
+  @media screen and (max-width: 1180px) {
+    width: 40%;
+  }
+  @media screen and (max-width: 1050px) {
+    width: 50%;
+  }
+  @media screen and (max-width: 850px) {
+    width: 60%;
+  }
+  @media screen and (max-width: 680px) {
+    width: 70%;
+  }
+  @media screen and (max-width: 500px) {
+    width: 85%;
+  }
+  @media screen and (max-width: 400px) {
+    width: 100%;
+  }
+}
+
+// UPDATE FORM IN ACCORDION MENU
+.MuiAccordionDetails-root {
+  .form_block {
+    .create-form {
+      form {
+        .checkbox-list {
+          width: 100%;
+          max-height: 250px;
+          margin: 1.6rem 0;
+          padding: 0 !important;
+          display: flex !important;
+          justify-content: space-between !important;
+          @media screen and (max-width: 1150px) {
+            max-height: 230px;
+          }
+          @media screen and (max-width: 850px) {
+            max-height: 280px;
+          }
+          /* Styles pour les iPhone 6, 7 et 8 en mode portrait */
+          @media only screen 
+          and (min-device-width: 375px) 
+          and (max-device-width: 668px) 
+          and (-webkit-device-pixel-ratio: 2)
+          and (orientation: portrait) {
+            max-height: 500px;
+          }
+          label {
+            width: 20% !important;
+            margin: 0.8rem 0 !important;
+            padding: 0 !important;
+            @media screen and (max-width: 1350px) {
+              width: 22% !important;
+            }
+            @media screen and (max-width: 1150px) {
+              width: 25% !important;
+            }
+            @media screen and (max-width: 850px) {
+              width: 30% !important;
+            }
+            /* Styles pour les iPhone 6, 7 et 8 en mode portrait */
+            @media only screen 
+            and (min-device-width: 375px) 
+            and (max-device-width: 668px) 
+            and (-webkit-device-pixel-ratio: 2)
+            and (orientation: portrait) {
+              width: 40% !important;
+            }
+           
+            span {
+              padding: 0 !important;
+              &:first-child {
+                svg {
+                  stroke: none;
+                  @media screen and (max-width: 1350px) {
+                      width: 2.4rem !important;
+                      height: 2.4rem !important;
+                  }
+                }
+              }
+              &:nth-child(2) {
+                width: 100%;
+                pointer-events: none !important;
+                div {
+                  width: 100%;
+                  display: flex;
+                  justify-content: space-between;
+                  margin: 0 auto;
+                  p {
+                    font-size: 2rem;
+                    margin-left: 1.6rem;
+                    color: $black;
+                    @media screen and (max-width: 1500px) {
+                      font-size: 1.8rem;
+                    }
+                    @media screen and (max-width: 1150px) {
+                      font-size: 1.6rem;
+                    }
+                  }
+                  svg {
+                    @media screen and (max-width: 1350px) {
+                      width: 2.4rem;
+                      height: 2.4rem;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        h4 {
+          width: 100%;
+          margin: 2.4rem 0 1.6rem 0;
+        }
+        .tags-list {
+          display: flex;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          margin-top: 1.6rem;
+          .tag_block {
+            display: flex;
+            align-items: center;
+            margin-left: 4rem;
+            p {
+              margin-right: 0.8rem;
+            }
+            &:first-child {
+              margin-left: 0;
+            }
+          }
+        }
+        .display-poi-list_block {
+          width: 100% !important;
+          display: flex !important;
+          justify-content: flex-start !important;  
+          .display-poi-item {
+            width: 24% !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            margin-right: 3.2rem !important;
+            margin-left: 0 !important;
+            margin-bottom: 0.8rem !important;
+            padding: 0.8rem 1.6rem !important;
+            border-radius: 5px;
+            border: 1px solid rgba(128, 128, 128, 0.299);
+            @media screen and (max-width: 1500px) {
+              width: 31% !important;
+            }
+            @media screen and (max-width: 1400px) {
+              width: 37% !important;
+            }
+            @media screen and (max-width: 1200px) {
+              width: 41% !important;
+            }
+            @media screen and (max-width: 1000px) {
+              width: 45% !important;
+            }
+            @media screen and (max-width: 600px) {
+              width: 48% !important;
+            }
+            .display-poi-libelle {
+              font-size: 1.6rem !important;
+              
+            }
+            .poi-img_block {
+              height: 45px;
+              width: 100px;
+              padding: 0 !important;
+              img {
+                object-fit: cover;
+                height: 100%;
+                width: 100%;
+              }
+            }   
+          } 
+        }
+        .no-tag-msg {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+}
+
+.css-13pd5d6-MuiInputBase-root-MuiFilledInput-root.Mui-disabled {
+  background-color: transparent !important;
+}

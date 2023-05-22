@@ -2,14 +2,31 @@ import { gql } from "@apollo/client";
 
 
 export const GET_ALL_POIS = gql`
-  query GetAllPois {
-    getAllPois {
+  query GetAllPoi {
+    getAllPoi {
       id
       name  
       address
       latitude
       longitude
       picture
+      city {
+        latitude
+        id
+        longitude
+        name
+        picture
+        user {
+          id
+          username
+          email
+        }
+      user {
+        id
+        username
+        email
+      }
+    }
       type {
         id
         name
@@ -69,6 +86,16 @@ export const GET_POI_BY_NAME = gql`
         name
         icon
       }
+    }
+  }
+`;
+
+export const GET_POIS_BY_CITY = gql`
+  query GetPoisByCity($cityId: Float!) {
+    getPoisByCity(cityId: $cityId) {
+      id 
+      name
+      picture
     }
   }
 `;

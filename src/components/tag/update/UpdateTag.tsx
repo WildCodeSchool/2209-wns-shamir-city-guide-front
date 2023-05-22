@@ -58,10 +58,9 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons, resetExpanded }: TagFor
     ],
     onCompleted() {
       setLoading(false);
-      setTagToUpdate(tagToUpdate);
       resetExpanded();
     },
-    onError(error) {
+    onError() {
       setOpenErrorModal(true);
       setLoading(false);
     },
@@ -69,13 +68,15 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons, resetExpanded }: TagFor
 
   const handleOnUpdate = async (e: FormEvent<HTMLFormElement>, tagToUpdate: ITag) => {
     e.preventDefault();
+    
+    // Last inputs verification before validate the api call, for security
     if (!Object.keys(icons).includes(tagToUpdate.icon)) {
       tagToUpdate.icon = DefaultIconsNames.TAG;
     }
-    const errorName = await validateName({ name: tagToUpdate.name });
 
-    if (errorName) setNameError(errorName);
-    if (!errorName) {
+    await changeName(tagToUpdate.name);
+
+    if (!isThereAnyError()) {
       setLoading(true);
       setTimeout(() => {
         updateTag({ 
@@ -112,6 +113,13 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons, resetExpanded }: TagFor
       setIconDisplayed(DefaultIconsNames.TAG);
     }
   }
+
+  const isThereAnyError = () => (
+    tagToUpdate.name.length === 0 ||
+    tagToUpdate.icon.length === 0 ||
+    nameError || 
+    iconError
+  );
 
   return (
     <div className="update-form">
@@ -150,10 +158,10 @@ const UpdateTag: React.FC<TagFormProps> = ({ tag, icons, resetExpanded }: TagFor
           <div className='update-btn-loading-block'>
             <Button 
               className='update-btn'  
-              style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}  
+              style={(isThereAnyError()) ? disabledFormButtonStyle : formButtonStyle}  
               type="submit"
               variant="contained"
-              disabled={(nameError || iconError) ? true : false}
+              disabled={isThereAnyError() ? true : false}
             >
               Mettre à jour
             </Button>

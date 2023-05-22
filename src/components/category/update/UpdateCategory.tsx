@@ -28,12 +28,11 @@ import {
 type CategoryFormProps = {
   category: ICategory
   icons: object
-  color: string
   resetExpanded: () => void
 };
 
 
-const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, resetExpanded }: CategoryFormProps) => {
+const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, resetExpanded }: CategoryFormProps) => {
   const [categoryToUpdate, setCategoryToUpdate] = useState<ICategory>({
     id: Number(category.id),
     name: category.name,
@@ -60,16 +59,8 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
     refetchQueries: [
       { query: GET_ALL_CATEGORIES }
     ],
-    onCompleted(data) {
+    onCompleted() {
       setLoading(false);
-      const updatedCategory = data.updateCategory;
-      setCategoryToUpdate({
-        id: Number(updatedCategory.id),
-        name: updatedCategory.name,
-        icon: updatedCategory.icon,
-        color: updatedCategory.color
-      });
-      setIconDisplayed(updatedCategory.icon);
       resetExpanded();
     },
     onError() {
@@ -80,13 +71,13 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
 
   const handleOnUpdate = async (e: FormEvent<HTMLFormElement>, categoryToUpdate: ICategory) => {
     e.preventDefault();
+
+    // Last inputs verification before validate the api call, for security
     if (!Object.keys(icons).includes(categoryToUpdate.icon)) {
       categoryToUpdate.icon = DefaultIconsNames.CATEGORY;
     }
-    const errorName = await validateName({ name: categoryToUpdate.name });
 
-    if (errorName) setNameError(errorName);
-    if (!errorName) {
+    if (!isThereAnyError()) {
       setLoading(true);
       setTimeout(() => {
         updateCategory({
@@ -129,6 +120,13 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
     }
   }
 
+  const isThereAnyError = () => (
+    categoryToUpdate.name.length === 0 ||
+    categoryToUpdate.icon.length === 0 ||
+    nameError || 
+    iconError
+  );
+
   return (
     <div className="update-form">
       <form
@@ -170,10 +168,10 @@ const UpdateCategory: React.FC<CategoryFormProps> = ({ category, icons, color, r
           <div className='update-btn-loading-block'>
             <Button
               className='update-btn'
-              style={(nameError || iconError) ? disabledFormButtonStyle : formButtonStyle}
+              style={isThereAnyError() ? disabledFormButtonStyle : formButtonStyle}
               type="submit"
               variant="contained"
-              disabled={(nameError || iconError) ? true : false}
+              disabled={isThereAnyError() ? true : false}
             >
               Mettre à jour
             </Button>
