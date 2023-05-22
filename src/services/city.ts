@@ -2,9 +2,9 @@ import { useQuery } from "@apollo/client";
 import { 
   GET_ALL_CITIES, 
   GET_CITY_BY_ID, 
-  GET_CITY_BY_NAME,
-
-} from "../api/city/qGET_CITIES_BY_USERNAMEueries";
+  GET_CITY_BY_NAME
+  GET_CITIES_BY_USERNAME
+} from "../api/city/queries";
 
 
 export const GetAllCities = () => {
