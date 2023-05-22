@@ -10,5 +10,5 @@ export interface ICity {
   picture: string;
   // circuits?: ICircuit[];
   // pois?: IPoi[];
-  // user: IUser[];
+  user: IUser[];
 }

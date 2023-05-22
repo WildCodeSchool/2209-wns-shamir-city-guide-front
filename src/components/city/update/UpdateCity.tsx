@@ -22,6 +22,7 @@ import {
   disabledFormButtonStyle
 } from "../../../style/customStyles";
 import { IUser } from "../../../types/user";
+import AllUsers from "../../../pages/private/superAdmin/user/AllUsers";
 
 
 type CityFormProps = {
@@ -37,7 +38,8 @@ const UpdateCity: React.FC<CityFormProps> = ({ city, users, resetExpanded }: Cit
     name: city.name,
     latitude: city.latitude,
     longitude: city.longitude,
-    picture: city.picture
+    picture: city.picture,
+    user: city.user,
   });
 
   const [adminToUpdate] = useState<IUser[]>(users)
@@ -130,9 +132,16 @@ const UpdateCity: React.FC<CityFormProps> = ({ city, users, resetExpanded }: Cit
     else setLongitudeError("");
   }
 
-    const handleUserChange = (event: SelectChangeEvent<IUser>) => {
-    setCityAdmin(event.target.value as IUser);
-  };
+    // const changeAdminName = async (value:string) => {
+    //   setCityAdmin({...cityToUpdate, user: value});
+    //   const errorUsername = await validateAdministrateur({ username: value });
+    //   if (errorUsername) setAdministrateurError(errorUsername);
+    //   else setCityAdminError("");
+    // } 
+    
+  //   const handleUserChange = (event: SelectChangeEvent<IUser>) => {
+  //   setCityAdmin(event.target.value as IUser);
+  // };
 
   
   return (
@@ -188,7 +197,20 @@ const UpdateCity: React.FC<CityFormProps> = ({ city, users, resetExpanded }: Cit
               error={longitudeError?.length ? true : false}
               helperText={longitudeError.length ? longitudeError : ""}
             /> 
-                      <FormControl sx={{width:220}}>
+
+            <TextField  
+            label="Username" 
+            variant="filled" 
+            inputProps={{style: textFielPropsStyle}}
+            InputLabelProps={{style: labelTextFieldPropsStyle}} 
+            // onChange={(e) => changeUsername(e.target.value.trim())}
+            // className='text-field'
+            // value={userToUpdate.username}
+            // error={usernameError?.length ? true : false}
+            // helperText={usernameError.length ? usernameError : ""}
+          />
+          
+          {/* <FormControl sx={{width:220}}>
             <InputLabel id="custom-select-label">Administrateur</InputLabel>  
             <Select
               labelId="custom-select-label"
@@ -212,7 +234,7 @@ const UpdateCity: React.FC<CityFormProps> = ({ city, users, resetExpanded }: Cit
               administrateurError.length ? administrateurError : ""
 
               }
-          </FormControl>
+          </FormControl> */}
           </div>
 
         <div className='buttons'>

@@ -96,7 +96,7 @@ const AllCities: React.FC = () => {
                       <Typography sx={{ color: 'text.secondary' }}>{city.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
-                        <UpdateCity city={city} users={allUsers.GetAllUsers} resetExpanded={resetExpanded} />
+                        <UpdateCity city={city} users={allUsers.GetAllUsersWithoutRoles} resetExpanded={resetExpanded} />
                       </AccordionDetails>
                     </Accordion>
                   </div>
