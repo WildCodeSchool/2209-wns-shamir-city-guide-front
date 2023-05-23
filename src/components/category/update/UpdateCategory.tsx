@@ -14,8 +14,7 @@ import { ICategory } from "../../../types/category";
 import { validateName, validateIcon } from "../../../utils/validationForms/categoryValidation";
 import { DefaultIconsNames } from "../../../utils/constants";
 
-import { TextField } from "@mui/material";
-import Button from '@mui/material/Button';
+import { TextField, Button } from "@mui/material";
 import { ColorPicker, useColor } from 'react-color-palette';
 
 import {

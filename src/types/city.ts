@@ -6,7 +6,7 @@ export interface ICity {
   id?: number;
   name: string;
   latitude: string;
-  longiture: string;
+  longitude: string;
   picture: string;
   circuits?: ICircuit[];
   pois?: IPoi[];
