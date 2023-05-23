@@ -1,4 +1,3 @@
-//import './createType.scss';
 import { FormEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 
@@ -7,12 +6,15 @@ import { GET_ALL_CITIES } from "../../../api/city/queries";
 
 import Loader from "../../loader/Loader";
 import ErrorModal from "../../modal/serverError/ServerErrorModal";
+import CustomSelectMenu from "../../selectMenu";
+import ImageLink from "../../imageLink";
 
 import { validateName, validatePicture, validateLatitude, validateLongitude } from "../../../utils/validationForms/cityValidation";
+import { validateCommonId } from "../../../utils/validationForms/commonValidation";
 
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import { FormControl, TextField, MenuItem, Select, SelectChangeEvent, InputLabel, Button } from "@mui/material";
+import { TextField, SelectChangeEvent, Button } from "@mui/material";
 
 import {
   textFielPropsStyle,
@@ -20,6 +22,8 @@ import {
   formButtonStyle,
   disabledFormButtonStyle
 } from "../../../style/customStyles";
+
+import { cityDefaultImgUrl } from "../../../utils/constants";
 import { IUser } from "../../../types/user";
 
 type CityFormProps = {
@@ -31,7 +35,7 @@ const CreateCity: React.FC<CityFormProps> = ({ users }: CityFormProps) => {
   const [cityPicture, setCityPicture] = useState<string>("");
   const [cityLatitude, setCityLatitude] = useState<string>("");
   const [cityLongitude, setCityLongitude] = useState<string>("");
-  const [cityAdmin, setCityAdmin] = useState<IUser>();  
+  const [cityAdmin, setCityAdmin] = useState<number | null>(null);  
 
   const [onVisible, setOnVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -40,7 +44,7 @@ const CreateCity: React.FC<CityFormProps> = ({ users }: CityFormProps) => {
   const [pictureError, setPictureError] = useState<string>("");
   const [latitudeError, setLatitudeError] = useState<string>("");
   const [longitudeError, setLongitudeError] = useState<string>("");
-  const [administrateurError, setAdministrateurError] = useState<string>("");
+  const [administratorError, setAdministratorError] = useState<string>("");
 
   const [openErrorModal, setOpenErrorModal] = useState<boolean>(false);
   const handleModalClose = () => setOpenErrorModal(false);
@@ -62,7 +66,7 @@ const CreateCity: React.FC<CityFormProps> = ({ users }: CityFormProps) => {
       setCityPicture("");
       setCityLatitude("");
       setCityLongitude("");
-      setCityAdmin(undefined);
+      setCityAdmin(null);
     },
     onError() {
       setOpenErrorModal(true);
@@ -72,17 +76,8 @@ const CreateCity: React.FC<CityFormProps> = ({ users }: CityFormProps) => {
 
   const handleOnCreate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const errorName = await validateName({ name: cityName });
-    if (errorName) setNameError(errorName);
-    const errorPicture = await validatePicture({picture: cityPicture});
-    if (errorPicture) setPictureError(errorPicture);
-    const errorLatitude = await validateLatitude({latitude: cityLatitude})
-    if (errorLatitude) setLatitudeError(errorLatitude);
-    const errorLongitude = await validateLongitude({longitude: cityLongitude});
-    if (errorLongitude) setLongitudeError(errorLongitude);
-  
-
-    if (!errorName) {
+    
+    if (!isAnyInputError()) {
       setLoading(true);
       setTimeout(() => {
         createCity(
@@ -93,7 +88,7 @@ const CreateCity: React.FC<CityFormProps> = ({ users }: CityFormProps) => {
               picture: cityPicture,
               latitude: cityLatitude,
               longitude: cityLongitude,
-              user: cityAdmin,
+              userId: cityAdmin,
               }
             }
           }
@@ -132,15 +127,33 @@ const CreateCity: React.FC<CityFormProps> = ({ users }: CityFormProps) => {
       setLongitudeError("");
   }
 
-  const handleUserChange = (event: SelectChangeEvent<IUser>) => {
-    setCityAdmin(event.target.value as IUser);
+  const handleAdminChange = async (event: SelectChangeEvent<number>) => {
+    const cityAdminId = parseInt(event.target.value as string);
+    setCityAdmin(cityAdminId);
+
+    const cityAdminError = await validateCommonId({ id: cityAdminId ? cityAdminId : 0 }); 
+    if (cityAdminError) setAdministratorError(cityAdminError);
+    else setAdministratorError("");
   };
+
+  const isAnyInputError = () => (
+    cityName.length === 0 ||
+    cityLatitude.length === 0 ||
+    cityLongitude.length === 0 ||
+    cityPicture.length === 0 ||
+    !cityAdmin ||
+    nameError ||
+    latitudeError ||
+    longitudeError ||
+    pictureError ||
+    administratorError
+  );
 
   const handleOnVisible = () => setOnVisible(true);
   const handleStopOnVisible = () => setOnVisible(false);
 
   return (
-    <div className="create-type-block">
+    <div className="form_block">
       <Button 
         onClick={handleOnVisible}
         disabled={onVisible ? true : false} 
@@ -173,17 +186,6 @@ const CreateCity: React.FC<CityFormProps> = ({ users }: CityFormProps) => {
               helperText={nameError.length ? nameError : ""}
             />
             <TextField
-              label="Photo"
-              variant="filled" 
-              inputProps={{style: textFielPropsStyle}}
-              InputLabelProps={{style: labelTextFieldPropsStyle}} 
-              onChange={(e) => changePicture(e.target.value.trim())}
-              className='text-field'
-              value={cityPicture}
-              error={pictureError?.length ? true : false}
-              helperText={pictureError.length ? pictureError : ""}
-            />
-            <TextField
               label="Latitude"
               variant="filled" 
               inputProps={{style: textFielPropsStyle}}
@@ -205,40 +207,51 @@ const CreateCity: React.FC<CityFormProps> = ({ users }: CityFormProps) => {
               error={longitudeError?.length ? true : false}
               helperText={longitudeError.length ? longitudeError : ""}
             /> 
-          <FormControl sx={{width:220}}>
-            <InputLabel id="custom-select-label">Administrateur</InputLabel>  
-            <Select
-              labelId="custom-select-label"
-              label="Administrateur"
-              value={cityAdmin ?? ""}
-              onChange={handleUserChange}
-              error={administrateurError?.length ? true : false}
 
-              >
-                
-                {users &&
-                  users.map((cityAdministrator: any) => {
-                    return (
-                      <MenuItem value={cityAdministrator} key={cityAdministrator.id}>
-                        {cityAdministrator.username}
-                      </MenuItem>
-                    )})}
+            <div className="container-select-image-checkbox">
+              <div className="image-field_block">
+                <TextField
+                  label="Photo"
+                  variant="filled" 
+                  inputProps={{style: textFielPropsStyle}}
+                  InputLabelProps={{style: labelTextFieldPropsStyle}} 
+                  onChange={(e) => changePicture(e.target.value.trim())}
+                  className='text-field'
+                  value={cityPicture}
+                  error={pictureError?.length ? true : false}
+                  helperText={pictureError.length ? pictureError : ""}
+                />
+                <div className="image_block">
+                    <ImageLink link={cityPicture} defaultPath={cityDefaultImgUrl} alt="point d'intérêt" />
+                </div>
+              </div>
 
-              </Select>
-              {
-              administrateurError.length ? administrateurError : ""
-
-              }
-          </FormControl>
+              <div className="menu-select-block">
+                  <div className="cities-select-menu"> 
+                    <CustomSelectMenu
+                      label="Administrateur"
+                      menuSelectClassname="menu-select-cities"
+                      selectValue={cityAdmin ?? 0}
+                      onChange={handleAdminChange}
+                      dataToList={users}
+                      menuItemClassname=""
+                      menuItemPropertyToDisplay="username"
+                      displayImg={false}
+                      propertyImgToDisplay=''
+                    />
+                    {administratorError.length ? administratorError : ""}
+                  </div>
+              </div>
+            </div>
           </div>
           
           <div className="create-btn-loading-block">
             <Button   
               className="create-button"
-              style={nameError? disabledFormButtonStyle : formButtonStyle}  
+              style={(isAnyInputError()) ? disabledFormButtonStyle : formButtonStyle}  
               type="submit"
               variant="contained"
-              disabled={nameError? true : false}
+              disabled={(isAnyInputError()) ? true : false}
             >
               Créer
             </Button>

@@ -58,7 +58,7 @@ export const enum DefaultIconsNames {
   USER = "PersonOutlined",
   ROLE = "PermContactCalendarOutlined",
   POI = "InterestsOutlined",
-  CIRCUIT = "TravelExploreOutlined"
+  CIRCUIT = "TravelExploreOutlined",
   CITY = "LocationCityOutlinedIcon"
 }
 

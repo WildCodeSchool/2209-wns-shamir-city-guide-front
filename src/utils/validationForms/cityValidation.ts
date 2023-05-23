@@ -1,9 +1,9 @@
 import * as yup from "yup";
-import { IUser } from "../../types/user";
+// import { IUser } from "../../types/user";
 
-type CityFormProps = {
-  users: IUser[]
-};
+// type CityFormProps = {
+//   users: IUser[]
+// };
 
 interface INameData {
   name: string;
@@ -35,7 +35,7 @@ export const nameValidationSchema = yup.object().shape({
 export const pictureValidationSchema = yup.object().shape({
   picture: yup
     .string()
-    .matches(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/, "L'url de l'image n'est pas dans le bon format")
+    .matches(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_.~#?&//=]*)/, "L'url de l'image n'est pas dans le bon format")
 });
 
 export const latitudeValidationSchema = yup.object().shape({

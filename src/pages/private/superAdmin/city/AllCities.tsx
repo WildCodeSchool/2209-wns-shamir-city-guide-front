@@ -25,7 +25,6 @@ const AllCities: React.FC = () => {
   // GET ALL
   const { allCities, citiesError, citiesLoading } = GetAllCities();
   const { allUsers, usersError } = GetAllUsersWithoutRoles();
-  console.log(allUsers?.getAllUsers);
 
   // Active cities Loader during 0.5 second
   useEffect(() => {
@@ -96,7 +95,7 @@ const AllCities: React.FC = () => {
                       <Typography sx={{ color: 'text.secondary' }}>{city.name}</Typography>
                       </AccordionSummary>
                       <AccordionDetails id={`section-${index}`}>
-                        <UpdateCity city={city} users={allUsers.GetAllUsersWithoutRoles} resetExpanded={resetExpanded} />
+                        <UpdateCity city={city} users={allUsers.getAllUsers} resetExpanded={resetExpanded} />
                       </AccordionDetails>
                     </Accordion>
                   </div>
