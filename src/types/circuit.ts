@@ -7,7 +7,6 @@ export interface ICircuit {
   name: string;
   picture: string;
   description: string;
-  price: number;
   city?: ICity;
   category: ICategory;
   pois: IPoi[];
