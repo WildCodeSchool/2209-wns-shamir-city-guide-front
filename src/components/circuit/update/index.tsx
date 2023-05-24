@@ -1,4 +1,3 @@
-import "../style.scss";
 import React, { 
   ChangeEvent, 
   FormEvent, 
