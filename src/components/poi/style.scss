@@ -173,9 +173,6 @@
           and (orientation: portrait) {
             max-height: 500px;
           }
-          .poi-row {
-            border: 1px solid red;
-          }
           label {
             width: 20% !important;
             margin: 0.8rem 0 !important;
@@ -247,7 +244,7 @@
           justify-content: flex-start !important;
           flex-wrap: wrap !important;
           & > #poi-by-city-label {
-            margin-left: 3.2rem !important;
+            margin-left: 0rem !important;
             margin-bottom: 1.6rem !important;
           }
           .MuiFormControlLabel-root {
@@ -441,32 +438,33 @@
         .display-poi-list_block {
           width: 100% !important;
           display: flex !important;
-          justify-content: flex-start !important;  
+          justify-content: space-between !important;  
+          margin-right: 0 !important;
           .display-poi-item {
             width: 24% !important;
             display: flex !important;
             justify-content: space-between !important;
             align-items: center !important;
-            margin-right: 3.2rem !important;
+            margin-right: 0rem !important;
             margin-left: 0 !important;
             margin-bottom: 0.8rem !important;
             padding: 0.8rem 1.6rem !important;
             border-radius: 5px;
             border: 1px solid rgba(128, 128, 128, 0.299);
-            @media screen and (max-width: 1500px) {
-              width: 31% !important;
+            @media screen and (max-width: 1700px) {
+              width: 33% !important;
             }
             @media screen and (max-width: 1400px) {
-              width: 37% !important;
+              width: 40% !important;
             }
             @media screen and (max-width: 1200px) {
-              width: 41% !important;
-            }
-            @media screen and (max-width: 1000px) {
               width: 45% !important;
             }
+            @media screen and (max-width: 950px) {
+              width: 47% !important;
+            }
             @media screen and (max-width: 600px) {
-              width: 48% !important;
+              width: 49% !important;
             }
             .display-poi-libelle {
               font-size: 1.6rem !important;

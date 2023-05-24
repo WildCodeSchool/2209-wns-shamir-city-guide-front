@@ -2,16 +2,19 @@
   .create-form {
     .fields {
       .poi-by-city-checkbox-list {
+        display: flex;
+        justify-content: space-evenly !important;
         #poi-by-city-label {
           padding: 0.8rem 1.6rem !important;
           border-radius: 5px;
           border: 1px solid rgba(128, 128, 128, 0.299);
-          &:first-child {
-            margin-left: 0 !important;
-          }
+          
         }
       }
     }
   }
-  
+}
+
+.form_block .create-form form .fields .poi-by-city-checkbox-list {
+  justify-content: space-between !important;
 }
