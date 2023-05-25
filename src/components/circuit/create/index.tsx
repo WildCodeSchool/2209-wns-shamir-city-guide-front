@@ -196,9 +196,10 @@ const CreateCircuit: React.FC<CircuitFormProps> = ({ categories, userCities }: C
     pictureError ||
     cityError ||
     categoryError ||
-    poisError
+    poisError ||
+    selectedPois.length === 0
   );
-
+      
   return (
     <div className="form_block">
       <Button
